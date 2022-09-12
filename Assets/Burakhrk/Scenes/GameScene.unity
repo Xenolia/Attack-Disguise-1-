@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -192,7 +192,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117533331}
-  m_LocalRotation: {x: 0.22619946, y: -0.000000016760408, z: 0.0000000038920733, w: 0.97408104}
+  m_LocalRotation: {x: 0.22619946, y: 0.000000016760414, z: -0.0000000038920747, w: 0.97408104}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -527,6 +527,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 995012232}
     m_Modifications:
+    - target: {fileID: 3026864531718523592, guid: 1f380e158485b4c829b3770f545ae703,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026864531718523592, guid: 1f380e158485b4c829b3770f545ae703,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026864531718523592, guid: 1f380e158485b4c829b3770f545ae703,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6243745069151466467, guid: 1f380e158485b4c829b3770f545ae703,
         type: 3}
       propertyPath: m_Name
@@ -752,7 +767,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413619313}
-  m_LocalRotation: {x: 0.208444, y: -0.00000001682843, z: 0.0000000035865673, w: 0.9780343}
+  m_LocalRotation: {x: 0.208444, y: 0.000000016828436, z: -0.0000000035865675, w: 0.9780343}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1684,7 +1699,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031334764}
-  m_LocalRotation: {x: 0.22619946, y: -0.000000016760414, z: 0.0000000038920747, w: 0.97408104}
+  m_LocalRotation: {x: 0.22619946, y: 0.000000016760408, z: -0.0000000038920733, w: 0.97408104}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1834,6 +1849,18 @@ PrefabInstance:
     - target: {fileID: 4695473154865788, guid: 5f60f23fe538d094bb399c524f4bce64, type: 3}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695473154865788, guid: 5f60f23fe538d094bb399c524f4bce64, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695473154865788, guid: 5f60f23fe538d094bb399c524f4bce64, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695473154865788, guid: 5f60f23fe538d094bb399c524f4bce64, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4695473154865788, guid: 5f60f23fe538d094bb399c524f4bce64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2523,11 +2550,6 @@ PrefabInstance:
       objectReference: {fileID: 1110478847}
     - target: {fileID: 6109414691055030755, guid: a43a632c76f894d30bb72c415e3bf3e8,
         type: 3}
-      propertyPath: attackCooldown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6109414691055030755, guid: a43a632c76f894d30bb72c415e3bf3e8,
-        type: 3}
       propertyPath: lastHitFocusObject
       value: 
       objectReference: {fileID: 1792117994}
@@ -2535,21 +2557,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6109414691055030764, guid: a43a632c76f894d30bb72c415e3bf3e8,
-        type: 3}
-      propertyPath: m_SkinWidth
-      value: 0.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 6109414691055030764, guid: a43a632c76f894d30bb72c415e3bf3e8,
-        type: 3}
-      propertyPath: m_SlopeLimit
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6109414691055030764, guid: a43a632c76f894d30bb72c415e3bf3e8,
-        type: 3}
-      propertyPath: m_StepOffset
-      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 6109414691055030765, guid: a43a632c76f894d30bb72c415e3bf3e8,
         type: 3}
