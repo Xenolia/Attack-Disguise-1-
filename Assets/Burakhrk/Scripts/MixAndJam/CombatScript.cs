@@ -262,7 +262,7 @@ public class CombatScript : MonoBehaviour
     void LerpCharacterAcceleration()
     {
         movementInput.acceleration = 0;
-        DOVirtual.Float(0, 1, .6f, ((acceleration)=> movementInput.acceleration = acceleration));
+        DOVirtual.Float(0, movementInput.acceleration, .6f, ((acceleration)=> movementInput.acceleration = acceleration));
     }
 
     bool isLastHit()

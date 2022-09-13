@@ -19,7 +19,7 @@ public class MovementInput : MonoBehaviour
 	[SerializeField] float movementSpeed;
 	[SerializeField] float rotationSpeed = 0.1f;
 	[SerializeField] float fallSpeed = .2f;
-	public float acceleration = 1;
+	public float acceleration = 10;
 
 	[Header("Booleans")]
 	[SerializeField] bool blockRotationPlayer;
@@ -54,8 +54,8 @@ public class MovementInput : MonoBehaviour
 			return;
 
 		var camera = Camera.main;
-		var forward = cam.transform.forward;
-		var right = cam.transform.right;
+		var forward = camera.transform.forward;
+		var right = camera.transform.right;
 
 		forward.y = 0f;
 		right.y = 0f;
@@ -115,10 +115,8 @@ public class MovementInput : MonoBehaviour
 
 	public void OnMove(InputValue value)
 	{
-		//Debug.Log("Movement");
-
-	moveAxis.x = (value.Get<Vector2>().x/Screen.width)+transform.position.x;
-		moveAxis.y = (value.Get<Vector2>().y/Screen.height)+transform.position.z;
+        moveAxis.x = (value.Get<Vector2>().x/Screen.width)-0.5f;
+		moveAxis.y = (value.Get<Vector2>().y/Screen.height)-0.46f;
 	}
 
 	#endregion
