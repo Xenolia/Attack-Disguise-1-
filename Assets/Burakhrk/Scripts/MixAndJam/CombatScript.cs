@@ -63,7 +63,7 @@ public class CombatScript : MonoBehaviour
         {
             if (enemyManager.AliveEnemyCount() == 0)
             {
-                Attack(null, 0);
+               // Attack(null, 0);
                 return;
             }
             else
