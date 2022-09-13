@@ -15,6 +15,7 @@ public class MovementInput : MonoBehaviour
 	private float verticalVel;
 
 	[Header("Settings")]
+	public bool allowMovement=true;
 	[SerializeField] float movementSpeed;
 	[SerializeField] float rotationSpeed = 0.1f;
 	[SerializeField] float fallSpeed = .2f;
@@ -49,6 +50,9 @@ public class MovementInput : MonoBehaviour
 
 	void PlayerMoveAndRotation()
 	{
+		if (!allowMovement)
+			return;
+
 		var camera = Camera.main;
 		var forward = cam.transform.forward;
 		var right = cam.transform.right;
