@@ -25,16 +25,22 @@ public class MovementInput : MonoBehaviour
 	[SerializeField] bool blockRotationPlayer;
 	private bool isGrounded;
 
+	private JammoActions _jummoActions;
 
 	void Start()
 	{
+		_jummoActions = new JammoActions();
+		_jummoActions.Player.Enable();
 		 anim = this.GetComponent<Animator>();
 		cam = Camera.main;
 		controller = this.GetComponent<CharacterController>();
+		
 	}
 
 	void Update()
 	{
+		if(Input.GetMouseButton(0))
+			GetInput();
 		InputMagnitude();
 
 		isGrounded = controller.isGrounded;
@@ -68,7 +74,7 @@ public class MovementInput : MonoBehaviour
 		if (blockRotationPlayer == false)
 		{
 			//Camera
-			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed * acceleration);
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed * acceleration * Time.deltaTime);
 			controller.Move(desiredMoveDirection * Time.deltaTime * (movementSpeed * acceleration));
 		}
 		else
@@ -85,6 +91,7 @@ public class MovementInput : MonoBehaviour
 
 	public void RotateToCamera(Transform t)
 	{
+		/*
 		var forward = cam.transform.forward;
 
 		desiredMoveDirection = forward;
@@ -92,6 +99,7 @@ public class MovementInput : MonoBehaviour
 		Quaternion lookAtRotationOnly_Y = Quaternion.Euler(transform.rotation.eulerAngles.x, lookAtRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
 
 		t.rotation = Quaternion.Slerp(transform.rotation, lookAtRotationOnly_Y, rotationSpeed);
+		*/
 	}
 
 	void InputMagnitude()
@@ -116,10 +124,22 @@ public class MovementInput : MonoBehaviour
 	public void OnMove(InputValue value)
 	{
 		//Debug.Log("Movement");
+		var inputValues = _jummoActions.Player.Move.ReadValue<Vector2>();
+		moveAxis.x = inputValues.x;
+		moveAxis.y = inputValues.y;
 
-	moveAxis.x = (value.Get<Vector2>().x/Screen.width)+transform.position.x;
-		moveAxis.y = (value.Get<Vector2>().y/Screen.height)+transform.position.z;
-	}
+		Debug.Log("x " + inputValues.x);
+		Debug.Log("y " + inputValues.y);
+    }
+
+	private void GetInput()
+    {
+        var inputValues = _jummoActions.Player.Move.ReadValue<Vector2>();
+        moveAxis.x = inputValues.x;
+        moveAxis.y = inputValues.y;
+        Debug.Log("x " + inputValues.x);
+        Debug.Log("y " + inputValues.y);
+    }		
 
 	#endregion
 
