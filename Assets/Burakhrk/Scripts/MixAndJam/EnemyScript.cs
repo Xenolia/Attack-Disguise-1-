@@ -5,6 +5,10 @@ using DG.Tweening;
 
 public class EnemyScript : MonoBehaviour
 {
+    //mechanic blend burakhrk
+    EventBus eventBus;
+    public bool OnBattle=false;
+
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
@@ -38,6 +42,23 @@ public class EnemyScript : MonoBehaviour
     public UnityEvent<EnemyScript> OnStopMoving;
     public UnityEvent<EnemyScript> OnRetreat;
 
+    private void Awake()
+    {
+        eventBus = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>();
+    }
+    private void OnEnable()
+    {
+        eventBus.OnBattle += OnBattleBehaviour;
+    }
+    private void OnDisable()
+    {
+        eventBus.OnBattle -= OnBattleBehaviour;
+
+    }
+    void OnBattleBehaviour()
+    {
+        OnBattle = true;
+    }
     void Start()
     {
         enemyManager = GetComponentInParent<EnemyManager>();
@@ -81,11 +102,15 @@ public class EnemyScript : MonoBehaviour
 
     void Update()
     {
-        //Constantly look at player
-        transform.LookAt(new Vector3(playerCombat.transform.position.x, transform.position.y, playerCombat.transform.position.z));
+        if (OnBattle)
+        {
+            //Constantly look at player
+            transform.LookAt(new Vector3(playerCombat.transform.position.x, transform.position.y, playerCombat.transform.position.z));
 
-        //Only moves if the direction is set
-        MoveEnemy(moveDirection);
+            //Only moves if the direction is set
+            MoveEnemy(moveDirection);
+        }
+       
     }
 
     //Listened event from Player Animation

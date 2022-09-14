@@ -35,6 +35,7 @@ public class EnemyDetection : MonoBehaviour
         inputDirection = forward * movementInput.moveAxis.y + right * movementInput.moveAxis.x;
         inputDirection = inputDirection.normalized;
 
+        /*
         RaycastHit info;
 
         if (Physics.SphereCast(transform.position, 3f, inputDirection, out info, 10,layerMask))
@@ -42,8 +43,9 @@ public class EnemyDetection : MonoBehaviour
             if(info.collider.transform.GetComponent<EnemyScript>().IsAttackable())
                 currentTarget = info.collider.transform.GetComponent<EnemyScript>();
         }
+        */
     }
-
+ 
     public EnemyScript CurrentTarget()
     {
         return currentTarget;
