@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
-
+using UnityEngine.UI;
 public class EnemyScript : MonoBehaviour
 {
     //mechanic blend burakhrk

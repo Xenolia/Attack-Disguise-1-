@@ -123,11 +123,12 @@ public class MovementInput : MonoBehaviour
 
 	public void OnMove(InputValue value)
 	{
-		return;
+		/*
 		//Debug.Log("Movement");
 		var inputValues = _jummoActions.Player.Move.ReadValue<Vector2>();
 		moveAxis.x = inputValues.x;
 		moveAxis.y = inputValues.y;
+		*/
 
     }
 

@@ -6,6 +6,9 @@ using Cinemachine;
 
 public class CombatScript : MonoBehaviour
 {
+    EventBus eventBus;
+    public bool OnBattle=false;
+
     private EnemyManager enemyManager;
     private EnemyDetection enemyDetection;
     private MovementInput movementInput;
@@ -51,7 +54,20 @@ public class CombatScript : MonoBehaviour
         movementInput = GetComponent<MovementInput>();
         impulseSource = GetComponentInChildren<CinemachineImpulseSource>();
     }
+    private void OnEnable()
+    {
+        eventBus=GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>();
+        eventBus.OnBattle += OnBattleBehaviour;
+    }
+    private void OnDisable()
+    {
+        eventBus.OnBattle -= OnBattleBehaviour;
 
+    }
+    void OnBattleBehaviour()
+    {
+        OnBattle = true;
+    }
     //This function gets called whenever the player inputs the punch action
     void AttackCheck()
     {
@@ -280,8 +296,10 @@ public class CombatScript : MonoBehaviour
         CounterCheck();
     }
 
-    private void OnAttack()
+    public void OnAttack()
     {
+        if (!OnBattle)
+            return;
        // Debug.Log("Attack triggered");
       AttackCheck();
     }

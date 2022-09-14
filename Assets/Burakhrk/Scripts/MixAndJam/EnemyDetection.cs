@@ -54,6 +54,7 @@ public class EnemyDetection : MonoBehaviour
     public void SetCurrentTarget(EnemyScript target)
     {
         currentTarget = target;
+        combatScript.OnAttack();
     }
 
     public float InputMagnitude()
