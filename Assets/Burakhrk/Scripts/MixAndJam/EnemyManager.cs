@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class EnemyManager : MonoBehaviour
 {
+    EnemyDetection enemyDetection;
+
+
     private EnemyScript[] enemies;
     public EnemyStruct[] allEnemies;
     private List<int> enemyIndexes;
@@ -12,7 +17,7 @@ public class EnemyManager : MonoBehaviour
     private Coroutine AI_Loop_Coroutine;
 
     public int aliveEnemyCount;
-    void Start()
+    private void Awake()
     {
         enemies = GetComponentsInChildren<EnemyScript>();
 
@@ -24,6 +29,20 @@ public class EnemyManager : MonoBehaviour
             allEnemies[i].enemyAvailability = true;
         }
 
+    }
+   void EnemySetUp()
+    {
+        enemyDetection = FindObjectOfType<EnemyDetection>();
+
+        foreach (var item in enemies)
+        {
+            item.buttonCanvas.GetComponent<Button>().onClick.AddListener(() => enemyDetection.SetCurrentTarget(item)); ;
+        }
+    }
+
+    void Start()
+    {
+        EnemySetUp();
         StartAI();
     }
 

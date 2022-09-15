@@ -53,6 +53,7 @@ public class EnemyDetection : MonoBehaviour
 
     public void SetCurrentTarget(EnemyScript target)
     {
+        Debug.LogError(target);
         currentTarget = target;
         combatScript.OnAttack();
     }
@@ -69,5 +70,12 @@ public class EnemyDetection : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 1);
         if(CurrentTarget() != null)
             Gizmos.DrawSphere(CurrentTarget().transform.position, .5f);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<EnemyScript>()&&!currentTarget)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>().OnBattleInvoke();
+        }
     }
 }

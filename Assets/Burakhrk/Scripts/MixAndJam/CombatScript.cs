@@ -16,7 +16,7 @@ public class CombatScript : MonoBehaviour
     private CinemachineImpulseSource impulseSource;
 
     [Header("Target")]
-    private EnemyScript lockedTarget;
+   [SerializeField] private EnemyScript lockedTarget;
 
     [Header("Combat Settings")]
     [SerializeField] private float attackCooldown;
@@ -68,6 +68,10 @@ public class CombatScript : MonoBehaviour
     {
         OnBattle = true;
     }
+    private void LateUpdate()
+    {
+        lockedTarget = enemyDetection.CurrentTarget();
+    }
     //This function gets called whenever the player inputs the punch action
     void AttackCheck()
     {
@@ -77,6 +81,10 @@ public class CombatScript : MonoBehaviour
         //Check to see if the detection behavior has an enemy set
         if (enemyDetection.CurrentTarget() == null)
         {
+            Debug.Log("EnemyNull");
+            return;
+
+
             if (enemyManager.AliveEnemyCount() == 0)
             {
                // Attack(null, 0);
@@ -84,7 +92,7 @@ public class CombatScript : MonoBehaviour
             }
             else
             {
-                lockedTarget = enemyManager.RandomEnemy();
+                lockedTarget = enemyDetection.CurrentTarget();
             }
         }
 
@@ -94,7 +102,7 @@ public class CombatScript : MonoBehaviour
 
         //Extra check to see if the locked target was set
         if(lockedTarget == null)
-            lockedTarget = enemyManager.RandomEnemy();
+            lockedTarget = enemyDetection.CurrentTarget();
 
         //AttackTarget
         Attack(lockedTarget, TargetDistance(lockedTarget));
@@ -108,8 +116,11 @@ public class CombatScript : MonoBehaviour
         //Attack nothing in case target is null
         if (target == null)
         {
+            target = enemyDetection.CurrentTarget();
+            /*
             AttackType("GroundPunch", .2f, null, 0);
             return;
+            */
         }
 
         if (distance < 15)
@@ -120,8 +131,8 @@ public class CombatScript : MonoBehaviour
         }
         else
         {
-            lockedTarget = null;
-            AttackType("GroundPunch", .2f, null, 0);
+            lockedTarget = enemyDetection.CurrentTarget();
+            AttackType("AirKick", .2f, null, 0);
         }
 
         //Change impulse
@@ -179,11 +190,14 @@ public class CombatScript : MonoBehaviour
 
     void CounterCheck()
     {
+        return;
         //Initial check
         if (isCountering || isAttackingEnemy || !enemyManager.AnEnemyIsPreparingAttack())
             return;
+        if (enemyDetection.CurrentTarget() == null)
+            Debug.LogError("asdasd");
 
-        lockedTarget = ClosestCounterEnemy();
+        lockedTarget = enemyDetection.CurrentTarget();
         OnCounterAttack.Invoke(lockedTarget);
 
         if (TargetDistance(lockedTarget) > 2)
@@ -206,7 +220,9 @@ public class CombatScript : MonoBehaviour
             isCountering = true;
             movementInput.enabled = false;
             yield return new WaitForSeconds(duration);
+
             Attack(lockedTarget, TargetDistance(lockedTarget));
+
             isCountering = false;
 
         }

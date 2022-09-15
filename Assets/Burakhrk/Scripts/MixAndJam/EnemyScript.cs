@@ -8,7 +8,7 @@ public class EnemyScript : MonoBehaviour
     //mechanic blend burakhrk
     EventBus eventBus;
     public bool OnBattle=false;
-
+    public GameObject buttonCanvas;
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
@@ -57,6 +57,7 @@ public class EnemyScript : MonoBehaviour
     }
     void OnBattleBehaviour()
     {
+        buttonCanvas.SetActive(true);
         OnBattle = true;
     }
     void Start()
@@ -169,7 +170,7 @@ public class EnemyScript : MonoBehaviour
     void Death()
     {
         StopEnemyCoroutines();
-
+        buttonCanvas.SetActive(false);
         this.enabled = false;
         characterController.enabled = false;
         animator.SetTrigger("Death");
