@@ -20,7 +20,7 @@ public class EnemyScript : MonoBehaviour
     public int health = 3;
     private float moveSpeed = 1;
     private Vector3 moveDirection;
-
+    public float retreatDistance = 2;
     [Header("States")]
     [SerializeField] private bool isPreparingAttack;
     [SerializeField] private bool isMoving;
@@ -171,14 +171,18 @@ public class EnemyScript : MonoBehaviour
     {
         StopEnemyCoroutines();
         buttonCanvas.SetActive(false);
-        this.enabled = false;
         characterController.enabled = false;
         animator.SetTrigger("Death");
         enemyManager.SetEnemyAvailiability(this, false);
+        this.enabled = false;
     }
 
     public void SetRetreat()
     {
+        if (enemyDetection.CurrentTarget() == this)
+            return;
+
+
         StopEnemyCoroutines();
 
         RetreatCoroutine = StartCoroutine(PrepRetreat());
@@ -190,7 +194,7 @@ public class EnemyScript : MonoBehaviour
             isRetreating = true;
             moveDirection = -Vector3.forward;
             isMoving = true;
-            yield return new WaitUntil(() => Vector3.Distance(transform.position, playerCombat.transform.position) > 4);
+            yield return new WaitUntil(() => Vector3.Distance(transform.position, playerCombat.transform.position) > retreatDistance);
             isRetreating = false;
             StopMoving();
 
