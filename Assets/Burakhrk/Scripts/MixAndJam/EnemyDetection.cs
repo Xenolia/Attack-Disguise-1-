@@ -53,9 +53,14 @@ public class EnemyDetection : MonoBehaviour
 
     public void SetCurrentTarget(EnemyScript target)
     {
-        Debug.LogError(target);
+        if (combatScript.hasDamaged)
+            return;
+
+        Debug.Log("Set target  for " + target);
+
         currentTarget = target;
         combatScript.OnAttack();
+        
     }
 
     public float InputMagnitude()

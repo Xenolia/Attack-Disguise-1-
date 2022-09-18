@@ -171,6 +171,9 @@ public class EnemyManager : MonoBehaviour
 
         if (FindObjectOfType<EnemyDetection>().CurrentTarget() == enemy)
             FindObjectOfType<EnemyDetection>().SetCurrentTarget(null);
+
+      AliveEnemyCount();
+
     }
 
 

@@ -23,6 +23,7 @@ public class CombatScript : MonoBehaviour
 
     [Header("States")]
     public bool isAttackingEnemy = false;
+    public bool hasDamaged = true;
     public bool isCountering = false;
 
     [Header("Public References")]
@@ -75,9 +76,10 @@ public class CombatScript : MonoBehaviour
     //This function gets called whenever the player inputs the punch action
     void AttackCheck()
     {
-        if (isAttackingEnemy)
+        if (lockedTarget == enemyDetection.CurrentTarget())
             return;
 
+    
         //Check to see if the detection behavior has an enemy set
         if (enemyDetection.CurrentTarget() == null)
         {
@@ -123,7 +125,7 @@ public class CombatScript : MonoBehaviour
             */
         }
 
-        if (distance < 15)
+        if (distance < 10)
         {
             animationCount = (int)Mathf.Repeat((float)animationCount + 1, (float)attacks.Length);
             string attackString = isLastHit() ? attacks[Random.Range(0, attacks.Length)] : attacks[animationCount];
@@ -137,7 +139,6 @@ public class CombatScript : MonoBehaviour
 
         //Change impulse
         impulseSource.m_ImpulseDefinition.m_AmplitudeGain = Mathf.Max(3, 1 * distance);
-
     }
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)
@@ -165,7 +166,8 @@ public class CombatScript : MonoBehaviour
             movementInput.enabled = false;
             yield return new WaitForSeconds(duration);
             isAttackingEnemy = false;
-            yield return new WaitForSeconds(.2f);
+            enemyDetection.SetCurrentTarget(null);
+            yield return new WaitForSeconds(0.5f);
             movementInput.enabled = true;
             LerpCharacterAcceleration();
         }
@@ -179,6 +181,8 @@ public class CombatScript : MonoBehaviour
             lastHitCamera.SetActive(false);
             Time.timeScale = 1f;
         }
+
+
     }
 
     void MoveTorwardsTarget(EnemyScript target, float duration)
@@ -244,7 +248,6 @@ public class CombatScript : MonoBehaviour
     {
         if (lockedTarget == null || enemyManager.AliveEnemyCount() == 0)
             return;
-
         OnHit.Invoke(lockedTarget);
 
         //Polish
@@ -263,6 +266,7 @@ public class CombatScript : MonoBehaviour
         {
             movementInput.enabled = false;
             yield return new WaitForSeconds(.5f);
+            hasDamaged = true;
             movementInput.enabled = true;
             LerpCharacterAcceleration();
         }
@@ -294,7 +298,7 @@ public class CombatScript : MonoBehaviour
     void LerpCharacterAcceleration()
     {
         movementInput.acceleration = 0;
-        DOVirtual.Float(0, movementInput.acceleration, .6f, ((acceleration)=> movementInput.acceleration = acceleration));
+        DOVirtual.Float(0, movementInput.acceleration, 0.4f, ((acceleration)=> movementInput.acceleration = acceleration));
     }
 
     bool isLastHit()
@@ -316,6 +320,11 @@ public class CombatScript : MonoBehaviour
     {
         if (!OnBattle)
             return;
+
+        if (isAttackingEnemy)
+            return;
+
+        hasDamaged = false;
        // Debug.Log("Attack triggered");
       AttackCheck();
     }
