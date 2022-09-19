@@ -130,11 +130,14 @@ public class CombatScript : MonoBehaviour
             animationCount = (int)Mathf.Repeat((float)animationCount + 1, (float)attacks.Length);
             string attackString = isLastHit() ? attacks[Random.Range(0, attacks.Length)] : attacks[animationCount];
             AttackType(attackString, attackCooldown, target, .65f);
+            Debug.Log("Close attack");
         }
         else
         {
             lockedTarget = enemyDetection.CurrentTarget();
             AttackType("AirKick", .2f, null, 0);
+            Debug.Log("Range attack");
+
         }
 
         //Change impulse
@@ -166,10 +169,11 @@ public class CombatScript : MonoBehaviour
             movementInput.enabled = false;
             yield return new WaitForSeconds(duration);
             isAttackingEnemy = false;
-            enemyDetection.SetCurrentTarget(null);
             yield return new WaitForSeconds(0.5f);
             movementInput.enabled = true;
             LerpCharacterAcceleration();
+            Debug.Log(" attack done");
+
         }
 
         IEnumerator FinalBlowCoroutine()
@@ -180,6 +184,8 @@ public class CombatScript : MonoBehaviour
             yield return new WaitForSecondsRealtime(2);
             lastHitCamera.SetActive(false);
             Time.timeScale = 1f;
+            Debug.Log(" attack done last");
+
         }
 
 
@@ -249,7 +255,8 @@ public class CombatScript : MonoBehaviour
         if (lockedTarget == null || enemyManager.AliveEnemyCount() == 0)
             return;
         OnHit.Invoke(lockedTarget);
-
+        enemyDetection.CurrentTarget().OnPlayerHitBurak();
+        enemyDetection.SetCurrentTarget(null);
         //Polish
         punchParticle.PlayParticleAtPosition(punchPosition.position);
     }

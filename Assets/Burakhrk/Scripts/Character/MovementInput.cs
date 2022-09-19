@@ -4,7 +4,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class MovementInput : MonoBehaviour
 {
-	private Animator anim;
+    EventBus eventBus;
+    public bool OnBattle = false;
+
+
+    private Animator anim;
 	private Camera cam;
 	private CharacterController controller;
 
@@ -26,8 +30,23 @@ public class MovementInput : MonoBehaviour
 	private bool isGrounded;
 
 	private JammoActions _jummoActions;
-
-	void Start()
+    private void OnEnable()
+    {
+        eventBus = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>();
+        eventBus.OnBattle += OnBattleBehaviour;
+    }
+    private void OnDisable()
+    {
+        eventBus.OnBattle -= OnBattleBehaviour;
+        anim.SetFloat("InputMagnitude", 0);
+    }
+    void OnBattleBehaviour()
+    {
+        OnBattle = true;
+        anim.SetFloat("InputMagnitude", 0);
+		movementSpeed = 0;
+    }
+    void Start()
 	{
 		_jummoActions = new JammoActions();
 		_jummoActions.Player.Enable();
@@ -51,7 +70,9 @@ public class MovementInput : MonoBehaviour
 			verticalVel -= 1;
 
 		moveVector = new Vector3(0, verticalVel * fallSpeed * Time.deltaTime, 0);
-		controller.Move(moveVector);
+
+		if (!OnBattle)
+			controller.Move(moveVector);
 	}
 
 	void PlayerMoveAndRotation()
@@ -143,8 +164,5 @@ public class MovementInput : MonoBehaviour
 
 	#endregion
 
-	private void OnDisable()
-	{
-		anim.SetFloat("InputMagnitude", 0);
-	}
+ 
 }

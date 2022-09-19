@@ -113,16 +113,44 @@ public class EnemyScript : MonoBehaviour
         }
        
     }
+    public void OnPlayerHitBurak()
+    {
+       
+            StopEnemyCoroutines();
+            DamageCoroutine = StartCoroutine(HitCoroutine());
 
+            isLockedTarget = false;
+            OnDamage.Invoke(this);
+
+            health--;
+
+            if (health <= 0)
+            {
+                Death();
+                return;
+            }
+
+            animator.SetTrigger("Hit");
+            transform.DOMove(transform.position - (transform.forward / 2), .3f).SetDelay(.1f);
+
+            StopMoving();
+
+        IEnumerator HitCoroutine()
+        {
+            isStunned = true;
+            yield return new WaitForSeconds(.5f);
+            isStunned = false;
+        }
+    }
     //Listened event from Player Animation
     void OnPlayerHit(EnemyScript target)
     {
+        return;
         if (target == this)
         {
             StopEnemyCoroutines();
             DamageCoroutine = StartCoroutine(HitCoroutine());
 
-            enemyDetection.SetCurrentTarget(null);
             isLockedTarget = false;
             OnDamage.Invoke(this);
 

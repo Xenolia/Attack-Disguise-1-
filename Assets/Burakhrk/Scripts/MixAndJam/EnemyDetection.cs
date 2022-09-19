@@ -53,8 +53,10 @@ public class EnemyDetection : MonoBehaviour
 
     public void SetCurrentTarget(EnemyScript target)
     {
-        if (combatScript.hasDamaged)
+
+        if (combatScript.isAttackingEnemy)
             return;
+
 
         Debug.Log("Set target  for " + target);
 

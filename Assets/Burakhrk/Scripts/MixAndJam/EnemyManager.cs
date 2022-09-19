@@ -173,10 +173,7 @@ public class EnemyManager : MonoBehaviour
             FindObjectOfType<EnemyDetection>().SetCurrentTarget(null);
 
       AliveEnemyCount();
-
     }
-
-
 }
 
 [System.Serializable]
