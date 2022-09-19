@@ -77,9 +77,12 @@ public class CombatScript : MonoBehaviour
     void AttackCheck()
     {
         if (lockedTarget == enemyDetection.CurrentTarget())
+        {
+            Debug.Log("This worked");
             return;
+        }
 
-    
+
         //Check to see if the detection behavior has an enemy set
         if (enemyDetection.CurrentTarget() == null)
         {
@@ -112,6 +115,7 @@ public class CombatScript : MonoBehaviour
 
     public void Attack(EnemyScript target, float distance)
     {
+        Debug.LogError(distance);
         //Types of attack animation
         attacks = new string[] { "AirKick", "AirKick2", "AirPunch", "AirKick3" };
 
@@ -125,7 +129,7 @@ public class CombatScript : MonoBehaviour
             */
         }
 
-        if (distance < 10)
+        if (distance < 7)
         {
             animationCount = (int)Mathf.Repeat((float)animationCount + 1, (float)attacks.Length);
             string attackString = isLastHit() ? attacks[Random.Range(0, attacks.Length)] : attacks[animationCount];
@@ -134,10 +138,8 @@ public class CombatScript : MonoBehaviour
         }
         else
         {
-            lockedTarget = enemyDetection.CurrentTarget();
-            AttackType("AirKick", .2f, null, 0);
+            AttackType("AirKick", .2f, null, 1);
             Debug.Log("Range attack");
-
         }
 
         //Change impulse
@@ -216,7 +218,7 @@ public class CombatScript : MonoBehaviour
             return;
         }
 
-        float duration = .2f;
+        float duration = .3f;
         animator.SetTrigger("Dodge");
         transform.DOLookAt(lockedTarget.transform.position, .2f);
         transform.DOMove(transform.position + lockedTarget.transform.forward, duration);
@@ -322,7 +324,12 @@ public class CombatScript : MonoBehaviour
     {
         CounterCheck();
     }
-
+    public void Attack()
+    {
+        hasDamaged = false;
+        // Debug.Log("Attack triggered");
+        AttackCheck();
+    }
     public void OnAttack()
     {
         if (!OnBattle)
@@ -331,9 +338,7 @@ public class CombatScript : MonoBehaviour
         if (isAttackingEnemy)
             return;
 
-        hasDamaged = false;
-       // Debug.Log("Attack triggered");
-      AttackCheck();
+      
     }
 
     #endregion

@@ -61,7 +61,7 @@ public class EnemyDetection : MonoBehaviour
         Debug.Log("Set target  for " + target);
 
         currentTarget = target;
-        combatScript.OnAttack();
+        combatScript.Attack();
         
     }
 
