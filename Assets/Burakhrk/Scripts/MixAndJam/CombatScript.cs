@@ -238,7 +238,6 @@ public class CombatScript : MonoBehaviour
        
         if (lockedTarget == null || enemyManager.AliveEnemyCount() == 0)
             return;
-        Debug.LogError("Hþit event");
         OnHit.Invoke(lockedTarget);
         enemyDetection.CurrentTarget().OnPlayerHitBurak();
         //Polish
