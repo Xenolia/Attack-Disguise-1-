@@ -1199,7 +1199,7 @@ MonoBehaviour:
   OnBattle: 0
   buttonCanvas: {fileID: 68849308660390936}
   health: 3
-  retreatDistance: 2
+  retreatDistance: 4
   isPreparingAttack: 0
   isMoving: 0
   isRetreating: 0
@@ -1762,31 +1762,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.98
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.66400826
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.74772525
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -96.787
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4769419065764476, guid: 9747e55cc13229f45bfee75afeaa540c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

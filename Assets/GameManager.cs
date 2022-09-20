@@ -9,5 +9,20 @@ public class GameManager : MonoBehaviour
     {
         AudioListener.volume = 0;
     }
+    public void LevelWin()
+    {
+
+    }
+    public void LevelFail()
+    {
+
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            LevelFail();  
+        }
+    }
 }
 

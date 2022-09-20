@@ -8,7 +8,7 @@ public class CombatScript : MonoBehaviour
 {
     EventBus eventBus;
     public bool OnBattle=false;
-
+    public int Health;
     private EnemyManager enemyManager;
     private EnemyDetection enemyDetection;
     private MovementInput movementInput;
@@ -23,9 +23,8 @@ public class CombatScript : MonoBehaviour
 
     [Header("States")]
     public bool isAttackingEnemy = false;
-    public bool hasDamaged = true;
     public bool isCountering = false;
-
+    public bool isDead=false;
     [Header("Public References")]
     [SerializeField] private Transform punchPosition;
     [SerializeField] private ParticleSystemScript punchParticle;
@@ -71,40 +70,23 @@ public class CombatScript : MonoBehaviour
     }
     private void LateUpdate()
     {
+
         lockedTarget = enemyDetection.CurrentTarget();
     }
     //This function gets called whenever the player inputs the punch action
     void AttackCheck()
     {
-        if (lockedTarget == enemyDetection.CurrentTarget())
-        {
-            Debug.Log("This worked");
-            return;
-        }
-
-
+        lockedTarget = enemyDetection.CurrentTarget();
         //Check to see if the detection behavior has an enemy set
         if (enemyDetection.CurrentTarget() == null)
         {
-            Debug.Log("EnemyNull");
-            return;
-
-
             if (enemyManager.AliveEnemyCount() == 0)
             {
                // Attack(null, 0);
                 return;
             }
-            else
-            {
-                lockedTarget = enemyDetection.CurrentTarget();
-            }
         }
-
-        //If the player is moving the movement input, use the "directional" detection to determine the enemy
-        if (enemyDetection.InputMagnitude() > .2f)
-            lockedTarget = enemyDetection.CurrentTarget();
-
+     
         //Extra check to see if the locked target was set
         if(lockedTarget == null)
             lockedTarget = enemyDetection.CurrentTarget();
@@ -115,8 +97,7 @@ public class CombatScript : MonoBehaviour
 
     public void Attack(EnemyScript target, float distance)
     {
-        Debug.LogError(distance);
-        //Types of attack animation
+         //Types of attack animation
         attacks = new string[] { "AirKick", "AirKick2", "AirPunch", "AirKick3" };
 
         //Attack nothing in case target is null
@@ -129,7 +110,7 @@ public class CombatScript : MonoBehaviour
             */
         }
 
-        if (distance < 7)
+        if (distance < 3)
         {
             animationCount = (int)Mathf.Repeat((float)animationCount + 1, (float)attacks.Length);
             string attackString = isLastHit() ? attacks[Random.Range(0, attacks.Length)] : attacks[animationCount];
@@ -138,7 +119,7 @@ public class CombatScript : MonoBehaviour
         }
         else
         {
-            AttackType("AirKick", .2f, null, 1);
+            AttackType("AirKick", .5f, lockedTarget, 0.75f);
             Debug.Log("Range attack");
         }
 
@@ -254,11 +235,12 @@ public class CombatScript : MonoBehaviour
 
     public void HitEvent()
     {
+       
         if (lockedTarget == null || enemyManager.AliveEnemyCount() == 0)
             return;
+        Debug.LogError("Hþit event");
         OnHit.Invoke(lockedTarget);
         enemyDetection.CurrentTarget().OnPlayerHitBurak();
-        enemyDetection.SetCurrentTarget(null);
         //Polish
         punchParticle.PlayParticleAtPosition(punchPosition.position);
     }
@@ -275,10 +257,22 @@ public class CombatScript : MonoBehaviour
         {
             movementInput.enabled = false;
             yield return new WaitForSeconds(.5f);
-            hasDamaged = true;
             movementInput.enabled = true;
             LerpCharacterAcceleration();
+            HealthCheck();
         }
+    }
+    void HealthCheck()
+    {
+        Health--;
+        if(Health<=0)
+        {
+            Dead();
+        }
+    }
+    void Dead()
+    {
+        eventBus.gameObject.GetComponent<GameManager>().LevelFail();
     }
 
     EnemyScript ClosestCounterEnemy()
@@ -326,7 +320,6 @@ public class CombatScript : MonoBehaviour
     }
     public void Attack()
     {
-        hasDamaged = false;
         // Debug.Log("Attack triggered");
         AttackCheck();
     }
