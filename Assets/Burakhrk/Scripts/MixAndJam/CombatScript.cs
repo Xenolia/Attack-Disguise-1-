@@ -251,7 +251,7 @@ public class CombatScript : MonoBehaviour
         if (damageCoroutine != null)
             StopCoroutine(damageCoroutine);
         damageCoroutine = StartCoroutine(DamageCoroutine());
-
+         
         IEnumerator DamageCoroutine()
         {
             movementInput.enabled = false;
@@ -271,6 +271,7 @@ public class CombatScript : MonoBehaviour
     }
     void Dead()
     {
+        animator.SetTrigger("Death");
         eventBus.gameObject.GetComponent<GameManager>().LevelFail();
     }
 

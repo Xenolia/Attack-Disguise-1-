@@ -318,6 +318,9 @@ public class EnemyScript : MonoBehaviour
 
     private void Attack()
     {
+        if (playerCombat.isDead)
+            return;
+
         transform.DOMove(transform.position + (transform.forward / 1), .5f);
         animator.SetTrigger("AirPunch");
     }

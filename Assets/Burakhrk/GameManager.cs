@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    [SerializeField] GameObject disablePanel;
     private void Awake()
     {
         AudioListener.volume = 0;
@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     }
     public void LevelFail()
     {
-
+        disablePanel.SetActive(true);
     }
+   
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.R))
