@@ -155,7 +155,7 @@ public class CombatScript : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             movementInput.enabled = true;
             LerpCharacterAcceleration();
-            Debug.Log(" attack done");
+            Debug.Log("attack done");
 
         }
 
