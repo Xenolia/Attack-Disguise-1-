@@ -58,7 +58,7 @@ public class AutoAttack : MonoBehaviour
         if (target == null)
             return;
 
-        target.StopMoving();
+        target.DoIdle();
         MoveTorwardsTarget(target, movementDuration);
 
         IEnumerator AttackCoroutine(float duration)
