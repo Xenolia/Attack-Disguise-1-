@@ -72,7 +72,6 @@ public class MovementInput : MonoBehaviour
             blockRotationPlayer = false;
 
         }
-        // stop code  here 
 
         InputMagnitude();
 
