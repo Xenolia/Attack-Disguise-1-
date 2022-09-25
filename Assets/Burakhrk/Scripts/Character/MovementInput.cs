@@ -58,9 +58,23 @@ public class MovementInput : MonoBehaviour
 
 	void Update()
 	{
-		if(Input.GetMouseButton(0))
-			GetInput();
-		InputMagnitude();
+        if (Input.GetMouseButton(0))
+        {
+            GetInput();
+			PlayerMoveAndRotation();
+        }
+        else
+        {
+			moveAxis.x = 0;
+			moveAxis.y = 0;
+			blockRotationPlayer = true;
+            PlayerMoveAndRotation();
+            blockRotationPlayer = false;
+
+        }
+        // stop code  here 
+
+        InputMagnitude();
 
 		isGrounded = controller.isGrounded;
 
