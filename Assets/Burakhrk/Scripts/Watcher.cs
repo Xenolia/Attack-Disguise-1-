@@ -15,13 +15,15 @@ public class Watcher : EnemyAI
     public bool isTarget = false;
 
     private Vector3 firstPos;
-     private void Awake()
+    private Vector3 targetPos;
+
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         firstPos = transform.position;
-        lastKnownPos = firstPos;
-    }
+        targetPos = firstPos;
+     }
     private Vector3 lastMove;
 
     internal override void DoPatrol()
@@ -29,24 +31,27 @@ public class Watcher : EnemyAI
         if (isDead||isTarget)
             return;
 
-        if ((rb.position - lastKnownPos).magnitude > 0.5)
+        if ((rb.position - targetPos).magnitude >= 0.5f)
         {
-            MoveTo(lastKnownPos);
+            MoveTo(targetPos);
+ 
+            /*
             if ((rb.position - lastMove).magnitude < 0.03) // We hit a wall
             {
                 lastKnownPos = transform.position - transform.forward; // turn back
                 Debug.Log("Watcher turn back");
             }
+            */
         }
         else
         {
-             Debug.Log("Watcher random walk");
+            targetPos=(firstPos + new Vector3(Random.Range(-range, range), 0, 0));
 
             // Reached last known position, trying random walk.
             lineOfSight.SetMaterial(unseenMaterial);
-            lastKnownPos = firstPos + new Vector3(Random.Range(-range, range), 0, Random.Range(-range, range));
+          //  lastKnownPos = firstPos + new Vector3(Random.Range(-range, range), 0, firstPos.z);
         }
-        lastMove = rb.position;
+       // lastMove = rb.position;
     }
 
     internal override void DoIdle()
@@ -127,6 +132,8 @@ public class Watcher : EnemyAI
     }
     void DeadSituation()
     {
+         CharacterController character = GetComponent<CharacterController>();
+        character.enabled = false;
          lineOfSight.gameObject.SetActive(false);
     }
 }

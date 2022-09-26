@@ -36,8 +36,6 @@ public abstract class EnemyAI : MonoBehaviour
             case State.Patrol:
                 if (lineOfSight.visibleTargets.Count > 0) // I saw the player, Start following him 
                     currentState = State.Follow;
-                else if ((Time.time - lastKnownTime) > 20) // It has been 20 seconds since we saw the player, switching to idle.
-                    currentState = State.Idle;
                 else
                     DoPatrol();
                 break;

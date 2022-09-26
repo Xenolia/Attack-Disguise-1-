@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DetectorPlayer : MonoBehaviour
 {
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy")&& other.gameObject.GetComponent<Watcher>())

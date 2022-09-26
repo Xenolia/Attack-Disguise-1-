@@ -79,7 +79,7 @@ public class AutoAttack : MonoBehaviour
 
         IEnumerator AttackCoroutine(float duration)
         {
-            yield return new WaitForSeconds(duration+0.1f);
+            yield return new WaitForSeconds(duration-0.1f);
              AttackEnd();
         }
     }

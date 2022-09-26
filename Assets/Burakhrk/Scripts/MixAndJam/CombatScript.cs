@@ -126,6 +126,17 @@ public class CombatScript : MonoBehaviour
         //Change impulse
         impulseSource.m_ImpulseDefinition.m_AmplitudeGain = Mathf.Max(3, 1 * distance);
     }
+    void AttackStart()
+    {
+        movementInput.acceleration = 0;
+        isAttackingEnemy = true;
+        movementInput.enabled = false;
+        lockedTarget.GettingAttacked();
+     }
+    void AttackEnd()
+    {
+        movementInput.enabled = true;
+    }
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)
     {
@@ -147,14 +158,13 @@ public class CombatScript : MonoBehaviour
 
         IEnumerator AttackCoroutine(float duration)
         {
-            movementInput.acceleration = 0;
-            isAttackingEnemy = true;
-             movementInput.enabled = false;
+            AttackStart();
+           
             yield return new WaitForSeconds(duration);
             isAttackingEnemy = false;
             yield return new WaitForSeconds(0.5f);
-            movementInput.enabled = true;
- 
+           
+            AttackEnd();
             LerpCharacterAcceleration();
             Debug.Log("attack done");
 

@@ -9,6 +9,7 @@ public class EnemyScript : MonoBehaviour
     EventBus eventBus;
     public bool OnBattle=false;
     public GameObject buttonCanvas;
+    public bool isTarget=false;
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
@@ -109,6 +110,7 @@ public class EnemyScript : MonoBehaviour
             transform.LookAt(new Vector3(playerCombat.transform.position.x, transform.position.y, playerCombat.transform.position.z));
 
             //Only moves if the direction is set
+            if(!isTarget)
             MoveEnemy(moveDirection);
         }
        
@@ -194,7 +196,11 @@ public class EnemyScript : MonoBehaviour
             StopMoving();
         }
     }
-
+   public void GettingAttacked()
+    {
+        isTarget = true;
+        StopMoving();
+    }
     void Death()
     {
         StopEnemyCoroutines();
