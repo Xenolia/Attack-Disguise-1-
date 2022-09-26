@@ -8,6 +8,7 @@ public class DetectorPlayer : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy")&& other.gameObject.GetComponent<Watcher>())
         {
+            if(other.gameObject.GetComponent<Watcher>().isDead==false)
             GetComponentInParent < AutoAttack>().AttackCheck(other.GetComponent<Watcher>());
         }
     }

@@ -10,8 +10,8 @@ public class Watcher : EnemyAI
     private Rigidbody rb;
     public float movementSpeed = 3f;
     public Material seenMaterial, unseenMaterial;
-    
-    private void Awake()
+    public bool isDead = false;
+     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -21,14 +21,22 @@ public class Watcher : EnemyAI
 
     internal override void DoPatrol()
     {
+        if (isDead)
+            return;
+
         if ((rb.position - lastKnownPos).magnitude > 0.5)
         {
             MoveTo(lastKnownPos);
             if ((rb.position - lastMove).magnitude < 0.03) // We hit a wall
+            {
                 lastKnownPos = transform.position - transform.forward; // turn back
+                Debug.Log("Watcher turn back");
+            }
         }
         else
         {
+            Debug.Log("Watcher random walk");
+
             // Reached last known position, trying random walk.
             lineOfSight.SetMaterial(unseenMaterial);
             lastKnownPos = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
@@ -38,13 +46,19 @@ public class Watcher : EnemyAI
 
     internal override void DoIdle()
     {
+        if (isDead)
+            return;
+
         lineOfSight.SetMaterial(unseenMaterial);
-        SetAnim(false);
+        SetAnim(false,false);
         return;
     }
 
     internal override void DoFollow()
     {
+        if (isDead)
+            return;
+
         if (lineOfSight.visibleTargets.Count == 0)
             return;
         lineOfSight.SetMaterial(seenMaterial);
@@ -55,21 +69,37 @@ public class Watcher : EnemyAI
 
     internal override void DoAttack()
     {
+        if (isDead)
+            return;
+
+        SetAnim(false,false);
+
         Debug.Log("Pew Pew!");
     }
 
     void MoveTo(Vector3 pos)
     {
-        SetAnim(true);
+        if (isDead)
+            return;
+
+        SetAnim(true,false);
         Vector3 delta = (pos - transform.position).normalized;
         rb.MoveRotation(Quaternion.Slerp(rb.rotation, Quaternion.LookRotation(delta),
             Time.fixedDeltaTime * movementSpeed));
         rb.MovePosition(Vector3.Lerp(rb.position, rb.position + delta, Time.fixedDeltaTime * movementSpeed));
     }
 
-    void SetAnim(bool isMoving)
+    void SetAnim(bool isMoving, bool isDeadAnim)
     {
-        if(isMoving)
+        if (isDeadAnim)
+        {
+            animator.SetTrigger("Death");
+            return;
+        }
+        if (isDead)
+            return;
+
+        if (isMoving)
        animator.SetFloat("InputMagnitude",0.55f);
        else
             animator.SetFloat("InputMagnitude", 0);
@@ -77,6 +107,13 @@ public class Watcher : EnemyAI
     
     public void TakeDamage()
     {
-
+        SetAnim(false, true);
+        isDead = true;
+        Debug.Log("watcher dead");
+        DeadSituation();
+    }
+    void DeadSituation()
+    {
+         lineOfSight.gameObject.SetActive(false);
     }
 }

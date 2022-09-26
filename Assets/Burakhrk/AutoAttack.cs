@@ -27,10 +27,11 @@ public class AutoAttack : MonoBehaviour
     }
     public void AttackCheck(Watcher watcher)
     {
+        Debug.Log("Auto attack check");
+
         if (!readyToAttack)
             return;
         target = watcher;
-
         if (target)
             Attack();
 
@@ -82,7 +83,7 @@ public class AutoAttack : MonoBehaviour
     public void HitEvent()
     {
 
-        if (target == null)
+        if (target == null||target.isDead)
             return;
 
         target.TakeDamage();
