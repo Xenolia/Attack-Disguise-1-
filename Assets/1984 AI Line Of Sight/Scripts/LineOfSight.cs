@@ -64,8 +64,12 @@ public class LineOfSight : MonoBehaviour
                     float dstToTarget = Vector3.Distance(transform.position, target.position);
                     if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                     {
-                        visibleTargets.Add(target);
-                        Debug.Log("Target detected");
+                        if (target.gameObject.GetComponent<AutoAttack>().isVisible)
+                        {
+                            visibleTargets.Add(target);
+                            Debug.Log("Target detected");
+                        }
+       
                     }
                 }
             }

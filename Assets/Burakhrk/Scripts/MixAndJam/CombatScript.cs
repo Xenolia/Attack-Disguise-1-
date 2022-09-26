@@ -149,11 +149,12 @@ public class CombatScript : MonoBehaviour
         {
             movementInput.acceleration = 0;
             isAttackingEnemy = true;
-            movementInput.enabled = false;
+             movementInput.enabled = false;
             yield return new WaitForSeconds(duration);
             isAttackingEnemy = false;
             yield return new WaitForSeconds(0.5f);
             movementInput.enabled = true;
+ 
             LerpCharacterAcceleration();
             Debug.Log("attack done");
 

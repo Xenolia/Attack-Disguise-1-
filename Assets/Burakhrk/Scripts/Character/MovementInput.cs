@@ -26,7 +26,7 @@ public class MovementInput : MonoBehaviour
 	public float acceleration = 1;
 
 	[Header("Booleans")]
-	[SerializeField] bool blockRotationPlayer;
+	public	bool blockRotationPlayer;
 	private bool isGrounded;
 
 	private JammoActions _jummoActions;

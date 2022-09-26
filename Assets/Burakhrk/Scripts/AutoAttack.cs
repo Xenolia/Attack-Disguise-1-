@@ -6,7 +6,7 @@ using UnityEngine;
 public class AutoAttack : MonoBehaviour
 {
 
-
+    public bool isVisible = true;
     [SerializeField] bool isAttacking;
     [SerializeField] bool readyToAttack;
     [SerializeField] Watcher target;
@@ -38,8 +38,7 @@ public class AutoAttack : MonoBehaviour
     }
     public void Attack()
     {
-        isAttacking = true;
-
+        AttackStart();
         //Types of attack animation
         attacks = new string[] { "AirKick", "AirKick2", "AirPunch", "AirKick3" };
 
@@ -47,7 +46,23 @@ public class AutoAttack : MonoBehaviour
             AttackType(attackString, attackCooldown, target, .65f);
             Debug.Log("Close attack");
     }
+    void AttackStart()
+    {
+        Watcher watcher = target.GetComponent<Watcher>();
+        watcher.isTarget = true;
+        watcher.DoIdle();
+        isAttacking = true;
+        isVisible = false;
+        GameManager.Instance.EnableCanvas();
 
+    }
+    void AttackEnd()
+    {
+        GameManager.Instance.DisableCanvas();
+        isAttacking = false;
+        isVisible = true;
+        Debug.Log("attack done");
+    }
     void AttackType(string attackTrigger, float cooldown, Watcher target, float movementDuration)
     {
         animator.SetTrigger(attackTrigger);
@@ -64,13 +79,8 @@ public class AutoAttack : MonoBehaviour
 
         IEnumerator AttackCoroutine(float duration)
         {
-            
-            
-            yield return new WaitForSeconds(duration);
-            yield return new WaitForSeconds(0.5f);
-            isAttacking = false;
-            Debug.Log("attack done");
-
+            yield return new WaitForSeconds(duration+0.1f);
+             AttackEnd();
         }
     }
 

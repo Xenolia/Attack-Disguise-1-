@@ -9,19 +9,24 @@ public class Watcher : EnemyAI
     private Animator animator;
     private Rigidbody rb;
     public float movementSpeed = 3f;
+    [SerializeField] float range=2;
     public Material seenMaterial, unseenMaterial;
     public bool isDead = false;
+    public bool isTarget = false;
+
+    private Vector3 firstPos;
      private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-
+        firstPos = transform.position;
+        lastKnownPos = firstPos;
     }
     private Vector3 lastMove;
 
     internal override void DoPatrol()
     {
-        if (isDead)
+        if (isDead||isTarget)
             return;
 
         if ((rb.position - lastKnownPos).magnitude > 0.5)
@@ -35,11 +40,11 @@ public class Watcher : EnemyAI
         }
         else
         {
-            Debug.Log("Watcher random walk");
+             Debug.Log("Watcher random walk");
 
             // Reached last known position, trying random walk.
             lineOfSight.SetMaterial(unseenMaterial);
-            lastKnownPos = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+            lastKnownPos = firstPos + new Vector3(Random.Range(-range, range), 0, Random.Range(-range, range));
         }
         lastMove = rb.position;
     }
@@ -56,12 +61,16 @@ public class Watcher : EnemyAI
 
     internal override void DoFollow()
     {
-        if (isDead)
+        if (isDead || isTarget)
             return;
 
         if (lineOfSight.visibleTargets.Count == 0)
             return;
         lineOfSight.SetMaterial(seenMaterial);
+        lastKnownPos = lineOfSight.visibleTargets[0].position;
+        lastKnownTime = Time.time;
+        PlayerSeen();
+        return;
         MoveTo(lineOfSight.visibleTargets[0].position); // move towards target
         lastKnownPos = lineOfSight.visibleTargets[0].position;
         lastKnownTime = Time.time;
@@ -69,14 +78,18 @@ public class Watcher : EnemyAI
 
     internal override void DoAttack()
     {
-        if (isDead)
+        if (isDead || isTarget)
             return;
 
         SetAnim(false,false);
 
         Debug.Log("Pew Pew!");
     }
-
+    void PlayerSeen()
+    {
+        Debug.LogError(transform.name);
+        //GameManager.Instance.LevelFail();
+    }
     void MoveTo(Vector3 pos)
     {
         if (isDead)
@@ -109,7 +122,7 @@ public class Watcher : EnemyAI
     {
         SetAnim(false, true);
         isDead = true;
-        Debug.Log("watcher dead");
+         Debug.Log("watcher dead");
         DeadSituation();
     }
     void DeadSituation()

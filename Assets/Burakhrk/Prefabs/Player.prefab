@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 1558592663}
   - component: {fileID: 1558592662}
   - component: {fileID: 1558592661}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: AutoDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1558592661
 MonoBehaviour:
@@ -547,10 +547,10 @@ MonoBehaviour:
   OnBattle: 0
   moveAxis: {x: 0, y: 0}
   allowMovement: 1
-  movementSpeed: 0.7
+  movementSpeed: 5
   rotationSpeed: 100
   fallSpeed: 0.2
-  acceleration: 10
+  acceleration: 1
   blockRotationPlayer: 0
 --- !u!114 &6109414691055030766
 MonoBehaviour:
@@ -647,11 +647,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06405f236d94545dabf4304a72c87ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isVisible: 1
   isAttacking: 0
-  readyToAttack: 0
+  readyToAttack: 1
   target: {fileID: 0}
-  attackCooldown: 0
-  punchPosition: {fileID: 0}
+  attackCooldown: 1.5
+  punchPosition: {fileID: 1507721247}
   punchParticle: {fileID: 0}
 --- !u!1 &6260814378528525445
 GameObject:
