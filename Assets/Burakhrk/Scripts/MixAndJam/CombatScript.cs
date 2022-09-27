@@ -28,6 +28,8 @@ public class CombatScript : MonoBehaviour
     [Header("Public References")]
     [SerializeField] private Transform punchPosition;
     [SerializeField] private ParticleSystemScript punchParticle;
+    [SerializeField] private Transform takeDamagePos;
+    [SerializeField] private GameObject takeDamageParticle;
     [SerializeField] private GameObject lastHitCamera;
     [SerializeField] private Transform lastHitFocusObject;
 
@@ -137,9 +139,9 @@ public class CombatScript : MonoBehaviour
      }
     void AttackEnd()
     {
-        movementInput.enabled = true;
+         movementInput.enabled = true;
         GameManager.Instance.DisableCanvas();
-
+        enemyManager.StartAI();
     }
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)
@@ -185,10 +187,11 @@ public class CombatScript : MonoBehaviour
 
     void MoveTorwardsTarget(EnemyScript target, float duration)
     {
-        Debug.LogError(target);
-        OnTrajectory.Invoke(target) ;
-        transform.DOLookAt(target.transform.position, .2f);
+         OnTrajectory.Invoke(target) ;
+        Vector3 targetPos=target.transform.position;
+        transform.DOLookAt(targetPos, .2f);
         transform.DOMove(TargetOffset(target.transform), duration);
+       
     }
 
     void CounterCheck()
@@ -198,8 +201,7 @@ public class CombatScript : MonoBehaviour
         if (isCountering || isAttackingEnemy || !enemyManager.AnEnemyIsPreparingAttack())
             return;
         if (enemyDetection.CurrentTarget() == null)
-            Debug.LogError("asdasd");
-
+ 
         lockedTarget = enemyDetection.CurrentTarget();
         OnCounterAttack.Invoke(lockedTarget);
 
@@ -267,15 +269,19 @@ public class CombatScript : MonoBehaviour
         IEnumerator DamageCoroutine()
         {
             movementInput.enabled = false;
-            yield return new WaitForSeconds(.5f);
+            takeDamageParticle.transform.position = takeDamagePos.transform.position;
+            takeDamageParticle.GetComponent<ParticleSystem>().Play();
+            yield return new WaitForSeconds(.2f);
             movementInput.enabled = true;
             LerpCharacterAcceleration();
             HealthCheck();
         }
-    }
+     }
     void HealthCheck()
     {
         Health--;
+        GameManager.Instance.DisableCanvas();
+       
         if(Health<=0)
         {
             Dead();

@@ -86,8 +86,10 @@ public class AutoAttack : MonoBehaviour
 
     void MoveTorwardsTarget(Watcher target, float duration)
     {
-        transform.DOLookAt(target.transform.position, .2f);
-        transform.DOMove((target.transform.position), duration);
+        Vector3 targetPos = target.transform.position;
+       Vector3 dir = (targetPos - transform.position).normalized;
+        transform.DOLookAt(targetPos, .2f);
+        transform.DOMove((targetPos-dir), duration);
     }
 
     public void HitEvent()

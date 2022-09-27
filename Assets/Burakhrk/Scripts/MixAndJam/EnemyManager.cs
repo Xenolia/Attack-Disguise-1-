@@ -55,7 +55,7 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator AI_Loop(EnemyScript enemy)
     {
-        if (AliveEnemyCount() == 0)
+         if (AliveEnemyCount() == 0)
         {
             StopCoroutine(AI_Loop(null));
             yield break;
@@ -75,6 +75,11 @@ public class EnemyManager : MonoBehaviour
         yield return new WaitUntil(() => attackingEnemy.IsLockedTarget() == false);
         yield return new WaitUntil(() => attackingEnemy.IsStunned() == false);
 
+        foreach (var enem in enemies)
+        {
+            if (enem.IsPreparingAttack())
+                yield break;
+        }
         attackingEnemy.SetAttack();
 
         yield return new WaitUntil(() => attackingEnemy.IsPreparingAttack() == false);
@@ -89,6 +94,7 @@ public class EnemyManager : MonoBehaviour
 
     public EnemyScript RandomEnemy()
     {
+
         enemyIndexes = new List<int>();
 
         for (int i = 0; i < allEnemies.Length; i++)
@@ -103,7 +109,7 @@ public class EnemyManager : MonoBehaviour
         EnemyScript randomEnemy;
         int randomIndex = Random.Range(0, enemyIndexes.Count);
         randomEnemy = allEnemies[enemyIndexes[randomIndex]].enemyScript;
-
+ 
         return randomEnemy;
     }
 
@@ -135,6 +141,7 @@ public class EnemyManager : MonoBehaviour
             if (allEnemies[i].enemyAvailability)
                 count++;
         }
+ 
         return count;
     }
 
@@ -171,7 +178,7 @@ public class EnemyManager : MonoBehaviour
                 allEnemies[i].enemyAvailability = state;
         }
  
-      AliveEnemyCount();
+        AliveEnemyCount();
     }
 }
 

@@ -143,6 +143,8 @@ public class EnemyScript : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             isStunned = false;
         }
+        isTarget = false;
+        SetRetreat();
     }
     //Listened event from Player Animation
     void OnPlayerHit(EnemyScript target)
@@ -354,8 +356,11 @@ public class EnemyScript : MonoBehaviour
         if (isRetreating)
         {
             if (RetreatCoroutine != null)
+            {
                 StopCoroutine(RetreatCoroutine);
-        }
+                isRetreating = false;
+            }
+         }
 
         if (PrepareAttackCoroutine != null)
             StopCoroutine(PrepareAttackCoroutine);

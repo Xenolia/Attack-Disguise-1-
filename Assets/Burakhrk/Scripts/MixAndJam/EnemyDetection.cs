@@ -54,14 +54,12 @@ public class EnemyDetection : MonoBehaviour
  
     public void SetNewTarget(EnemyScript target)
     {
-        Debug.LogError(target);
-        if (combatScript.isAttackingEnemy)
+         if (combatScript.isAttackingEnemy)
             return;
 
-        Debug.Log("Set target  for " + target);
-
+ 
         currentTarget = target;
-        Debug.LogError(currentTarget + "adasd");
+        Debug.Log(currentTarget + "adasd");
             combatScript.Attack2();
 
     }

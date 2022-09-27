@@ -13,4 +13,5 @@ public class DetectorPlayer : MonoBehaviour
             GetComponentInParent < AutoAttack>().AttackCheck(other.GetComponent<Watcher>());
         }
     }
+    
 }
