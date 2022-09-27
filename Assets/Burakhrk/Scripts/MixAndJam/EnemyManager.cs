@@ -32,12 +32,14 @@ public class EnemyManager : MonoBehaviour
     }
    void EnemySetUp()
     {
+        /*
         enemyDetection = FindObjectOfType<EnemyDetection>();
 
         foreach (var item in enemies)
         {
-            item.buttonCanvas.GetComponent<Button>().onClick.AddListener(() => enemyDetection.SetCurrentTarget(item)); ;
+            item.buttonCanvas.GetComponent<Button>().onClick.AddListener(() => enemyDetection.SetNewTarget(item)); ;
         }
+        */
     }
 
     void Start()
@@ -168,10 +170,7 @@ public class EnemyManager : MonoBehaviour
             if (allEnemies[i].enemyScript == enemy)
                 allEnemies[i].enemyAvailability = state;
         }
-
-        if (FindObjectOfType<EnemyDetection>().CurrentTarget() == enemy)
-            FindObjectOfType<EnemyDetection>().SetCurrentTarget(null);
-
+ 
       AliveEnemyCount();
     }
 }

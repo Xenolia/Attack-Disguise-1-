@@ -71,13 +71,15 @@ public class CombatScript : MonoBehaviour
     private void LateUpdate()
     {
 
-        lockedTarget = enemyDetection.CurrentTarget();
+       // lockedTarget = enemyDetection.CurrentTarget();
     }
     //This function gets called whenever the player inputs the punch action
     void AttackCheck()
     {
-        lockedTarget = enemyDetection.CurrentTarget();
-        //Check to see if the detection behavior has an enemy set
+        if (isAttackingEnemy)
+            return;
+
+         //Check to see if the detection behavior has an enemy set
         if (enemyDetection.CurrentTarget() == null)
         {
             if (enemyManager.AliveEnemyCount() == 0)
@@ -88,7 +90,6 @@ public class CombatScript : MonoBehaviour
         }
      
         //Extra check to see if the locked target was set
-        if(lockedTarget == null)
             lockedTarget = enemyDetection.CurrentTarget();
 
         //AttackTarget
@@ -119,7 +120,7 @@ public class CombatScript : MonoBehaviour
         }
         else
         {
-            AttackType("AirKick", .5f, lockedTarget, 0.75f);
+            AttackType("AirKick", .5f, target, 0.75f);
             Debug.Log("Range attack");
         }
 
@@ -132,10 +133,13 @@ public class CombatScript : MonoBehaviour
         isAttackingEnemy = true;
         movementInput.enabled = false;
         lockedTarget.GettingAttacked();
+        GameManager.Instance.EnableCanvas();
      }
     void AttackEnd()
     {
         movementInput.enabled = true;
+        GameManager.Instance.DisableCanvas();
+
     }
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)
@@ -155,19 +159,13 @@ public class CombatScript : MonoBehaviour
 
         target.StopMoving();
         MoveTorwardsTarget(target, movementDuration);
-
-        IEnumerator AttackCoroutine(float duration)
+         IEnumerator AttackCoroutine(float duration)
         {
             AttackStart();
            
             yield return new WaitForSeconds(duration);
-            isAttackingEnemy = false;
-            yield return new WaitForSeconds(0.5f);
-           
-            AttackEnd();
+            isAttackingEnemy = false;           
             LerpCharacterAcceleration();
-            Debug.Log("attack done");
-
         }
 
         IEnumerator FinalBlowCoroutine()
@@ -187,7 +185,8 @@ public class CombatScript : MonoBehaviour
 
     void MoveTorwardsTarget(EnemyScript target, float duration)
     {
-        OnTrajectory.Invoke(target);
+        Debug.LogError(target);
+        OnTrajectory.Invoke(target) ;
         transform.DOLookAt(target.transform.position, .2f);
         transform.DOMove(TargetOffset(target.transform), duration);
     }
@@ -253,6 +252,8 @@ public class CombatScript : MonoBehaviour
         enemyDetection.CurrentTarget().OnPlayerHitBurak();
         //Polish
         punchParticle.PlayParticleAtPosition(punchPosition.position);
+        AttackEnd();
+
     }
 
     public void DamageEvent()
@@ -322,7 +323,11 @@ public class CombatScript : MonoBehaviour
 
         return enemyManager.AliveEnemyCount() == 1 && lockedTarget.health <= 1;
     }
-
+    public void Attack2()
+    {
+        // Debug.Log("Attack triggered");
+        AttackCheck();
+    }
     #region Input
 
     private void OnCounter()
@@ -331,6 +336,7 @@ public class CombatScript : MonoBehaviour
     }
     public void Attack()
     {
+        return;
         // Debug.Log("Attack triggered");
         AttackCheck();
     }

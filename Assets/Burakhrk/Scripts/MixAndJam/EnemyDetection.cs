@@ -51,22 +51,20 @@ public class EnemyDetection : MonoBehaviour
         return currentTarget;
     }
 
-    public void SetCurrentTarget(EnemyScript target)
+ 
+    public void SetNewTarget(EnemyScript target)
     {
-
+        Debug.LogError(target);
         if (combatScript.isAttackingEnemy)
             return;
-
 
         Debug.Log("Set target  for " + target);
 
         currentTarget = target;
+        Debug.LogError(currentTarget + "adasd");
+            combatScript.Attack2();
 
-        if(currentTarget)
-        combatScript.Attack();
-        
     }
-
     public float InputMagnitude()
     {
         return inputDirection.magnitude;

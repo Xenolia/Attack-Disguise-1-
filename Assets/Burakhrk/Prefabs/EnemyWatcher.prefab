@@ -925,7 +925,7 @@ MonoBehaviour:
   lineOfSight: {fileID: 2498689410027496191}
   currentState: 1
   attackRange: 2
-  movementSpeed: 2
+  movementSpeed: 1
   range: 4
   seenMaterial: {fileID: 2100000, guid: 9335f5c16e82e4195a2a164e5222bdf3, type: 2}
   unseenMaterial: {fileID: 2100000, guid: 652e135e25fef4c08b91e013322bf468, type: 2}
