@@ -31,6 +31,8 @@ public class AutoAttack : MonoBehaviour
 
         if (!readyToAttack)
             return;
+        GameManager.Instance.EnableCanvas();
+
         target = watcher;
         if (target)
             Attack();
@@ -48,12 +50,10 @@ public class AutoAttack : MonoBehaviour
     }
     void AttackStart()
     {
-        Watcher watcher = target.GetComponent<Watcher>();
-        watcher.isTarget = true;
-        watcher.DoIdle();
+         target.isTarget = true;
+        target.DoIdle();
         isAttacking = true;
         isVisible = false;
-        GameManager.Instance.EnableCanvas();
 
     }
     void AttackEnd()
