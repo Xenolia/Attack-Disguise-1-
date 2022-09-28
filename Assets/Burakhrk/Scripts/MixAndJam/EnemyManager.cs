@@ -167,6 +167,10 @@ public class EnemyManager : MonoBehaviour
                 count++;
         }
         aliveEnemyCount = count;
+        if (aliveEnemyCount == 0)
+        {
+            GameManager.Instance.gameObject.GetComponent<BattleManager>().BattleFinished();
+        }
         return count;
     }
 

@@ -6,7 +6,7 @@ public class MovementInput : MonoBehaviour
 {
     BattleManager battleManager;
     public bool OnBattle = false;
-
+	private float firstSpeed;
 
     private Animator anim;
 	private Camera cam;
@@ -30,14 +30,22 @@ public class MovementInput : MonoBehaviour
 	private bool isGrounded;
 
 	private JammoActions _jummoActions;
+    private void Awake()
+    {
+		firstSpeed = movementSpeed;
+    }
     private void OnEnable()
     {
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         battleManager.OnBattle += OnBattleBehaviour;
+        battleManager.OnBattleFinished += OnBattleFinished;
+
     }
     private void OnDisable()
     {
         battleManager.OnBattle -= OnBattleBehaviour;
+        battleManager.OnBattleFinished -= OnBattleFinished;
+
         anim.SetFloat("InputMagnitude", 0);
     }
     void OnBattleBehaviour()
@@ -45,6 +53,12 @@ public class MovementInput : MonoBehaviour
         OnBattle = true;
         anim.SetFloat("InputMagnitude", 0);
 		movementSpeed = 0;
+    }
+	void OnBattleFinished()
+    {
+        OnBattle = false;
+        anim.SetFloat("InputMagnitude", 0);
+        movementSpeed = firstSpeed;
     }
     void Start()
 	{

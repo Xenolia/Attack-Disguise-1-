@@ -5,6 +5,8 @@ using Unity;
 public  class BattleManager :MonoBehaviour
 {
    public UnityAction  OnBattle;
+    public UnityAction OnBattleFinished;
+
     public bool Trigger = false;
     public GameObject ScreenStick;
 
@@ -14,5 +16,13 @@ public  class BattleManager :MonoBehaviour
         ScreenStick.SetActive(false);
         Trigger = true;
         Debug.Log("BattleTime");
+    }
+    public void BattleFinished()
+    {
+        OnBattleFinished?.Invoke();
+
+        Debug.LogError("Battle end");
+
+        ScreenStick.SetActive(true);
     }
 }
