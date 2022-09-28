@@ -254,6 +254,7 @@ public class CombatScript : MonoBehaviour
         enemyDetection.CurrentTarget().OnPlayerHitBurak();
         //Polish
         punchParticle.PlayParticleAtPosition(punchPosition.position);
+        Debug.LogError("hİT PARTİCLE");
         AttackEnd();
 
     }
@@ -269,23 +270,30 @@ public class CombatScript : MonoBehaviour
         IEnumerator DamageCoroutine()
         {
             movementInput.enabled = false;
-            takeDamageParticle.transform.position = takeDamagePos.transform.position;
-            takeDamageParticle.GetComponent<ParticleSystem>().Play();
+
+            HealthCheck();
+
             yield return new WaitForSeconds(.2f);
             movementInput.enabled = true;
             LerpCharacterAcceleration();
-            HealthCheck();
         }
      }
     void HealthCheck()
     {
+
         Health--;
         GameManager.Instance.DisableCanvas();
-       
-        if(Health<=0)
+
+        Debug.LogError("take daamage particle");
+
+        takeDamageParticle.transform.position = takeDamagePos.transform.position;
+        takeDamageParticle.GetComponent<ParticleSystem>().Play();
+
+        if (Health<=0)
         {
             Dead();
         }
+
     }
     void Dead()
     {
