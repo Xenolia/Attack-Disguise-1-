@@ -9,6 +9,8 @@ public class Watcher : EnemyAI
     private Animator animator;
     private Rigidbody rb;
     public float movementSpeed = 3f;
+    public enum MovementDirection {RightLeft, UpDown };
+   public MovementDirection movementDirection;
     [SerializeField] float range=2;
     public Material seenMaterial, unseenMaterial;
     public bool isDead = false;
@@ -45,8 +47,11 @@ public class Watcher : EnemyAI
         }
         else
         {
+            if(movementDirection==MovementDirection.RightLeft)
             targetPos=(firstPos + new Vector3(Random.Range(-range, range), 0, 0));
 
+            if (movementDirection == MovementDirection.UpDown)
+                targetPos = (firstPos + new Vector3(0, 0, Random.Range(-range, range)));
             // Reached last known position, trying random walk.
             lineOfSight.SetMaterial(unseenMaterial);
           //  lastKnownPos = firstPos + new Vector3(Random.Range(-range, range), 0, firstPos.z);
