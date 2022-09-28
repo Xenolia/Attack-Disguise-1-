@@ -798,18 +798,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6109414691055030765}
     m_Modifications:
-    - target: {fileID: 1555771135226214, guid: bae34dde1e1d6f943be9429ba898281e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1576173721941758, guid: bae34dde1e1d6f943be9429ba898281e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1797900131258570, guid: bae34dde1e1d6f943be9429ba898281e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1949876679914232, guid: bae34dde1e1d6f943be9429ba898281e, type: 3}
       propertyPath: m_Name
       value: Toon punch
@@ -856,46 +844,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4751764676436592, guid: bae34dde1e1d6f943be9429ba898281e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198028855084420732, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198090411509411890, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198332286089664606, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198477413171663716, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198490632160685768, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198604748595774880, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198639577393867062, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198744482806568492, guid: bae34dde1e1d6f943be9429ba898281e,
-        type: 3}
-      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

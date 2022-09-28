@@ -50,6 +50,7 @@ public class AutoAttack : MonoBehaviour
     }
     void AttackStart()
     {
+        GetComponent<MovementInput>().enabled = false;
          target.isTarget = true;
         target.DoIdle();
         isAttacking = true;
@@ -58,6 +59,8 @@ public class AutoAttack : MonoBehaviour
     }
     void AttackEnd()
     {
+        GetComponent<MovementInput>().enabled = true;
+
         GameManager.Instance.DisableCanvas();
         isAttacking = false;
         isVisible = true;

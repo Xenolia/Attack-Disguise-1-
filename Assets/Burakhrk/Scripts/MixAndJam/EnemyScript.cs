@@ -50,16 +50,23 @@ public class EnemyScript : MonoBehaviour
     private void OnEnable()
     {
         battleManager.OnBattle += OnBattleBehaviour;
+        battleManager.OnBattleFinished += OnBattleFinished;
+
     }
     private void OnDisable()
     {
         battleManager.OnBattle -= OnBattleBehaviour;
+        battleManager.OnBattleFinished -= OnBattleFinished;
 
     }
     void OnBattleBehaviour()
     {
         buttonCanvas.SetActive(true);
         OnBattle = true;
+    }
+    void OnBattleFinished()
+    {
+        OnBattle = false;
     }
     void Start()
     {
@@ -206,7 +213,8 @@ public class EnemyScript : MonoBehaviour
     void Death()
     {
         StopEnemyCoroutines();
-        buttonCanvas.SetActive(false);
+        if (GetComponentInChildren<Canvas>())
+            GetComponentInChildren<Canvas>().gameObject.SetActive(false);
         characterController.enabled = false;
         animator.SetTrigger("Death");
         enemyManager.SetEnemyAvailiability(this, false);

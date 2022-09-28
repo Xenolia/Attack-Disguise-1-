@@ -59,8 +59,7 @@ public class EnemyDetection : MonoBehaviour
 
  
         currentTarget = target;
-        Debug.Log(currentTarget + "adasd");
-            combatScript.Attack2();
+             combatScript.Attack2();
 
     }
     public float InputMagnitude()

@@ -17,6 +17,7 @@ public class LevelEndManager : MonoBehaviour
     {
         SkinnedMeshRenderer safeRenderer= safe.GetComponent<SkinnedMeshRenderer>();
          DOTween.To(() => myFloat, x => myFloat = x, 52, 1);
+       // DOVirtual.Float(0, movementInput.firstAcceleration, 0.4f, ((acceleration) => movementInput.acceleration = acceleration));
 
         safeRenderer.SetBlendShapeWeight(0,100);
     }

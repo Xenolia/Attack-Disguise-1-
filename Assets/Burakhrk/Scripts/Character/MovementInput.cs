@@ -7,6 +7,7 @@ public class MovementInput : MonoBehaviour
     BattleManager battleManager;
     public bool OnBattle = false;
 	private float firstSpeed;
+    public float firstAcceleration;
 
     private Animator anim;
 	private Camera cam;
@@ -33,10 +34,12 @@ public class MovementInput : MonoBehaviour
     private void Awake()
     {
 		firstSpeed = movementSpeed;
+		firstAcceleration = acceleration;
+        battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
+
     }
     private void OnEnable()
     {
-        battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         battleManager.OnBattle += OnBattleBehaviour;
         battleManager.OnBattleFinished += OnBattleFinished;
 
@@ -56,9 +59,10 @@ public class MovementInput : MonoBehaviour
     }
 	void OnBattleFinished()
     {
+		Debug.LogError("battle end for movement");
         OnBattle = false;
-        anim.SetFloat("InputMagnitude", 0);
         movementSpeed = firstSpeed;
+		acceleration = firstAcceleration;
     }
     void Start()
 	{
@@ -74,7 +78,7 @@ public class MovementInput : MonoBehaviour
 	{
         if (Input.GetMouseButton(0))
         {
-            GetInput();
+            GetInput2();
 			PlayerMoveAndRotation();
         }
         else
@@ -166,7 +170,12 @@ public class MovementInput : MonoBehaviour
 			anim.SetFloat("InputMagnitude", inputMagnitude * acceleration, .1f,Time.deltaTime);
 		}
 	}
-
+	void GetInput2()
+    {
+        var inputValues = _jummoActions.Player.Move.ReadValue<Vector2>();
+        moveAxis.x = inputValues.x;
+        moveAxis.y = inputValues.y;
+    }
 	#region Input
 
 	public void OnMove(InputValue value)
@@ -182,6 +191,7 @@ public class MovementInput : MonoBehaviour
 
 	private void GetInput()
     {
+		return;
         var inputValues = _jummoActions.Player.Move.ReadValue<Vector2>();
         moveAxis.x = inputValues.x;
         moveAxis.y = inputValues.y;

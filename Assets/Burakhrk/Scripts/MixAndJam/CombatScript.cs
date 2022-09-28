@@ -47,7 +47,11 @@ public class CombatScript : MonoBehaviour
 
     int animationCount = 0;
     string[] attacks;
+    private void Awake()
+    {
+        battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
 
+    }
     void Start()
     {
         enemyManager = FindObjectOfType<EnemyManager>();
@@ -58,17 +62,24 @@ public class CombatScript : MonoBehaviour
     }
     private void OnEnable()
     {
-        battleManager=GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         battleManager.OnBattle += OnBattleBehaviour;
+        battleManager.OnBattleFinished += OnBattleFinished;
+
     }
     private void OnDisable()
     {
         battleManager.OnBattle -= OnBattleBehaviour;
+        battleManager.OnBattleFinished -= OnBattleFinished;
 
     }
     void OnBattleBehaviour()
     {
         OnBattle = true;
+    }
+    void OnBattleFinished()
+    {
+        OnBattle = false;
+
     }
     private void LateUpdate()
     {
@@ -178,8 +189,7 @@ public class CombatScript : MonoBehaviour
             yield return new WaitForSecondsRealtime(2);
             lastHitCamera.SetActive(false);
             Time.timeScale = 1f;
-            Debug.Log(" attack done last");
-
+ 
         }
 
 
@@ -254,8 +264,7 @@ public class CombatScript : MonoBehaviour
         enemyDetection.CurrentTarget().OnPlayerHitBurak();
         //Polish
         punchParticle.PlayParticleAtPosition(punchPosition.position);
-        Debug.LogError("hİT PARTİCLE");
-        AttackEnd();
+         AttackEnd();
 
     }
 
@@ -284,8 +293,7 @@ public class CombatScript : MonoBehaviour
         Health--;
         GameManager.Instance.DisableCanvas();
 
-        Debug.LogError("take daamage particle");
-
+ 
         takeDamageParticle.transform.position = takeDamagePos.transform.position;
         takeDamageParticle.GetComponent<ParticleSystem>().Play();
 
@@ -327,8 +335,8 @@ public class CombatScript : MonoBehaviour
     void LerpCharacterAcceleration()
     {
         movementInput.acceleration = 0;
-        DOVirtual.Float(0, movementInput.acceleration, 0.4f, ((acceleration)=> movementInput.acceleration = acceleration));
-    }
+        DOVirtual.Float(0, movementInput.firstAcceleration, 0.4f, ((acceleration)=> movementInput.acceleration = acceleration));
+     }
 
     bool isLastHit()
     {
