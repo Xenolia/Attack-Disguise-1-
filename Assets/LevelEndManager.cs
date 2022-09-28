@@ -11,15 +11,13 @@ public class LevelEndManager : MonoBehaviour
 
     public void LevelWin()
     {
+        OpenSafe();
         GameManager.Instance.LevelWin();
     }
     void OpenSafe()
     {
         SkinnedMeshRenderer safeRenderer= safe.GetComponent<SkinnedMeshRenderer>();
-         DOTween.To(() => myFloat, x => myFloat = x, 52, 1);
-       // DOVirtual.Float(0, movementInput.firstAcceleration, 0.4f, ((acceleration) => movementInput.acceleration = acceleration));
-
-        safeRenderer.SetBlendShapeWeight(0,100);
+        DOVirtual.Float(0, safeRenderer.GetBlendShapeWeight(0), 0.4f, ((acceleration) => safeRenderer.SetBlendShapeWeight(0,acceleration)));
     }
     private void OnTriggerEnter(Collider other)
     {
