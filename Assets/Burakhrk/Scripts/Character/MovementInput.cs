@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class MovementInput : MonoBehaviour
 {
-    EventBus eventBus;
+    BattleManager battleManager;
     public bool OnBattle = false;
 
 
@@ -32,12 +32,12 @@ public class MovementInput : MonoBehaviour
 	private JammoActions _jummoActions;
     private void OnEnable()
     {
-        eventBus = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>();
-        eventBus.OnBattle += OnBattleBehaviour;
+        battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
+        battleManager.OnBattle += OnBattleBehaviour;
     }
     private void OnDisable()
     {
-        eventBus.OnBattle -= OnBattleBehaviour;
+        battleManager.OnBattle -= OnBattleBehaviour;
         anim.SetFloat("InputMagnitude", 0);
     }
     void OnBattleBehaviour()

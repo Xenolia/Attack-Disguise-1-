@@ -6,7 +6,7 @@ using Cinemachine;
 
 public class CombatScript : MonoBehaviour
 {
-    EventBus eventBus;
+    BattleManager battleManager;
     public bool OnBattle=false;
     public int Health;
     private EnemyManager enemyManager;
@@ -58,12 +58,12 @@ public class CombatScript : MonoBehaviour
     }
     private void OnEnable()
     {
-        eventBus=GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>();
-        eventBus.OnBattle += OnBattleBehaviour;
+        battleManager=GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
+        battleManager.OnBattle += OnBattleBehaviour;
     }
     private void OnDisable()
     {
-        eventBus.OnBattle -= OnBattleBehaviour;
+        battleManager.OnBattle -= OnBattleBehaviour;
 
     }
     void OnBattleBehaviour()
@@ -298,7 +298,7 @@ public class CombatScript : MonoBehaviour
     void Dead()
     {
         animator.SetTrigger("Death");
-        eventBus.gameObject.GetComponent<GameManager>().LevelFail();
+        battleManager.gameObject.GetComponent<GameManager>().LevelFail();
     }
 
     EnemyScript ClosestCounterEnemy()

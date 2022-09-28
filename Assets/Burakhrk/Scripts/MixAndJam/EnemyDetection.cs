@@ -80,7 +80,7 @@ public class EnemyDetection : MonoBehaviour
     {
         if (other.gameObject.GetComponent<EnemyScript>()&&!currentTarget)
         {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>().OnBattleInvoke();
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>().OnBattleInvoke();
         }
     }
 }

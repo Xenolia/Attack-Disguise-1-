@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using Unity;
-public  class EventBus :MonoBehaviour
+public  class BattleManager :MonoBehaviour
 {
    public UnityAction  OnBattle;
     public bool Trigger = false;

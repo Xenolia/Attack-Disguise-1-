@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EnemyScript : MonoBehaviour
 {
     //mechanic blend burakhrk
-    EventBus eventBus;
+    BattleManager battleManager;
     public bool OnBattle=false;
     public GameObject buttonCanvas;
     public bool isTarget=false;
@@ -45,15 +45,15 @@ public class EnemyScript : MonoBehaviour
 
     private void Awake()
     {
-        eventBus = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventBus>();
+        battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
     }
     private void OnEnable()
     {
-        eventBus.OnBattle += OnBattleBehaviour;
+        battleManager.OnBattle += OnBattleBehaviour;
     }
     private void OnDisable()
     {
-        eventBus.OnBattle -= OnBattleBehaviour;
+        battleManager.OnBattle -= OnBattleBehaviour;
 
     }
     void OnBattleBehaviour()
