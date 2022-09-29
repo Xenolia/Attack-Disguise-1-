@@ -157,13 +157,20 @@ public class CombatScript : MonoBehaviour
         lockedTarget.GettingAttacked();
         GameManager.Instance.EnableCanvas();
      }
+    IEnumerator AttackEndNumerator()
+    {
+        yield return new WaitForSeconds(0.5f);
+        movementInput.enabled = true;
+        enemyManager.StartAI();
+
+
+    }
     void AttackEnd()
     {
        
         transform.DORotate(new Vector3(0, 0, 0),0.3f);
-         movementInput.enabled = true;
         GameManager.Instance.DisableCanvas();
-        enemyManager.StartAI();
+        StartCoroutine(AttackEndNumerator());
     }
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)
@@ -279,8 +286,7 @@ public class CombatScript : MonoBehaviour
         //Polish
         punchParticle.PlayParticleAtPosition(punchPosition.position);
          AttackEnd();
-
-    }
+     }
 
     public void DamageEvent()
     {
@@ -368,6 +374,7 @@ public class CombatScript : MonoBehaviour
 
     private void OnCounter()
     {
+        Debug.LogError("Counter check");
         CounterCheck();
     }
     public void Attack()
