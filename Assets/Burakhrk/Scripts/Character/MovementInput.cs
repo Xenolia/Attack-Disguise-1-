@@ -90,7 +90,7 @@ public class MovementInput : MonoBehaviour
             blockRotationPlayer = false;
 
         }
-
+	
         InputMagnitude();
 
 		isGrounded = controller.isGrounded;
@@ -158,6 +158,7 @@ public class MovementInput : MonoBehaviour
 
 	void InputMagnitude()
 	{
+		Debug.Log("Input");
 		//Calculate the Input Magnitude
 		float inputMagnitude = new Vector2(moveAxis.x, moveAxis.y).sqrMagnitude;
 

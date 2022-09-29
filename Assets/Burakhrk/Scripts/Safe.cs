@@ -37,7 +37,7 @@ public class Safe : MonoBehaviour
         }
         yield return new WaitForSeconds(moneyExplosionDuration);
         MoneyExplosion();
-
+        GameManager.Instance.EnableCanvas();
         yield return new WaitForSeconds(2);
         WinLevelTrigger();
 

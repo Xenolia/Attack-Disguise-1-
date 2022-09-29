@@ -58,7 +58,6 @@ public class AutoAttack : MonoBehaviour
     }
      void AttackEnd()
     {
-      
         StartCoroutine(AttackNumerator());
     }
     IEnumerator AttackNumerator()
@@ -91,7 +90,6 @@ public class AutoAttack : MonoBehaviour
         IEnumerator AttackCoroutine(float duration)
         {
             yield return new WaitForSeconds(duration-0.1f);
-             AttackEnd();
         }
     }
 
@@ -111,6 +109,7 @@ public class AutoAttack : MonoBehaviour
 
         target.TakeDamage();
         //Polish
+        AttackEnd();
         punchParticle.PlayParticleAtPosition(punchPosition.position);
     }
 }

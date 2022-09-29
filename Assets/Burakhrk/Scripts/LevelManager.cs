@@ -23,6 +23,10 @@ public class LevelManager : MonoBehaviour
     }
     public void LoadLevel(int levelNo)
     {
+        foreach (var item in Levels)
+        {
+            item.SetActive(false);
+        }
         int openLevelIndex;
         openLevelIndex = ((levelNo%Levels.Length)-1);
          Levels[openLevelIndex].SetActive(true);

@@ -170,7 +170,7 @@ public class CombatScript : MonoBehaviour
     void AttackEnd()
     {
        
-        transform.DORotate(new Vector3(0, 0, 0),0.3f);
+        transform.DORotate(new Vector3(0, transform.rotation.y, transform.rotation.z),0.3f);
         GameManager.Instance.DisableCanvas();
         StartCoroutine(AttackEndNumerator());
 
