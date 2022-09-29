@@ -24,6 +24,11 @@ public class GameManager : MonoBehaviour
         AudioListener.volume = 0;
    
     }
+    private void OnEnable()
+    {
+        Time.timeScale = 1;
+    }
+ 
     public void LevelWin()
     {
         Debug.LogError("Win level");

@@ -25,18 +25,19 @@ public class LevelManager : MonoBehaviour
     {
         Levels[levelNo-1].SetActive(true);
         Debug.Log("level no  "+levelNo);
+        GetComponentInChildren<UIManager>().SetLevelText(levelNo);
     }
     public void NextLevel()
     {
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
+        SceneManager.LoadScene(0);
 
 
     }
     public void RestartLevel()
     {
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1));
-        SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
+        SceneManager.LoadScene(0);
 
     }
 }

@@ -2237,21 +2237,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   safeKapak: {fileID: 7175731093412521340}
-  moneyPrefabs:
-  - {fileID: 5788191601764878395, guid: 5cbc7608fc36040ff9794e53bf8af8f0, type: 3}
-  - {fileID: 7093058795565119117, guid: 733f563eae58e4e1b86e86d9fdf33b49, type: 3}
   safeOpenDuration: 1
-  moneyExplosionDuration: 0
+  moneyExplosionDuration: 0.1
   explosionParticles:
   - {fileID: 6645544251725850869}
-  - {fileID: 5882832474304265424}
   - {fileID: 8999036116688746552}
+  - {fileID: 5882832474304265424}
   - {fileID: 3165983565760365656}
   - {fileID: 3721741178606908146}
   - {fileID: 4530475132707442704}
   - {fileID: 439375615091630020}
   - {fileID: 7121108576888907693}
-  SafeOpenEase: 12
+  SafeOpenEase: 18
   explosionController: {fileID: 982868170178574645}
 --- !u!4 &1919884000288142526 stripped
 Transform:

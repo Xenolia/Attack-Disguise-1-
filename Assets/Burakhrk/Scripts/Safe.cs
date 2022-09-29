@@ -6,7 +6,6 @@ using System;
 public class Safe : MonoBehaviour
 {
     [SerializeField] GameObject safeKapak;
-    [SerializeField] GameObject[] moneyPrefabs; 
      [SerializeField] float safeOpenDuration;
     [SerializeField] float moneyExplosionDuration;
 

@@ -15,7 +15,7 @@ public class CombatScript : MonoBehaviour
     private MovementInput movementInput;
     private Animator animator;
     private CinemachineImpulseSource impulseSource;
-
+    private float attackEndDoubleCheckCounter;
     [Header("Target")]
    [SerializeField] private EnemyScript lockedTarget;
 
@@ -51,7 +51,7 @@ public class CombatScript : MonoBehaviour
     private void Awake()
     {
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
-
+        attackEndDoubleCheckCounter = attackCooldown+0.1f;
     }
     void Start()
     {
@@ -84,7 +84,15 @@ public class CombatScript : MonoBehaviour
     }
     private void LateUpdate()
     {
-
+        if(movementInput.enabled==false)
+        {
+            attackEndDoubleCheckCounter = attackEndDoubleCheckCounter - Time.deltaTime;
+            if(attackEndDoubleCheckCounter<=0)
+            {
+                AttackEnd();
+                attackEndDoubleCheckCounter = attackCooldown;
+            }
+        }
        // lockedTarget = enemyDetection.CurrentTarget();
     }
     //This function gets called whenever the player inputs the punch action
@@ -151,6 +159,8 @@ public class CombatScript : MonoBehaviour
      }
     void AttackEnd()
     {
+       
+        transform.DORotate(new Vector3(0, 0, 0),0.3f);
          movementInput.enabled = true;
         GameManager.Instance.DisableCanvas();
         enemyManager.StartAI();
@@ -185,6 +195,7 @@ public class CombatScript : MonoBehaviour
         IEnumerator FinalBlowCoroutine()
         {
             AttackStart();
+            yield return new WaitForSeconds(0.1f);
 
             Time.timeScale = .5f;
             lastHitCamera.SetActive(true);
