@@ -11,13 +11,13 @@ public class EnemyDetection : MonoBehaviour
 
     [SerializeField] Vector3 inputDirection;
     [SerializeField] private EnemyScript currentTarget;
-
+    BattleManager battleManager;
     public GameObject cam;
-
-    private void Start()
+     private void Start()
     {
         movementInput = GetComponentInParent<MovementInput>();
         combatScript = GetComponentInParent<CombatScript>();
+        battleManager = GameManager.Instance.GetComponent<BattleManager>();
     }
 
     private void Update()
@@ -79,7 +79,7 @@ public class EnemyDetection : MonoBehaviour
     {
         if (other.gameObject.GetComponent<EnemyScript>()&&!currentTarget)
         {
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>().OnBattleInvoke();
+            battleManager.OnBattleInvoke();
         }
     }
 }

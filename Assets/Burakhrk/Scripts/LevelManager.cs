@@ -24,8 +24,8 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(int levelNo)
     {
         int openLevelIndex;
-        openLevelIndex = ((levelNo%Levels.Length )- 1);
-        Levels[openLevelIndex].SetActive(true);
+        openLevelIndex = ((levelNo%Levels.Length)-1);
+         Levels[openLevelIndex].SetActive(true);
         Debug.Log("level no  "+levelNo);
         GetComponentInChildren<UIManager>().SetLevelText(levelNo);
     }

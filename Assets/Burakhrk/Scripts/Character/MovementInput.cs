@@ -110,8 +110,10 @@ public class MovementInput : MonoBehaviour
 	{
 		if (!allowMovement)
 			return;
+		if(anim.speed!=1)
+        anim.speed = 1;
 
-		var camera = Camera.main;
+        var camera = Camera.main;
 		var forward = cam.transform.forward;
 		var right = cam.transform.right;
 

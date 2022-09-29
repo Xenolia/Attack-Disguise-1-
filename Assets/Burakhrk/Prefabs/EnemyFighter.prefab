@@ -1200,8 +1200,8 @@ MonoBehaviour:
   OnBattle: 0
   buttonCanvas: {fileID: 68849308660390936}
   isTarget: 0
-  health: 3
-  retreatDistance: 4
+  health: 2
+  retreatDistance: 3
   isPreparingAttack: 0
   isMoving: 0
   isRetreating: 0

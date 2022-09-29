@@ -137,6 +137,7 @@ public class Watcher : EnemyAI
     }
     void DeadSituation()
     {
+        GetComponent<CapsuleCollider>().enabled = false;
          CharacterController character = GetComponent<CharacterController>();
         character.enabled = false;
          lineOfSight.gameObject.SetActive(false);

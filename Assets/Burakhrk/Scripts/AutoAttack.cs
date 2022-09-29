@@ -55,24 +55,32 @@ public class AutoAttack : MonoBehaviour
         target.DoIdle();
         isAttacking = true;
         isVisible = false;
-
     }
-    void AttackEnd()
+     void AttackEnd()
     {
+      
+        StartCoroutine(AttackNumerator());
+    }
+    IEnumerator AttackNumerator()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        isAttacking = false;
+        isVisible = true;
         GetComponent<MovementInput>().enabled = true;
 
         GameManager.Instance.DisableCanvas();
-        isAttacking = false;
-        isVisible = true;
         Debug.Log("attack done");
+        animator.speed = 1F;
     }
     void AttackType(string attackTrigger, float cooldown, Watcher target, float movementDuration)
     {
         animator.SetTrigger(attackTrigger);
+        animator.speed = 1.25f;
 
         if (attackCoroutine != null)
             StopCoroutine(attackCoroutine);
-        attackCoroutine = StartCoroutine(AttackCoroutine(cooldown));
+        attackCoroutine = StartCoroutine(AttackCoroutine(cooldown+0.2f));
 
         if (target == null)
             return;

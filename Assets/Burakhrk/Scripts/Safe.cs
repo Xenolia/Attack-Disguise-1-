@@ -29,7 +29,7 @@ public class Safe : MonoBehaviour
     {
         GameManager.Instance.EnableCanvas();
         FindObjectOfType<MovementInput>().acceleration = 0;
-        yield return new WaitForSeconds(safeOpenDuration/2);
+        yield return new WaitForSeconds(safeOpenDuration/3);
         foreach (var item in explosionParticles)
         {
             item.gameObject.SetActive(true);

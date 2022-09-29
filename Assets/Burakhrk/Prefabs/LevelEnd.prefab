@@ -2238,7 +2238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   safeKapak: {fileID: 7175731093412521340}
   safeOpenDuration: 1
-  moneyExplosionDuration: 0.1
+  moneyExplosionDuration: 0
   explosionParticles:
   - {fileID: 6645544251725850869}
   - {fileID: 8999036116688746552}

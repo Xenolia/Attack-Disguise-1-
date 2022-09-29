@@ -156,13 +156,15 @@ public class CombatScript : MonoBehaviour
         movementInput.enabled = false;
         lockedTarget.GettingAttacked();
         GameManager.Instance.EnableCanvas();
+        animator.speed = 1.25f;
      }
     IEnumerator AttackEndNumerator()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
         movementInput.enabled = true;
         enemyManager.StartAI();
 
+        animator.speed = 1;
 
     }
     void AttackEnd()
@@ -171,6 +173,7 @@ public class CombatScript : MonoBehaviour
         transform.DORotate(new Vector3(0, 0, 0),0.3f);
         GameManager.Instance.DisableCanvas();
         StartCoroutine(AttackEndNumerator());
+
     }
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)

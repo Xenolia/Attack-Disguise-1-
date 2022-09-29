@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
-
+ 
 public class EnemyManager : MonoBehaviour
 {
     EnemyDetection enemyDetection;
@@ -47,10 +46,16 @@ public class EnemyManager : MonoBehaviour
         EnemySetUp();
         StartAI();
     }
-
+    bool workOnce = false;
     public void StartAI()
     {
-        AI_Loop_Coroutine = StartCoroutine(AI_Loop(null));
+        AliveEnemyCount();
+        if(!workOnce)
+        {
+            AI_Loop_Coroutine = StartCoroutine(AI_Loop(null));
+            workOnce = true;
+
+        }
     }
 
     IEnumerator AI_Loop(EnemyScript enemy)
@@ -61,7 +66,7 @@ public class EnemyManager : MonoBehaviour
             yield break;
         }
 
-        yield return new WaitForSeconds(Random.Range(.5f,1.5f));
+        yield return new WaitForSeconds(Random.Range(1,1.5f));
 
         EnemyScript attackingEnemy = RandomEnemyExcludingOne(enemy);
 
