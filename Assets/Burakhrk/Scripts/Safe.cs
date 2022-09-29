@@ -28,7 +28,8 @@ public class Safe : MonoBehaviour
     }
     IEnumerator WaitForParticle()
     {
-        
+        GameManager.Instance.EnableCanvas();
+        FindObjectOfType<MovementInput>().acceleration = 0;
         yield return new WaitForSeconds(safeOpenDuration/2);
         foreach (var item in explosionParticles)
         {
@@ -38,7 +39,6 @@ public class Safe : MonoBehaviour
         yield return new WaitForSeconds(moneyExplosionDuration);
         MoneyExplosion();
 
-        GameManager.Instance.EnableCanvas();
         yield return new WaitForSeconds(2);
         WinLevelTrigger();
 

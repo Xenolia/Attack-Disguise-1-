@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
     }
     public void LevelWin()
     {
-
+        Debug.LogError("Win level");
+        Time.timeScale = 0;
     }
     public void LevelFail()
     {
