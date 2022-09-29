@@ -183,6 +183,8 @@ public class CombatScript : MonoBehaviour
 
         IEnumerator FinalBlowCoroutine()
         {
+            AttackStart();
+
             Time.timeScale = .5f;
             lastHitCamera.SetActive(true);
             lastHitFocusObject.position = lockedTarget.transform.position;

@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 public class Safe : MonoBehaviour
 {
-    SkinnedMeshRenderer safeRenderer;
-    [SerializeField] float safeOpenDuration;
-    private void Awake()
-    {
-        safeRenderer = GetComponent<SkinnedMeshRenderer>();
-    }
+    [SerializeField] GameObject safeKapak;
+    [SerializeField] GameObject[] moneyPrefabs; 
+     [SerializeField] float safeOpenDuration;
+    [SerializeField] float moneyExplosionDuration;
+
+    [SerializeField] ParticleSystem[] explosionParticles;
+    [SerializeField] Ease SafeOpenEase;
+
+
+    [SerializeField] ExplosionController explosionController;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -17,8 +22,33 @@ public class Safe : MonoBehaviour
     }
     void OpenSafe()
     {
-       // DOVirtual.Float(safeRenderer.GetBlendShapeWeight(0),(x)=> (safeRenderer.SetBlendShapeWeight(0,x),safeOpenDuration)) ;
-        GetComponentInParent<LevelEndManager>().LevelWin();
+        safeKapak.transform.DORotate(new Vector3(0,130,0),safeOpenDuration,RotateMode.LocalAxisAdd).SetEase(SafeOpenEase);
+        StartCoroutine(WaitForParticle());
 
+    }
+    IEnumerator WaitForParticle()
+    {
+        
+        yield return new WaitForSeconds(safeOpenDuration/2);
+        foreach (var item in explosionParticles)
+        {
+            item.gameObject.SetActive(true);
+            item.Play();
+        }
+        yield return new WaitForSeconds(moneyExplosionDuration);
+        MoneyExplosion();
+
+        GameManager.Instance.EnableCanvas();
+        yield return new WaitForSeconds(2);
+        WinLevelTrigger();
+
+    }
+    void WinLevelTrigger()
+    {
+        GetComponentInParent<LevelEndManager>().LevelWin();
+    }
+    void MoneyExplosion()
+    {
+        explosionController.Explode();
     }
 }
