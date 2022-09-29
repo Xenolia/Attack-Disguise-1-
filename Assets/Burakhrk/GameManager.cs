@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] GameObject disablePanel;
-    private void Awake()
+    [SerializeField] UIManager uIManager;
+     private void Awake()
     {
 
         if (Instance != null && Instance != this)
@@ -21,18 +22,24 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         AudioListener.volume = 0;
+   
     }
     public void LevelWin()
     {
         Debug.LogError("Win level");
         Time.timeScale = 0;
+        DisableCanvas();
+        uIManager.ActivateWinPanel();
     }
     public void LevelFail()
     {
         Time.timeScale = 0;
-        disablePanel.SetActive(true);
+        DisableCanvas();
+
+        uIManager.ActivateLosePanel();
+
     }
-   public void DisableCanvas()
+    public void DisableCanvas()
     {
         disablePanel.SetActive(false);
     }

@@ -12,7 +12,7 @@ public class Safe : MonoBehaviour
 
     [SerializeField] ParticleSystem[] explosionParticles;
     [SerializeField] Ease SafeOpenEase;
-
+    
 
     [SerializeField] ExplosionController explosionController;
     private void OnTriggerEnter(Collider other)
@@ -45,7 +45,7 @@ public class Safe : MonoBehaviour
     }
     void WinLevelTrigger()
     {
-        GetComponentInParent<LevelEndManager>().LevelWin();
+         GetComponentInParent<LevelEndManager>().LevelWin();
     }
     void MoneyExplosion()
     {

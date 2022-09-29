@@ -1,16 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
-    public List<GameObject> Levels;
+    public GameObject[] Levels;
+    [SerializeField] int levelNo = 1;
+
     private void Awake()
     {
-        
+
+        if (PlayerPrefs.HasKey("Level"))
+        {
+            levelNo = PlayerPrefs.GetInt("Level", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Level", 1);
+            levelNo = 1;
+        }
+         LoadLevel(levelNo);
     }
-    void LoadLevel()
+    public void LoadLevel(int levelNo)
     {
+        Levels[levelNo-1].SetActive(true);
+        Debug.Log("level no  "+levelNo);
+    }
+    public void NextLevel()
+    {
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
+
+
+    }
+    public void RestartLevel()
+    {
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1));
+        SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
 
     }
 }
