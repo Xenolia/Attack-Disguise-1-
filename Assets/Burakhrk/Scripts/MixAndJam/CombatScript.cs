@@ -7,9 +7,9 @@ using Cinemachine;
  
 public class CombatScript : MonoBehaviour
 {
+    Health health;
     BattleManager battleManager;
     public bool OnBattle=false;
-    public int Health;
     private EnemyManager enemyManager;
     private EnemyDetection enemyDetection;
     private MovementInput movementInput;
@@ -52,6 +52,7 @@ public class CombatScript : MonoBehaviour
     {
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         attackEndDoubleCheckCounter = attackCooldown+0.1f;
+        health = GetComponent<Health>();
     }
     void Start()
     {
@@ -312,21 +313,14 @@ public class CombatScript : MonoBehaviour
      }
     void HealthCheck()
     {
-
-        Health--;
-        GameManager.Instance.DisableCanvas();
+        health.TakeDamage(1);
+         GameManager.Instance.DisableCanvas();
 
  
         takeDamageParticle.transform.position = takeDamagePos.transform.position;
         takeDamageParticle.GetComponent<ParticleSystem>().Play();
-
-        if (Health<=0)
-        {
-            Dead();
-        }
-
     }
-    void Dead()
+   public void Dead()
     {
         animator.SetTrigger("Death");
         battleManager.gameObject.GetComponent<GameManager>().LevelFail();

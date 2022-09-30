@@ -37,6 +37,11 @@ public class MovementInput : MonoBehaviour
 		firstAcceleration = acceleration;
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
 
+        _jummoActions = new JammoActions();
+        _jummoActions.Player.Enable();
+        anim = this.GetComponent<Animator>();
+        cam = Camera.main;
+        controller = this.GetComponent<CharacterController>();
     }
     private void OnEnable()
     {
@@ -64,15 +69,7 @@ public class MovementInput : MonoBehaviour
         movementSpeed = firstSpeed;
 		acceleration = firstAcceleration;
     }
-    void Start()
-	{
-		_jummoActions = new JammoActions();
-		_jummoActions.Player.Enable();
-		 anim = this.GetComponent<Animator>();
-		cam = Camera.main;
-		controller = this.GetComponent<CharacterController>();
-		
-	}
+    
 
 	void Update()
 	{
@@ -158,8 +155,7 @@ public class MovementInput : MonoBehaviour
 
 	void InputMagnitude()
 	{
-		Debug.Log("Input");
-		//Calculate the Input Magnitude
+ 		//Calculate the Input Magnitude
 		float inputMagnitude = new Vector2(moveAxis.x, moveAxis.y).sqrMagnitude;
 
 		//Physically move player

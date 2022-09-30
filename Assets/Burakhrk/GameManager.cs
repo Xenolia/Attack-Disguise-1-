@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] GameObject disablePanel;
-    [SerializeField] UIManager uIManager;
+    public UIManager uIManager;
      private void Awake()
     {
 
