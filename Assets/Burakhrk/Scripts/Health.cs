@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
         //  uiManager.SetHealth(totalHealth, healthMultiplier);
         DOTween.To(() => healthBar.fillAmount, x => healthBar.fillAmount = x, healthMultiplier * totalHealth, takeDamageDuration).SetEase(Ease.OutBounce);
       //  healthBar.fillAmount = healthMultiplier * totalHealth;
-        healthText.text = totalHealth * healthMultiplier + " / " + "100";
+        healthText.text = totalHealth * healthMultiplier * 100 + " / " + "100";
     }
 
 

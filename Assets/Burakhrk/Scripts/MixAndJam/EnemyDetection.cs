@@ -79,6 +79,7 @@ public class EnemyDetection : MonoBehaviour
     {
         if (other.gameObject.GetComponent<EnemyScript>()&&!currentTarget)
         {
+            if(other.gameObject.GetComponent<EnemyScript>().enabled)
             battleManager.OnBattleInvoke();
         }
     }

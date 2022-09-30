@@ -24,7 +24,7 @@ public class AutoAttack : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-    }
+     }
     public void AttackCheck(Watcher watcher)
     {
         Debug.Log("Auto attack check");
@@ -38,14 +38,15 @@ public class AutoAttack : MonoBehaviour
             Attack();
 
     }
+    string attackString;
     public void Attack()
     {
         AttackStart();
         //Types of attack animation
         attacks = new string[] { "AirKick", "AirKick2", "AirPunch", "AirKick3" };
 
-            string attackString = attacks[Random.Range(0, attacks.Length)];
-            AttackType(attackString, attackCooldown, target, .65f);
+             attackString = attacks[Random.Range(0, attacks.Length)];
+            AttackType(attackString, attackCooldown, target, .75f);
             Debug.Log("Close attack");
     }
     void AttackStart()
@@ -62,7 +63,16 @@ public class AutoAttack : MonoBehaviour
     }
     IEnumerator AttackNumerator()
     {
-        yield return new WaitForSeconds(0.3f);
+        if (attackString == "AirPunch")
+            yield return new WaitForSeconds(1.65f);
+
+        if (attackString=="AirKick")
+        yield return new WaitForSeconds(1.65f);
+
+        if (attackString == "AirKick2")
+            yield return new WaitForSeconds(1);
+        if (attackString == "AirKick3")
+            yield return new WaitForSeconds(1);
 
         isAttacking = false;
         isVisible = true;

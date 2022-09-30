@@ -51,6 +51,7 @@ public class EnemyScript : MonoBehaviour
     {
         battleManager.OnBattle += OnBattleBehaviour;
         battleManager.OnBattleFinished += OnBattleFinished;
+        buttonCanvas.SetActive(true);
 
     }
     private void OnDisable()

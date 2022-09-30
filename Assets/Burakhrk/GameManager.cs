@@ -21,7 +21,12 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         AudioListener.volume = 0;
-   
+#if UNITY_EDITOR
+#else
+{
+  Debug.logger.logEnabled = false;
+}
+#endif
     }
     private void OnEnable()
     {

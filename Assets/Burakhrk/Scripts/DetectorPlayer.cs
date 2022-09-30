@@ -13,9 +13,12 @@ public class DetectorPlayer : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy")&& other.gameObject.GetComponent<Watcher>())
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            if(other.gameObject.GetComponent<Watcher>().isDead==false)
+            Watcher watcher= other.gameObject.GetComponent<Watcher>();
+            if (!watcher)
+                return;
+            if(other.gameObject.GetComponent<Watcher>().isDead==false&&watcher.enabled)
             {
                 Debug.LogError("Enemy Detected");
                 target = other.GetComponent<Watcher>();

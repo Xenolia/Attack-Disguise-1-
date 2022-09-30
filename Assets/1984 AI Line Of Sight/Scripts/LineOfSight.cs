@@ -53,7 +53,7 @@ public class LineOfSight : MonoBehaviour
         visibleTargets.Clear();
         if (!Use2DPhysics)
         {
-            Collider[] targetsInViewRadius = new Collider[5];
+            Collider[] targetsInViewRadius = new Collider[4];
             var size = Physics.OverlapSphereNonAlloc(transform.position, viewRadius, targetsInViewRadius, targetMask);
             for (int i = 0; i < size; i++)
             {
@@ -93,7 +93,11 @@ public class LineOfSight : MonoBehaviour
             }
         }
     }
-
+    public void AddTarget(Transform transform)
+    {
+        if(!visibleTargets.Contains(transform))
+        visibleTargets.Add(transform);
+    }
     void DrawFieldOfView()
     {
         int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
