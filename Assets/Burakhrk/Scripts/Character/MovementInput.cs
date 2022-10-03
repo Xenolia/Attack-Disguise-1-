@@ -47,8 +47,7 @@ public class MovementInput : MonoBehaviour
     {
         battleManager.OnBattle += OnBattleBehaviour;
         battleManager.OnBattleFinished += OnBattleFinished;
-
-    }
+     }
     private void OnDisable()
     {
         battleManager.OnBattle -= OnBattleBehaviour;

@@ -56,6 +56,7 @@ public class AutoAttack : MonoBehaviour
         target.DoIdle();
         isAttacking = true;
         isVisible = false;
+        readyToAttack = false;
     }
      void AttackEnd()
     {
@@ -76,6 +77,7 @@ public class AutoAttack : MonoBehaviour
 
         isAttacking = false;
         isVisible = true;
+        readyToAttack = true;
         GetComponent<MovementInput>().enabled = true;
 
         GameManager.Instance.DisableCanvas();

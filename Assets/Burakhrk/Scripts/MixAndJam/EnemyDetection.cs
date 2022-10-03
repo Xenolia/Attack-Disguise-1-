@@ -5,7 +5,7 @@ public class EnemyDetection : MonoBehaviour
 {
     [SerializeField] private EnemyManager enemyManager;
     private MovementInput movementInput;
-    private CombatScript combatScript;
+    [SerializeField] CombatScript combatScript;
 
     public LayerMask layerMask;
 
@@ -16,8 +16,7 @@ public class EnemyDetection : MonoBehaviour
      private void Start()
     {
         movementInput = GetComponentInParent<MovementInput>();
-        combatScript = GetComponentInParent<CombatScript>();
-        battleManager = GameManager.Instance.GetComponent<BattleManager>();
+         battleManager = GameManager.Instance.GetComponent<BattleManager>();
     }
 
     private void Update()
@@ -79,8 +78,11 @@ public class EnemyDetection : MonoBehaviour
     {
         if (other.gameObject.GetComponent<EnemyScript>()&&!currentTarget)
         {
-            if(other.gameObject.GetComponent<EnemyScript>().enabled)
-            battleManager.OnBattleInvoke();
+            if (other.gameObject.GetComponent<EnemyScript>().enabled)
+            {
+                combatScript.enabled = true;
+                battleManager.OnBattleInvoke();
+            }
         }
     }
 }

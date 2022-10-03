@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject disablePanel;
     public UIManager uIManager;
+    LevelManager levelManager;
      private void Awake()
     {
 
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         AudioListener.volume = 0;
+        levelManager = GetComponent<LevelManager>();
 #if UNITY_EDITOR
 #else
 {
@@ -61,6 +63,10 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R))
         {
             LevelFail();  
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            levelManager.NextLevel();
         }
     }
 }

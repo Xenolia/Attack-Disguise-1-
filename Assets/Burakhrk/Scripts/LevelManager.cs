@@ -29,6 +29,12 @@ public class LevelManager : MonoBehaviour
         }
         int openLevelIndex;
         openLevelIndex = ((levelNo%Levels.Length));
+        if (openLevelIndex != 0)
+            openLevelIndex--;
+        else
+            openLevelIndex = 4;
+
+        Debug.Log("Levels length" + Levels.Length);
         Debug.Log("openlevel Index  " + openLevelIndex);
          Levels[openLevelIndex].SetActive(true);
         Debug.Log("level no  "+levelNo);
@@ -38,13 +44,10 @@ public class LevelManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
         SceneManager.LoadScene(0);
-
-
     }
     public void RestartLevel()
     {
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1));
         SceneManager.LoadScene(0);
-
     }
 }

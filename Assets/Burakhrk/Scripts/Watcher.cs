@@ -97,7 +97,7 @@ public class Watcher : EnemyAI
     }
     void PlayerSeen()
     {
-        Debug.LogError(transform.name);
+        Debug.Log(" player seen  "+transform.name);
         //GameManager.Instance.LevelFail();
     }
     void MoveTo(Vector3 pos)

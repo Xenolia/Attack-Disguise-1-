@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyManager: {fileID: 0}
+  combatScript: {fileID: 6109414691055030755}
   layerMask:
     serializedVersion: 2
     m_Bits: 64
