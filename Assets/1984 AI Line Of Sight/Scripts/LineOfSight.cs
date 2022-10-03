@@ -67,7 +67,7 @@ public class LineOfSight : MonoBehaviour
                         if (target.gameObject.GetComponent<AutoAttack>().isVisible)
                         {
                             visibleTargets.Add(target);
-                            Debug.Log("Target detected");
+                            Debug.LogError("player detected");
                         }
        
                     }

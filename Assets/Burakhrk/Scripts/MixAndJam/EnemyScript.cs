@@ -65,6 +65,15 @@ public class EnemyScript : MonoBehaviour
         buttonCanvas.SetActive(true);
         OnBattle = true;
     }
+    public void DisableButton()
+    {
+        buttonCanvas.SetActive(false);
+    }
+    public void EnableButton()
+    {
+        buttonCanvas.SetActive(true);
+
+    }
     void OnBattleFinished()
     {
         OnBattle = false;

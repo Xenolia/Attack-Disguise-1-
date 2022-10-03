@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
+    EnemyManager enemyManager;
     [SerializeField] GameObject disablePanel;
     public UIManager uIManager;
     LevelManager levelManager;
@@ -34,7 +34,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
- 
+    private void Start()
+    {
+        enemyManager = GameObject.FindGameObjectWithTag("Enemy").GetComponentInParent<EnemyManager>();
+
+    }
     public void LevelWin()
     {
         Debug.LogError("Win level");
@@ -53,10 +57,14 @@ public class GameManager : MonoBehaviour
     public void DisableCanvas()
     {
         disablePanel.SetActive(false);
+        enemyManager.EnableButtonsEnemy();
+
     }
     public void EnableCanvas()
     {
         disablePanel.SetActive(true);
+        enemyManager.DisableButtonsEnemy();
+
     }
     private void Update()
     {

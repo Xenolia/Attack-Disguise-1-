@@ -74,15 +74,4 @@ public class EnemyDetection : MonoBehaviour
         if(CurrentTarget() != null)
             Gizmos.DrawSphere(CurrentTarget().transform.position, .5f);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<EnemyScript>()&&!currentTarget)
-        {
-            if (other.gameObject.GetComponent<EnemyScript>().enabled)
-            {
-                combatScript.enabled = true;
-                battleManager.OnBattleInvoke();
-            }
-        }
-    }
 }
