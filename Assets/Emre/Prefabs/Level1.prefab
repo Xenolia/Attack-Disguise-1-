@@ -589,7 +589,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631106576598274361}
-  m_LocalRotation: {x: 0.32897562, y: 0.000000016248643, z: -0.0000000056604796, w: 0.94433844}
+  m_LocalRotation: {x: 0.32897562, y: -0.000000016248649, z: 0.0000000056604805, w: 0.94433844}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -667,7 +667,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631106576676570186}
-  m_LocalRotation: {x: 0.3558875, y: 1e-45, z: -0, w: 0.9345288}
+  m_LocalRotation: {x: 0.3558875, y: -3e-45, z: 1e-45, w: 0.9345288}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3260,11 +3260,6 @@ PrefabInstance:
       propertyPath: enemyManager
       value: 
       objectReference: {fileID: 1631106576984960345}
-    - target: {fileID: 6109414691055030755, guid: a43a632c76f894d30bb72c415e3bf3e8,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6109414691055030755, guid: a43a632c76f894d30bb72c415e3bf3e8,
         type: 3}
       propertyPath: lastHitCamera
