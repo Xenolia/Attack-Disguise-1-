@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIJoystickController : MonoBehaviour
 {
@@ -15,8 +16,13 @@ public class UIJoystickController : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetMouseButton(0))
         {
+            // if (!EventSystem.current.IsPointerOverGameObject())
+           //     return;
+          //  EventSystem.current.RaycastAll(PointerEventData pointer)
+ 
             Vector2 pos = Input.mousePosition;
             if (!_initParamaters.JoystickImageBackground.enabled || !_initParamaters.JoystickImage.enabled)
             {

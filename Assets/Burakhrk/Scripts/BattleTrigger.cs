@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class BattleTrigger : MonoBehaviour
 {
     [SerializeField] BattleManager battleManager;
+    [SerializeField] AttackButtonController abcPrefab;
+    [SerializeField] EnemyDetection enemyDetection;
+    [SerializeField] Canvas canvas;
+    [SerializeField] EnemyScript[] enemyScript; 
     private void Awake()
     {
         if (!battleManager)
@@ -14,8 +18,21 @@ public class BattleTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-          other.gameObject.GetComponent<CombatScript>().enabled = true;
-           battleManager.OnBattleInvoke();
+
+            GetComponent<Collider>().enabled = false;
+            other.gameObject.GetComponent<CombatScript>().enabled = true;
+            battleManager.OnBattleInvoke();
+            CreateButtons();
+        }
+    }
+
+
+    void CreateButtons()
+    {
+        foreach (var enemy in enemyScript)
+        {
+            var abc = Instantiate(abcPrefab, canvas.transform) as AttackButtonController;
+            abc.Init(enemy, enemyDetection);
         }
     }
 }
