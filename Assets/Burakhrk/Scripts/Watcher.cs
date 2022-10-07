@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Watcher : EnemyAI
 {
+    UIButtonController UIButton;
     private Animator animator;
     private Rigidbody rb;
     public float movementSpeed = 3f;
@@ -25,6 +26,7 @@ public class Watcher : EnemyAI
         rb = GetComponent<Rigidbody>();
         firstPos = transform.position;
         targetPos = firstPos;
+        UIButton = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<UIButtonController>();
      }
     private Vector3 lastMove;
 
@@ -93,12 +95,16 @@ public class Watcher : EnemyAI
 
         SetAnim(false,false);
 
-        Debug.Log("Pew Pew!");
+        Debug.LogError("Pew Pew!");
     }
+    bool hasButton=false;
     void PlayerSeen()
     {
-        Debug.Log(" player seen  "+transform.name);
-        //GameManager.Instance.LevelFail();
+        if (!hasButton)
+        {
+            UIButton.CreateButton(GetComponent<EnemyScript>());
+            hasButton = true;
+        }
     }
     void MoveTo(Vector3 pos)
     {

@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     EnemyManager enemyManager;
-    [SerializeField] GameObject disablePanel;
-    public UIManager uIManager;
+     public UIManager uIManager;
+    [SerializeField] UIButtonController uIButton;
     LevelManager levelManager;
      private void Awake()
     {
@@ -56,16 +56,12 @@ public class GameManager : MonoBehaviour
     }
     public void DisableCanvas()
     {
-        disablePanel.SetActive(false);
-        enemyManager.EnableButtonsEnemy();
-
+         uIButton.EnableAllButtons();
     }
     public void EnableCanvas()
     {
-        disablePanel.SetActive(true);
-        enemyManager.DisableButtonsEnemy();
-
-    }
+        uIButton.DisableAllButtons();
+     }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.R))

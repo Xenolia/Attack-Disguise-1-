@@ -189,20 +189,6 @@ public class EnemyManager : MonoBehaviour
  
         AliveEnemyCount();
     }
-    public void EnableButtonsEnemy()
-    {
-        foreach (var item in enemies)
-        {
-            item.EnableButton();
-        }
-    }
-    public void DisableButtonsEnemy()
-    {
-        foreach (var item in enemies)
-        {
-            item.DisableButton();
-        }
-    }
 }
 
 [System.Serializable]

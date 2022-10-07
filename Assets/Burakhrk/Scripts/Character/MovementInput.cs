@@ -59,14 +59,12 @@ public class MovementInput : MonoBehaviour
     {
         OnBattle = true;
         anim.SetFloat("InputMagnitude", 0);
-		movementSpeed = 0;
-    }
+     }
 	void OnBattleFinished()
     {
 		Debug.LogError("battle end for movement");
         OnBattle = false;
-        movementSpeed = firstSpeed;
-		acceleration = firstAcceleration;
+ 		acceleration = firstAcceleration;
     }
     
 

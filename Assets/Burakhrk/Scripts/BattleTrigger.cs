@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class BattleTrigger : MonoBehaviour
 {
     [SerializeField] BattleManager battleManager;
-    [SerializeField] AttackButtonController abcPrefab;
+    [SerializeField] GameObject abcPrefab;
     [SerializeField] EnemyDetection enemyDetection;
     [SerializeField] Canvas canvas;
     [SerializeField] EnemyScript[] enemyScript; 
@@ -31,8 +31,8 @@ public class BattleTrigger : MonoBehaviour
     {
         foreach (var enemy in enemyScript)
         {
-            var abc = Instantiate(abcPrefab, canvas.transform) as AttackButtonController;
-            abc.Init(enemy, enemyDetection);
+            var abc = Instantiate(abcPrefab, canvas.transform);
+            abc.GetComponentInChildren<AttackButtonController>().Init(enemy, enemyDetection);
         }
     }
 }

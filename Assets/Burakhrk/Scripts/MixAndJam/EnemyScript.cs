@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyScript : MonoBehaviour
 {
     //mechanic blend burakhrk
+    MovementInput movementInput;
     BattleManager battleManager;
     public bool OnBattle=false;
     public GameObject buttonCanvas;
@@ -18,6 +19,7 @@ public class EnemyScript : MonoBehaviour
     private CharacterController characterController;
 
     [Header("Stats")]
+    public bool isDead = false;
     public int health = 3;
     private float moveSpeed = 1;
     private Vector3 moveDirection;
@@ -46,6 +48,8 @@ public class EnemyScript : MonoBehaviour
     private void Awake()
     {
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
+        characterController = GetComponent<CharacterController>();
+
     }
     private void OnEnable()
     {
@@ -65,15 +69,7 @@ public class EnemyScript : MonoBehaviour
         buttonCanvas.SetActive(true);
         OnBattle = true;
     }
-    public void DisableButton()
-    {
-        buttonCanvas.SetActive(false);
-    }
-    public void EnableButton()
-    {
-        buttonCanvas.SetActive(true);
-
-    }
+ 
     void OnBattleFinished()
     {
         OnBattle = false;
@@ -83,7 +79,6 @@ public class EnemyScript : MonoBehaviour
         enemyManager = GetComponentInParent<EnemyManager>();
 
         animator = GetComponent<Animator>();
-        characterController = GetComponent<CharacterController>();
 
         playerCombat = FindObjectOfType<CombatScript>();
         enemyDetection = playerCombat.GetComponentInChildren<EnemyDetection>();
@@ -182,6 +177,8 @@ public class EnemyScript : MonoBehaviour
                 Death();
                 return;
             }
+            if (Vector3.Distance(movementInput.transform.position, this.transform.position) > 1.7f)
+                return;
 
             animator.SetTrigger("Hit");
             transform.DOMove(transform.position - (transform.forward / 2), .3f).SetDelay(.1f);
@@ -222,6 +219,7 @@ public class EnemyScript : MonoBehaviour
     }
     void Death()
     {
+        isDead = true;
         StopEnemyCoroutines();
         if (GetComponentInChildren<Canvas>())
             GetComponentInChildren<Canvas>().gameObject.SetActive(false);

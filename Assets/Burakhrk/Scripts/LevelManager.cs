@@ -34,8 +34,7 @@ public class LevelManager : MonoBehaviour
         else
             openLevelIndex = 4;
 
-        Debug.Log("Levels length" + Levels.Length);
-        Debug.Log("openlevel Index  " + openLevelIndex);
+         Debug.Log("openlevel Index  " + openLevelIndex);
          Levels[openLevelIndex].SetActive(true);
         Debug.Log("level no  "+levelNo);
         GetComponentInChildren<UIManager>().SetLevelText(levelNo);

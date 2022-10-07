@@ -8,13 +8,11 @@ public  class BattleManager :MonoBehaviour
     public UnityAction OnBattleFinished;
 
     public bool Trigger = false;
-    public GameObject ScreenStick;
-
+ 
     public void OnBattleInvoke()
     {
         OnBattle?.Invoke();
-        ScreenStick.SetActive(false);
-        Trigger = true;
+         Trigger = true;
         Debug.Log("BattleTime");
     }
     public void BattleFinished()
@@ -22,7 +20,5 @@ public  class BattleManager :MonoBehaviour
         OnBattleFinished?.Invoke();
 
         Debug.LogError("Battle end");
-
-        ScreenStick.SetActive(true);
-    }
+      }
 }
