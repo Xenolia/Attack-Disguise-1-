@@ -66,9 +66,8 @@ public class LineOfSight : MonoBehaviour
                     {
                         if (target.gameObject.GetComponent<AutoAttack>().isVisible)
                         {
-
                             visibleTargets.Add(target);
-                         }
+                        }
        
                     }
                 }
