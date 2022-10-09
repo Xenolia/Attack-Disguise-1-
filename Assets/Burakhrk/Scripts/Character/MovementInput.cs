@@ -122,7 +122,9 @@ public class MovementInput : MonoBehaviour
 		if (blockRotationPlayer == false)
 		{
 			//Camera
+			if(desiredMoveDirection != default)
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed * acceleration * Time.deltaTime);
+
 			controller.Move(desiredMoveDirection * Time.deltaTime * (movementSpeed * acceleration));
 		}
 		else

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     EnemyManager enemyManager;
      public UIManager uIManager;
+    UIJoystickController joystickController;
     [SerializeField] UIButtonController uIButton;
     LevelManager levelManager;
      private void Awake()
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
         }
         AudioListener.volume = 0;
         levelManager = GetComponent<LevelManager>();
+        joystickController = GetComponentInChildren<UIJoystickController>();
 #if UNITY_EDITOR
 #else
 {
@@ -43,25 +45,28 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogError("Win level");
         Time.timeScale = 0;
-        DisableCanvas();
+        DisableControl();
         uIManager.ActivateWinPanel();
     }
     public void LevelFail()
     {
         Time.timeScale = 0;
-        DisableCanvas();
+        DisableControl();
 
         uIManager.ActivateLosePanel();
 
     }
-    public void DisableCanvas()
+    public void EnableControl()
     {
          uIButton.EnableAllButtons();
+        joystickController.EnableJoyStick();
     }
-    public void EnableCanvas()
+    public void DisableControl()
     {
         uIButton.DisableAllButtons();
-     }
+        joystickController.DisableJoyStick();
+
+    }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.R))

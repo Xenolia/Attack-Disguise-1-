@@ -8,16 +8,29 @@ using UnityEngine.EventSystems;
 public class UIJoystickController : MonoBehaviour
 {
     [SerializeField] private InitParameters _initParamaters;
-
+    bool stickEnabled = true;
     public void Init(InitParameters initParameters)
     {
         _initParamaters = initParameters;
+    }
+    public void DisableJoyStick()
+    {
+        stickEnabled = false;
+        _initParamaters.JoystickImage.enabled = false;
+        _initParamaters.JoystickImageBackground.enabled = false;
+    }
+    public void EnableJoyStick()
+    {
+        stickEnabled = true;
+
+        _initParamaters.JoystickImage.enabled = true;
+        _initParamaters.JoystickImageBackground.enabled = true;
     }
 
     private void Update()
     {
         
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)&&stickEnabled)
         {
             // if (!EventSystem.current.IsPointerOverGameObject())
            //     return;

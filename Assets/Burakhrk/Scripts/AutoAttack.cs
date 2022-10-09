@@ -31,7 +31,7 @@ public class AutoAttack : MonoBehaviour
 
         if (!readyToAttack)
             return;
-        GameManager.Instance.EnableCanvas();
+        GameManager.Instance.DisableControl();
 
         target = watcher;
         if (target)
@@ -80,7 +80,7 @@ public class AutoAttack : MonoBehaviour
         readyToAttack = true;
         GetComponent<MovementInput>().enabled = true;
 
-        GameManager.Instance.DisableCanvas();
+        GameManager.Instance.EnableControl();
         Debug.Log("attack done");
         animator.speed = 1F;
     }
@@ -122,6 +122,7 @@ public class AutoAttack : MonoBehaviour
         target.TakeDamage();
         //Polish
         AttackEnd();
+        if(punchParticle)
         punchParticle.PlayParticleAtPosition(punchPosition.position);
     }
 }

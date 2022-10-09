@@ -12,7 +12,7 @@ public class AttackButtonController : MonoBehaviour
     Transform targetTransform;
     EnemyDetection enemyDetection;
     [SerializeField] Vector3 offsetY;
-    [SerializeField] EnemyScript enemyScript;
+    public EnemyScript enemyScript;
 
     bool workOnce = true;
     MovementInput movementInput;
@@ -27,7 +27,7 @@ public class AttackButtonController : MonoBehaviour
         this.enemyDetection = enemyDetection;
         targetTransform = enemy.transform;
         enemyScript = enemy;
-        GetComponentInChildren<Button>().onClick.AddListener(() => enemyDetection.SetNewTarget(enemy));
+        GetComponent<Button>().onClick.AddListener(() => enemyDetection.SetNewTarget(enemy));
         UpdateButtonPos(targetTransform);
     }
     private void OnEnable()

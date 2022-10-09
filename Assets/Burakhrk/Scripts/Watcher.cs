@@ -10,7 +10,9 @@ public class Watcher : EnemyAI
     private Animator animator;
     private Rigidbody rb;
     public float movementSpeed = 3f;
-    public enum MovementDirection {RightLeft, UpDown };
+    GameObject player;
+
+     public enum MovementDirection {RightLeft, UpDown };
    public MovementDirection movementDirection;
     [SerializeField] float range=2;
     public Material seenMaterial, unseenMaterial;
@@ -27,7 +29,17 @@ public class Watcher : EnemyAI
         firstPos = transform.position;
         targetPos = firstPos;
         UIButton = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<UIButtonController>();
+        player = GameObject.FindGameObjectWithTag("Player");
      }
+    private void OnEnable()
+    {
+        lineOfSight.gameObject.SetActive(true);
+
+    }
+    private void OnDisable()
+    {
+        lineOfSight.gameObject.SetActive(false);
+    }
     private Vector3 lastMove;
 
     internal override void DoPatrol()
@@ -104,6 +116,15 @@ public class Watcher : EnemyAI
         {
             UIButton.CreateButton(GetComponent<EnemyScript>());
             hasButton = true;
+            player.GetComponent<CombatController>().ChangeMechanicToButton();
+            EnemyScript enemyScript = GetComponent<EnemyScript>();
+            enemyScript.enabled = true;
+            enemyScript.OnBattle=true;
+            enemyScript.SetAttack();
+            var sightObject = lineOfSight.gameObject;
+            Destroy(sightObject);
+            Watcher watcher = this;
+            Destroy(watcher);
         }
     }
     void MoveTo(Vector3 pos)
@@ -141,10 +162,10 @@ public class Watcher : EnemyAI
          Debug.Log("watcher dead");
         DeadSituation();
     }
-    void DeadSituation()
+   public void DeadSituation()
     {
-        GetComponent<CapsuleCollider>().enabled = false;
-         CharacterController character = GetComponent<CharacterController>();
+        UIButton.DestroyButton(GetComponent<EnemyScript>()) ;
+          CharacterController character = GetComponent<CharacterController>();
         character.enabled = false;
          lineOfSight.gameObject.SetActive(false);
     }

@@ -18,7 +18,17 @@ public class UIButtonController : MonoBehaviour
         var abc = Instantiate(abcPrefab, canvas.transform);
         abc.GetComponentInChildren<AttackButtonController>().Init(enemy, enemyDetection);
     }
-
+    public void DestroyButton(EnemyScript enemy)
+    {
+        foreach (var item in buttons)
+        {
+            if (item.enemyScript == enemy)
+            {
+                Destroy(item.gameObject);
+                return;
+            }
+        }
+    }
     public void RegisterButton(AttackButtonController button)
     {
         if (!buttons.Contains(button))

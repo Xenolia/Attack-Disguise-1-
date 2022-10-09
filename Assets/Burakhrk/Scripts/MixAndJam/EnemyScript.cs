@@ -9,8 +9,7 @@ public class EnemyScript : MonoBehaviour
     MovementInput movementInput;
     BattleManager battleManager;
     public bool OnBattle=false;
-    public GameObject buttonCanvas;
-    public bool isTarget=false;
+     public bool isTarget=false;
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
@@ -55,8 +54,7 @@ public class EnemyScript : MonoBehaviour
     {
         battleManager.OnBattle += OnBattleBehaviour;
         battleManager.OnBattleFinished += OnBattleFinished;
-        buttonCanvas.SetActive(true);
-
+ 
     }
     private void OnDisable()
     {
@@ -66,8 +64,7 @@ public class EnemyScript : MonoBehaviour
     }
     void OnBattleBehaviour()
     {
-        buttonCanvas.SetActive(true);
-        OnBattle = true;
+         OnBattle = true;
     }
  
     void OnBattleFinished()
@@ -225,6 +222,8 @@ public class EnemyScript : MonoBehaviour
             GetComponentInChildren<Canvas>().gameObject.SetActive(false);
         characterController.enabled = false;
         animator.SetTrigger("Death");
+
+        if(enemyManager)
         enemyManager.SetEnemyAvailiability(this, false);
         this.enabled = false;
     }

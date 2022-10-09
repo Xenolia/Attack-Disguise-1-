@@ -53,15 +53,13 @@ public class CombatScript : MonoBehaviour
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         attackEndDoubleCheckCounter = attackCooldown+0.1f;
         health = GetComponent<Health>();
-    }
-    void Start()
-    {
         enemyManager = FindObjectOfType<EnemyManager>();
         animator = GetComponent<Animator>();
         enemyDetection = GetComponentInChildren<EnemyDetection>();
         movementInput = GetComponent<MovementInput>();
         impulseSource = GetComponentInChildren<CinemachineImpulseSource>();
     }
+
     private void OnEnable()
     {
         battleManager.OnBattle += OnBattleBehaviour;
@@ -156,7 +154,7 @@ public class CombatScript : MonoBehaviour
         isAttackingEnemy = true;
         movementInput.enabled = false;
         lockedTarget.GettingAttacked();
-        GameManager.Instance.EnableCanvas();
+        GameManager.Instance.DisableControl();
         animator.speed = 1.25f;
      }
     IEnumerator AttackEndNumerator()
@@ -172,7 +170,7 @@ public class CombatScript : MonoBehaviour
     {
        
         transform.DORotate(new Vector3(0, transform.rotation.y, transform.rotation.z),0.3f);
-        GameManager.Instance.DisableCanvas();
+        GameManager.Instance.EnableControl();
         StartCoroutine(AttackEndNumerator());
 
     }
@@ -314,7 +312,7 @@ public class CombatScript : MonoBehaviour
     void HealthCheck()
     {
         health.TakeDamage(1);
-         GameManager.Instance.DisableCanvas();
+         GameManager.Instance.EnableControl();
 
  
         takeDamageParticle.transform.position = takeDamagePos.transform.position;
