@@ -68,10 +68,12 @@ public class EnemyDetection : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        /*
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, inputDirection);
         Gizmos.DrawWireSphere(transform.position, 1);
         if(CurrentTarget() != null)
             Gizmos.DrawSphere(CurrentTarget().transform.position, .5f);
+        */
     }
 }

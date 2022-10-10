@@ -294,6 +294,9 @@ public class EnemyScript : MonoBehaviour
 
     void PrepareAttack(bool active)
     {
+        if (isDead)
+            return;
+
         isPreparingAttack = active;
 
         if (active)
@@ -365,7 +368,7 @@ public class EnemyScript : MonoBehaviour
     public float dirMultiplier = 0.6f;
     void MoveEnemyWatcher()
     {
-        if (isPreparingAttack)
+        if (isPreparingAttack||isDead)
             return;
 
         dir = playerCombat.transform.position - transform.position;
@@ -387,43 +390,51 @@ public class EnemyScript : MonoBehaviour
             if (isMoving)
                 return;
             isPreparingAttack = false;
-            transform.DOMove((transform.position + (dirMultiplier * dir)), (dist / 5)).OnStart(() => {
+            transform.DOMove((transform.position + (dirMultiplier * dir)), (dist / 5))
+                .OnStart(() => {
                 isMoving = true;
-            }).OnComplete(() => { isMoving = false; }).OnUpdate(() =>
+            })
+                .OnUpdate(() =>
             {
                 if ((Vector3.Distance(playerCombat.transform.position, transform.position) <= attackRange))
                 {
                     Debug.Log("getting close to player ");
                     animator.SetFloat("InputMagnitude", 7, .2f, Time.deltaTime);
-                    StopMoving();
-                    if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
-                    {
-                        isPreparingAttack = true;
-                        Attack();
-                    }
-                    else
-                        PrepareAttack(false);
                 }
                 else
                 {
                     Debug.Log("need to get close to player ");
                     animator.SetFloat("InputMagnitude", 10, .2f, Time.deltaTime);
                 }
+            })
+                .OnComplete(() => {
+                    Debug.LogError("getting in range completed");
+                isMoving = false;
+                if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+                {
+                    isPreparingAttack = true;
+                    Attack();
+                }
+                else
+                    PrepareAttack(false);
             });
         }
 
     }
     private void Attack()
     {
-        if (playerCombat.isDead || isMoving)
+         if (playerCombat.isDead)
             return;
 
-
+        isMoving = false;
 
         float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
 
-        if (dist < attackRange)
+        if (dist <= attackRange)
+        {
             animator.SetTrigger("AirPunch");
+            PrepareAttack(false);
+        }
 
         else
             PrepareAttack(false);
