@@ -92,7 +92,7 @@ Transform:
   m_GameObject: {fileID: 1558592659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.8, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6109414691055030765}
@@ -159,7 +159,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1558592661
 MonoBehaviour:
@@ -200,7 +200,6 @@ GameObject:
   - component: {fileID: 4389191863161834721}
   - component: {fileID: 9096160029831227500}
   - component: {fileID: 8538471326251407492}
-  - component: {fileID: 2907713207827048878}
   - component: {fileID: 387058220527689673}
   m_Layer: 7
   m_Name: EnemyDetection
@@ -274,19 +273,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2907713207827048878
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404697744392709373}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &387058220527689673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,9 +287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyManager: {fileID: 0}
   combatScript: {fileID: 6109414691055030755}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
   inputDirection: {x: 0, y: 0, z: 0}
   currentTarget: {fileID: 0}
   cam: {fileID: 0}
@@ -534,6 +517,7 @@ GameObject:
   - component: {fileID: 6109414691055030755}
   - component: {fileID: 1936083428}
   - component: {fileID: 658287548187378548}
+  - component: {fileID: 1903528181}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -580,7 +564,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 30
   m_StepOffset: 0.27
-  m_SkinWidth: 0.0001
+  m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &6109414691055030767
@@ -678,7 +662,7 @@ MonoBehaviour:
   takeDamagePos: {fileID: 6884889258801696049}
   takeDamageParticle: {fileID: 949887553587673454}
   lastHitCamera: {fileID: 0}
-  lastHitFocusObject: {fileID: 0}
+  lastHitFocusObject: {fileID: 6109414691055030765}
   OnTrajectory:
     m_PersistentCalls:
       m_Calls: []
@@ -707,6 +691,7 @@ MonoBehaviour:
   attackCooldown: 1.5
   punchPosition: {fileID: 1507721247}
   punchParticle: {fileID: 0}
+  range: 0
 --- !u!114 &658287548187378548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,11 +704,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04655e75244c644159a08a92de999ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 123
+  totalHealth: 10
   healthMultiplier: 0
   takeDamageDuration: 0.8
   healthBar: {fileID: 8244456561206107096}
   healthText: {fileID: 8244456560597678911}
+--- !u!114 &1903528181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6109414691055030761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90bfb942d135347be8a81fa5f065a2ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6260814378528525445
 GameObject:
   m_ObjectHideFlags: 0

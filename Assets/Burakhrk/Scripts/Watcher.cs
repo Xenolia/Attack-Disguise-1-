@@ -18,12 +18,14 @@ public class Watcher : EnemyAI
     public Material seenMaterial, unseenMaterial;
     public bool isDead = false;
     public bool isTarget = false;
+    CharacterController characterController;
 
     private Vector3 firstPos;
     private Vector3 targetPos;
 
     private void Awake()
     {
+        characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         firstPos = transform.position;
@@ -50,14 +52,7 @@ public class Watcher : EnemyAI
         if ((rb.position - targetPos).magnitude >= 0.5f)
         {
             MoveTo(targetPos);
- 
-            /*
-            if ((rb.position - lastMove).magnitude < 0.03) // We hit a wall
-            {
-                lastKnownPos = transform.position - transform.forward; // turn back
-                Debug.Log("Watcher turn back");
-            }
-            */
+
         }
         else
         {
@@ -66,11 +61,8 @@ public class Watcher : EnemyAI
 
             if (movementDirection == MovementDirection.UpDown)
                 targetPos = (firstPos + new Vector3(0, 0, Random.Range(-range, range)));
-            // Reached last known position, trying random walk.
             lineOfSight.SetMaterial(unseenMaterial);
-          //  lastKnownPos = firstPos + new Vector3(Random.Range(-range, range), 0, firstPos.z);
         }
-       // lastMove = rb.position;
     }
 
     internal override void DoIdle()
@@ -94,10 +86,6 @@ public class Watcher : EnemyAI
         lastKnownPos = lineOfSight.visibleTargets[0].position;
         lastKnownTime = Time.time;
         PlayerSeen();
-        return;
-        MoveTo(lineOfSight.visibleTargets[0].position); // move towards target
-        lastKnownPos = lineOfSight.visibleTargets[0].position;
-        lastKnownTime = Time.time;
     }
 
     internal override void DoAttack()
@@ -107,7 +95,7 @@ public class Watcher : EnemyAI
 
         SetAnim(false,false);
 
-        Debug.LogError("Pew Pew!");
+        Debug.Log("Pew Pew!");
     }
     bool hasButton=false;
     void PlayerSeen()
@@ -131,12 +119,14 @@ public class Watcher : EnemyAI
     {
         if (isDead)
             return;
-
+        characterController.enabled = false;
         SetAnim(true,false);
         Vector3 delta = (pos - transform.position).normalized;
-        rb.MoveRotation(Quaternion.Slerp(rb.rotation, Quaternion.LookRotation(delta),
-            Time.fixedDeltaTime * movementSpeed));
-        rb.MovePosition(Vector3.Lerp(rb.position, rb.position + delta, Time.fixedDeltaTime * movementSpeed));
+          rb.MoveRotation(Quaternion.Slerp(rb.rotation, Quaternion.LookRotation(delta),
+           Time.fixedDeltaTime * movementSpeed));
+       rb.MovePosition(Vector3.Lerp(rb.position, rb.position + delta, Time.fixedDeltaTime * movementSpeed));
+        characterController.enabled = true;
+
     }
 
     void SetAnim(bool isMoving, bool isDeadAnim)

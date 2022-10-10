@@ -15,6 +15,7 @@ public class DetectorPlayer : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
+         
             Watcher watcher= other.gameObject.GetComponent<Watcher>();
             if (!watcher)
                 return;
@@ -27,6 +28,7 @@ public class DetectorPlayer : MonoBehaviour
             }
         }
     }
+    /*
     private void OnTriggerStay(Collider other)
     {
         if (target)
@@ -43,6 +45,8 @@ public class DetectorPlayer : MonoBehaviour
             }
         }
     }
+    */
+    /*
     private void Update()
     {
         if (!target)
@@ -57,5 +61,6 @@ public class DetectorPlayer : MonoBehaviour
             counter = 1.5f;
         }
     }
+    */
 
 }

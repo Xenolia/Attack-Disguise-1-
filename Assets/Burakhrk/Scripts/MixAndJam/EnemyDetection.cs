@@ -7,7 +7,7 @@ public class EnemyDetection : MonoBehaviour
     private MovementInput movementInput;
     [SerializeField] CombatScript combatScript;
 
-    public LayerMask layerMask;
+ //   public LayerMask layerMask;
 
     [SerializeField] Vector3 inputDirection;
     [SerializeField] private EnemyScript currentTarget;

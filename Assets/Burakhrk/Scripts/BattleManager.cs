@@ -19,6 +19,6 @@ public  class BattleManager :MonoBehaviour
     {
         OnBattleFinished?.Invoke();
 
-        Debug.LogError("Battle end");
+        Debug.Log("Battle end");
       }
 }

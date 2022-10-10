@@ -123,7 +123,7 @@ public class EnemyScript : MonoBehaviour
             //Only moves if the direction is set
             if (!isTarget && enemyManager)
                 MoveEnemy(moveDirection);
-        }
+        } 
     }
     public void OnPlayerHitBurak()
     {
@@ -217,12 +217,17 @@ public class EnemyScript : MonoBehaviour
     }
     void Death()
     {
+        if (isDead)
+            return;
+
         isDead = true;
         StopEnemyCoroutines();
         if (GetComponentInChildren<Canvas>())
             GetComponentInChildren<Canvas>().gameObject.SetActive(false);
-        characterController.enabled = false;
-        animator.SetTrigger("Death");
+
+
+        Destroy(characterController);
+         animator.SetTrigger("Death");
 
         if (enemyManager)
             enemyManager.SetEnemyAvailiability(this, false);
@@ -231,8 +236,9 @@ public class EnemyScript : MonoBehaviour
             CombatController combatController = playerCombat.gameObject.GetComponent<CombatController>();
             combatController.ChangeMechanicToAuto();
         }
-        this.enabled = false;
-    }
+        EnemyScript enemyScriptGarbage = this;
+        Destroy(enemyScriptGarbage);
+     }
 
     public void SetRetreat()
     {
@@ -396,16 +402,11 @@ public class EnemyScript : MonoBehaviour
             })
                 .OnUpdate(() =>
             {
-                if ((Vector3.Distance(playerCombat.transform.position, transform.position) <= attackRange))
-                {
-                    Debug.Log("getting close to player ");
-                    animator.SetFloat("InputMagnitude", 7, .2f, Time.deltaTime);
-                }
-                else
-                {
-                    Debug.Log("need to get close to player ");
-                    animator.SetFloat("InputMagnitude", 10, .2f, Time.deltaTime);
-                }
+                float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
+
+                Debug.Log("getting close to player ");
+                    animator.SetFloat("InputMagnitude", 10*dist, .2f, Time.deltaTime);
+             
             })
                 .OnComplete(() => {
                     Debug.LogError("getting in range completed");
@@ -471,8 +472,10 @@ public class EnemyScript : MonoBehaviour
         moveDirection = Vector3.zero;
         animator.SetFloat("InputMagnitude", 0);
 
-        if (characterController.enabled)
+        /*
+        if (characterController)
             characterController.Move(moveDirection);
+        */
     }
 
     void StopEnemyCoroutines()

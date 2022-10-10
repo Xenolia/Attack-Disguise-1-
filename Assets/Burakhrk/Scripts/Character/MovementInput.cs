@@ -62,7 +62,7 @@ public class MovementInput : MonoBehaviour
      }
 	void OnBattleFinished()
     {
-		Debug.LogError("battle end for movement");
+		Debug.Log("battle end for movement");
         OnBattle = false;
  		acceleration = firstAcceleration;
     }

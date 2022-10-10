@@ -165,6 +165,15 @@ public class EnemyManager : MonoBehaviour
 
     public int AliveEnemyCount()
     {
+        enemies = GetComponentsInChildren<EnemyScript>();
+
+        allEnemies = new EnemyStruct[enemies.Length];
+
+        for (int i = 0; i < allEnemies.Length; i++)
+        {
+            allEnemies[i].enemyScript = enemies[i];
+         }
+
         int count = 0;
         for (int i = 0; i < allEnemies.Length; i++)
         {

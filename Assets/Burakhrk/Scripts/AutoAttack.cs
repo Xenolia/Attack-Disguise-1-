@@ -16,7 +16,7 @@ public class AutoAttack : MonoBehaviour
 
     [SerializeField] private Transform punchPosition;
     [SerializeField] private ParticleSystemScript punchParticle;
-
+    [SerializeField] float range;
 
     private Coroutine attackCoroutine;
 
@@ -24,6 +24,7 @@ public class AutoAttack : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+       range= GetComponentInChildren<DetectorPlayer>().gameObject.GetComponent<SphereCollider>().radius;
      }
     public void AttackCheck(Watcher watcher)
     {
@@ -34,8 +35,17 @@ public class AutoAttack : MonoBehaviour
         GameManager.Instance.DisableControl();
 
         target = watcher;
-        if (target)
+        if (!target)
+            return;
+
+        if (Vector3.Distance(target.transform.position, transform.position) < range)
+        {
             Attack();
+        }
+        else
+            target = null;
+       
+           
 
     }
     string attackString;

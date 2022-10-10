@@ -67,8 +67,10 @@ public abstract class EnemyAI : MonoBehaviour
     public float attackRange = 2;
     private void OnDrawGizmosSelected()
     {
+        /*
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+        */
     }
 
     // In your inherited class you have to implement this methods,
