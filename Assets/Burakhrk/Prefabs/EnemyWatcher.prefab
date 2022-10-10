@@ -1099,7 +1099,7 @@ MonoBehaviour:
   OnRetreat:
     m_PersistentCalls:
       m_Calls: []
-  attackDist: 1
+  attackRange: 1.5
 --- !u!1 &6459073995764573621
 GameObject:
   m_ObjectHideFlags: 0

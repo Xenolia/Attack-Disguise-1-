@@ -961,8 +961,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnBattle: 0
-  buttonCanvas: {fileID: 68849308660390936}
   isTarget: 0
+  isDead: 0
   health: 2
   retreatDistance: 3
   isPreparingAttack: 0
@@ -981,6 +981,7 @@ MonoBehaviour:
   OnRetreat:
     m_PersistentCalls:
       m_Calls: []
+  attackRange: 1.7
 --- !u!1 &6459073995764573621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,12 +1869,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf6f8bdc7256944759ff12bf03e4b50a, type: 3}
---- !u!1 &68849308660390936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3586888186353909096, guid: bf6f8bdc7256944759ff12bf03e4b50a,
-    type: 3}
-  m_PrefabInstance: {fileID: 3545377279528968560}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &600243687799415600 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4136498730157523520, guid: bf6f8bdc7256944759ff12bf03e4b50a,

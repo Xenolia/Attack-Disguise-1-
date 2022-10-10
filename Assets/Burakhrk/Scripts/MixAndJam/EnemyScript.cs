@@ -3,13 +3,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.Collections.Generic;
+
 public class EnemyScript : MonoBehaviour
 {
     //mechanic blend burakhrk
     MovementInput movementInput;
     BattleManager battleManager;
-    public bool OnBattle=false;
-     public bool isTarget=false;
+    public bool OnBattle = false;
+    public bool isTarget = false;
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
@@ -48,13 +50,14 @@ public class EnemyScript : MonoBehaviour
     {
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         characterController = GetComponent<CharacterController>();
+        playerCombat = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatScript>();
 
     }
     private void OnEnable()
     {
         battleManager.OnBattle += OnBattleBehaviour;
         battleManager.OnBattleFinished += OnBattleFinished;
- 
+
     }
     private void OnDisable()
     {
@@ -64,9 +67,9 @@ public class EnemyScript : MonoBehaviour
     }
     void OnBattleBehaviour()
     {
-         OnBattle = true;
+        OnBattle = true;
     }
- 
+
     void OnBattleFinished()
     {
         OnBattle = false;
@@ -77,7 +80,6 @@ public class EnemyScript : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        playerCombat = FindObjectOfType<CombatScript>();
         enemyDetection = playerCombat.GetComponentInChildren<EnemyDetection>();
 
         playerCombat.OnHit.AddListener((x) => OnPlayerHit(x));
@@ -113,43 +115,37 @@ public class EnemyScript : MonoBehaviour
 
     void Update()
     {
-        if (OnBattle)
+        if (OnBattle && !isDead)
         {
             //Constantly look at player
             transform.LookAt(new Vector3(playerCombat.transform.position.x, transform.position.y, playerCombat.transform.position.z));
 
             //Only moves if the direction is set
-            if(!isTarget&&enemyManager)
-            MoveEnemy(moveDirection);
-
-
-            if (!enemyManager)
-                SetAttack();
-                
+            if (!isTarget && enemyManager)
+                MoveEnemy(moveDirection);
         }
-       
     }
     public void OnPlayerHitBurak()
     {
-       
-            StopEnemyCoroutines();
-            DamageCoroutine = StartCoroutine(HitCoroutine());
 
-            isLockedTarget = false;
-            OnDamage.Invoke(this);
+        StopEnemyCoroutines();
+        DamageCoroutine = StartCoroutine(HitCoroutine());
 
-            health--;
+        isLockedTarget = false;
+        OnDamage.Invoke(this);
 
-            if (health <= 0)
-            {
-                Death();
-                return;
-            }
+        health--;
 
-            animator.SetTrigger("Hit");
-            transform.DOMove(transform.position - (transform.forward / 2), .3f).SetDelay(.1f);
+        if (health <= 0)
+        {
+            Death();
+            return;
+        }
 
-            StopMoving();
+        animator.SetTrigger("Hit");
+        transform.DOMove(transform.position - (transform.forward / 2), .3f).SetDelay(.1f);
+
+        StopMoving();
 
         IEnumerator HitCoroutine()
         {
@@ -214,7 +210,7 @@ public class EnemyScript : MonoBehaviour
             StopMoving();
         }
     }
-   public void GettingAttacked()
+    public void GettingAttacked()
     {
         isTarget = true;
         StopMoving();
@@ -228,8 +224,13 @@ public class EnemyScript : MonoBehaviour
         characterController.enabled = false;
         animator.SetTrigger("Death");
 
-        if(enemyManager)
-        enemyManager.SetEnemyAvailiability(this, false);
+        if (enemyManager)
+            enemyManager.SetEnemyAvailiability(this, false);
+        else
+        {
+            CombatController combatController = playerCombat.gameObject.GetComponent<CombatController>();
+            combatController.ChangeMechanicToAuto();
+        }
         this.enabled = false;
     }
 
@@ -276,7 +277,20 @@ public class EnemyScript : MonoBehaviour
             isMoving = true;
         }
     }
+    public void SetAttackAfterWatcher()
+    {
+        StartCoroutine(SetAttackWatcherNumerator());
+        MoveEnemyWatcher();
+    }
+    IEnumerator SetAttackWatcherNumerator()
+    {
+        if (isDead)
+            yield break;
 
+        yield return new WaitForSeconds(1.5f);
+        MoveEnemyWatcher();
+        StartCoroutine(SetAttackWatcherNumerator());
+    }
 
     void PrepareAttack(bool active)
     {
@@ -293,7 +307,7 @@ public class EnemyScript : MonoBehaviour
             counterParticle.Stop();
         }
     }
-
+    public float attackRange = 2;
     void MoveEnemy(Vector3 direction)
     {
         Debug.Log("Move Enemy");
@@ -334,11 +348,11 @@ public class EnemyScript : MonoBehaviour
 
         characterController.Move(movedir);
         Debug.Log(" Enemy moved checking is preparing attack ");
-         
+
         if (!isPreparingAttack)
             return;
 
-        if(Vector3.Distance(transform.position, playerCombat.transform.position) < 2)
+        if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
         {
             StopMoving();
             if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
@@ -347,76 +361,94 @@ public class EnemyScript : MonoBehaviour
                 PrepareAttack(false);
         }
     }
-    void MoveEnemyWatcher(Vector3 direction)
+    Vector3 dir;
+    public float dirMultiplier = 0.6f;
+    void MoveEnemyWatcher()
     {
-        Debug.Log("Move Enemy");
-        //Set movespeed based on direction
-        moveSpeed = 1;
-
-        if (direction == Vector3.forward)
-            moveSpeed = 5;
-        if (direction == -Vector3.forward)
-            moveSpeed = 2;
-
-        //Set Animator values
-        animator.SetFloat("InputMagnitude", (characterController.velocity.normalized.magnitude * direction.z) / (5 / moveSpeed), .2f, Time.deltaTime);
-        animator.SetBool("Strafe", (direction == Vector3.right || direction == Vector3.left));
-        animator.SetFloat("StrafeDirection", direction.normalized.x, .2f, Time.deltaTime);
-
-        //Don't do anything if isMoving is false
-        if (!isMoving)
-        {
-            SetRetreat();
-            return;
-         }
-
-        Vector3 dir = (playerCombat.transform.position - transform.position).normalized;
-        Vector3 pDir = Quaternion.AngleAxis(90, Vector3.up) * dir; //Vector perpendicular to direction
-        Vector3 movedir = Vector3.zero;
-
-        Vector3 finalDirection = Vector3.zero;
-
-        if (direction == Vector3.forward)
-            finalDirection = dir;
-        if (direction == Vector3.right || direction == Vector3.left)
-            finalDirection = (pDir * direction.normalized.x);
-        if (direction == -Vector3.forward)
-            finalDirection = -transform.forward;
-
-        if (direction == Vector3.right || direction == Vector3.left)
-            moveSpeed /= 1.5f;
-
-        movedir += finalDirection * moveSpeed * Time.deltaTime;
-
-        characterController.Move(movedir);
-        Debug.Log(" Enemy moved checking is preparing attack ");
-
-        if (!isPreparingAttack)
+        if (isPreparingAttack)
             return;
 
-        if (Vector3.Distance(transform.position, playerCombat.transform.position) < 2)
+        dir = playerCombat.transform.position - transform.position;
+        float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
+
+        if (dist < attackRange)
         {
-            StopMoving();
+            //  StopMoving();
             if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+            {
+                isPreparingAttack = true;
                 Attack();
+            }
             else
                 PrepareAttack(false);
         }
+        else
+        {
+            if (isMoving)
+                return;
+            isPreparingAttack = false;
+            transform.DOMove((transform.position + (dirMultiplier * dir)), (dist / 5)).OnStart(() => {
+                isMoving = true;
+            }).OnComplete(() => { isMoving = false; }).OnUpdate(() =>
+            {
+                if ((Vector3.Distance(playerCombat.transform.position, transform.position) <= attackRange))
+                {
+                    Debug.Log("getting close to player ");
+                    animator.SetFloat("InputMagnitude", 7, .2f, Time.deltaTime);
+                    StopMoving();
+                    if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+                    {
+                        isPreparingAttack = true;
+                        Attack();
+                    }
+                    else
+                        PrepareAttack(false);
+                }
+                else
+                {
+                    Debug.Log("need to get close to player ");
+                    animator.SetFloat("InputMagnitude", 10, .2f, Time.deltaTime);
+                }
+            });
+        }
+
     }
-
-
     private void Attack()
     {
-        if (playerCombat.isDead)
+        if (playerCombat.isDead || isMoving)
             return;
 
-        transform.DOMove(transform.position + (transform.forward / 1), .5f);
-        animator.SetTrigger("AirPunch");
+
+
+        float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
+
+        if (dist < attackRange)
+            animator.SetTrigger("AirPunch");
+
+        else
+            PrepareAttack(false);
+
+        /*
+        else
+
+            transform.DOMove((transform.position + (dirMultiplier/2 * dir)), (dist / 5)).OnComplete(() => { isMoving = false; }).OnUpdate(() =>
+            {
+
+                animator.SetFloat("InputMagnitude",5, .15f, Time.deltaTime);
+                float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
+
+            }).OnComplete(() =>
+            {
+                if (dist < attackRange)
+                    animator.SetTrigger("AirPunch");
+            });
+        */
+
     }
 
     public void HitEvent()
     {
-        if(!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+        if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
             playerCombat.DamageEvent();
 
         PrepareAttack(false);
@@ -426,7 +458,9 @@ public class EnemyScript : MonoBehaviour
     {
         isMoving = false;
         moveDirection = Vector3.zero;
-        if(characterController.enabled)
+        animator.SetFloat("InputMagnitude", 0);
+
+        if (characterController.enabled)
             characterController.Move(moveDirection);
     }
 
@@ -441,12 +475,12 @@ public class EnemyScript : MonoBehaviour
                 StopCoroutine(RetreatCoroutine);
                 isRetreating = false;
             }
-         }
+        }
 
         if (PrepareAttackCoroutine != null)
             StopCoroutine(PrepareAttackCoroutine);
 
-        if(DamageCoroutine != null)
+        if (DamageCoroutine != null)
             StopCoroutine(DamageCoroutine);
 
         if (MovementCoroutine != null)

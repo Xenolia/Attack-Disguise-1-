@@ -304,7 +304,7 @@ public class CombatScript : MonoBehaviour
 
             HealthCheck();
 
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.4f);
             movementInput.enabled = true;
             LerpCharacterAcceleration();
         }
@@ -350,7 +350,8 @@ public class CombatScript : MonoBehaviour
     void LerpCharacterAcceleration()
     {
         movementInput.acceleration = 0;
-        DOVirtual.Float(0, movementInput.firstAcceleration, 0.4f, ((acceleration)=> movementInput.acceleration = acceleration));
+        DOVirtual.Float(0, movementInput.firstAcceleration, 1f, ((acceleration)=> movementInput.acceleration = acceleration));
+
      }
 
     bool isLastHit()
