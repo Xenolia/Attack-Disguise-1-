@@ -88,6 +88,5 @@ public class AttackButtonController : MonoBehaviour
         textObj.SetActive(true);
         image.enabled = true;
         button.enabled = true;
-
     }
 }

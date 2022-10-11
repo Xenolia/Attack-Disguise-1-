@@ -681,30 +681,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2860150665121038191, guid: b79f84b500bf42041aa91c83df705f42,
-        type: 3}
-      propertyPath: totalHealth
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 5816502685461592882, guid: b79f84b500bf42041aa91c83df705f42,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000003980088
+      value: -7.123662e-15
       objectReference: {fileID: 0}
     - target: {fileID: 5816502685461592882, guid: b79f84b500bf42041aa91c83df705f42,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000013865282
+      value: 4.095084e-15
       objectReference: {fileID: 0}
     - target: {fileID: 5816502685847873743, guid: b79f84b500bf42041aa91c83df705f42,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000015896623
+      value: -0.000000015896623
       objectReference: {fileID: 0}
     - target: {fileID: 5816502685847873743, guid: b79f84b500bf42041aa91c83df705f42,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000065845964
+      value: 0.0000000065845964
       objectReference: {fileID: 0}
     - target: {fileID: 5816502686624162525, guid: b79f84b500bf42041aa91c83df705f42,
         type: 3}
@@ -714,7 +709,7 @@ PrefabInstance:
     - target: {fileID: 5816502686624162525, guid: b79f84b500bf42041aa91c83df705f42,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 5816502686852533287, guid: b79f84b500bf42041aa91c83df705f42,
         type: 3}
@@ -1076,7 +1071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d677f1681015749b15c436eec6d880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovementRange: 150
+  m_MovementRange: 90
   m_ControlPath: <Gamepad>/leftStick
 --- !u!114 &1112812294
 MonoBehaviour:

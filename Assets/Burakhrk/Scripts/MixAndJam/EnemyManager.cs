@@ -171,8 +171,10 @@ public class EnemyManager : MonoBehaviour
 
         for (int i = 0; i < allEnemies.Length; i++)
         {
-            allEnemies[i].enemyScript = enemies[i];
-         }
+            allEnemies[i].enemyScript = enemies[i]; 
+            allEnemies[i].enemyAvailability = true;
+
+        }
 
         int count = 0;
         for (int i = 0; i < allEnemies.Length; i++)

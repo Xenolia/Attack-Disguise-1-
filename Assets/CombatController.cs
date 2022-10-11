@@ -20,5 +20,6 @@ public class CombatController : MonoBehaviour
     public void ChangeMechanicToAuto()
     {
         autoDetector.SetActive(true);
+       
     }
 }
