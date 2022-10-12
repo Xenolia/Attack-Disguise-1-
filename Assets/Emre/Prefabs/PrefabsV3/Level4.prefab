@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d373e18fddaa47d29b0f7e4d2775306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies: []
   allEnemies: []
   aliveEnemyCount: 0
 --- !u!1 &92870303777629995
@@ -634,7 +635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &92870304219722676
 Transform:
   m_ObjectHideFlags: 0
@@ -1907,10 +1908,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
-  abcPrefab: {fileID: 0}
-  enemyDetection: {fileID: 0}
+  abcPrefab: {fileID: 2620911811255270826, guid: 21c99f1bb65fe48e284e8f89660f04d9,
+    type: 3}
+  enemyDetection: {fileID: 294680566657202647}
   canvas: {fileID: 0}
-  enemyScript: []
+  enemyManager: {fileID: 92870303758793083}
 --- !u!1 &5817728945064658023
 GameObject:
   m_ObjectHideFlags: 0

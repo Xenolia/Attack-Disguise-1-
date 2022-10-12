@@ -8,7 +8,8 @@ public class BattleTrigger : MonoBehaviour
     [SerializeField] GameObject abcPrefab;
     [SerializeField] EnemyDetection enemyDetection;
     [SerializeField] Canvas canvas;
-    [SerializeField] EnemyScript[] enemyScript; 
+    [SerializeField] EnemyManager enemyManager;
+    EnemyScript[] enemyScript; 
     private void Awake()
     {
         if (!battleManager)
@@ -29,6 +30,8 @@ public class BattleTrigger : MonoBehaviour
 
     void CreateButtons()
     {
+
+        enemyScript = enemyManager.enemies;
         foreach (var enemy in enemyScript)
         {
             var abc = Instantiate(abcPrefab, canvas.transform);

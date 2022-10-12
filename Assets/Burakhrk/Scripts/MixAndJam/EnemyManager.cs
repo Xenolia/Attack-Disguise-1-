@@ -5,10 +5,7 @@ using UnityEngine.UI;
  
 public class EnemyManager : MonoBehaviour
 {
-    EnemyDetection enemyDetection;
-
-
-    private EnemyScript[] enemies;
+    public EnemyScript[] enemies;
     public EnemyStruct[] allEnemies;
     private List<int> enemyIndexes;
 

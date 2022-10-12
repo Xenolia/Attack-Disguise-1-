@@ -94,6 +94,7 @@ public class Watcher : EnemyAI
             return;
 
         SetAnim(false,false);
+        PlayerSeen();
 
         Debug.Log("Pew Pew!");
     }
@@ -107,7 +108,7 @@ public class Watcher : EnemyAI
             player.GetComponent<CombatController>().ChangeMechanicToButton();
             EnemyScript enemyScript = GetComponent<EnemyScript>();
             enemyScript.enabled = true;
-            enemyScript.OnBattle=true;
+          
             enemyScript.SetAttackAfterWatcher();
             var sightObject = lineOfSight.gameObject;
             Destroy(sightObject);

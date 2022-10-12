@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 1938440265}
   m_Layer: 9
   m_Name: AutoDetector
-  m_TagString: Player
+  m_TagString: Detector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 1936083428}
   - component: {fileID: 658287548187378548}
   - component: {fileID: 1903528181}
+  - component: {fileID: 128608635727228921}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -662,7 +663,7 @@ MonoBehaviour:
   takeDamagePos: {fileID: 6884889258801696049}
   takeDamageParticle: {fileID: 949887553587673454}
   lastHitCamera: {fileID: 0}
-  lastHitFocusObject: {fileID: 6109414691055030765}
+  lastHitFocusObject: {fileID: 0}
   OnTrajectory:
     m_PersistentCalls:
       m_Calls: []
@@ -721,6 +722,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90bfb942d135347be8a81fa5f065a2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &128608635727228921
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6109414691055030761}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6260814378528525445
 GameObject:
   m_ObjectHideFlags: 0

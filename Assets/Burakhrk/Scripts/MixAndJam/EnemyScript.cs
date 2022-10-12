@@ -12,6 +12,7 @@ public class EnemyScript : MonoBehaviour
     BattleManager battleManager;
     public bool OnBattle = false;
     public bool isTarget = false;
+    public bool watcherEnemy=false;
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
@@ -207,6 +208,7 @@ public class EnemyScript : MonoBehaviour
             StopEnemyCoroutines();
             isLockedTarget = true;
             PrepareAttack(false);
+            isTarget = false;
             StopMoving();
         }
     }
@@ -285,6 +287,9 @@ public class EnemyScript : MonoBehaviour
     }
     public void SetAttackAfterWatcher()
     {
+        OnBattle = true;
+
+        watcherEnemy = true;
         StartCoroutine(SetAttackWatcherNumerator());
         MoveEnemyWatcher();
     }
@@ -293,7 +298,7 @@ public class EnemyScript : MonoBehaviour
         if (isDead)
             yield break;
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2);
         MoveEnemyWatcher();
         StartCoroutine(SetAttackWatcherNumerator());
     }
@@ -409,7 +414,7 @@ public class EnemyScript : MonoBehaviour
              
             })
                 .OnComplete(() => {
-                    Debug.LogError("getting in range completed");
+                    Debug.Log("getting in range completed");
                 isMoving = false;
                 if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
                 {

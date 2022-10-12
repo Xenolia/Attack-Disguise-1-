@@ -21,46 +21,11 @@ public class DetectorPlayer : MonoBehaviour
                 return;
             if(other.gameObject.GetComponent<Watcher>().isDead==false&&watcher.enabled)
             {
-                Debug.LogError("Enemy Detected");
+                Debug.Log("Enemy Detected");
                 target = other.GetComponent<Watcher>();
                 autoAttack.AttackCheck(target);
 
             }
         }
     }
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        if (target)
-            return;
-
-        if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<Watcher>())
-        {
-            if (other.gameObject.GetComponent<Watcher>().isDead == false)
-            {
-                Debug.LogError("Enemy Detected");
-                target = other.GetComponent<Watcher>();
-                GetComponentInParent<AutoAttack>().AttackCheck(target);
-
-            }
-        }
-    }
-    */
-    /*
-    private void Update()
-    {
-        if (!target)
-            return;
-
-        if (counter > 0)
-            counter = counter - Time.deltaTime;
-
-        if (counter < 0)
-        {
-            target = null;
-            counter = 1.5f;
-        }
-    }
-    */
-
 }

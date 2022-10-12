@@ -8,9 +8,34 @@ public class WatcherDetector : MonoBehaviour
     [SerializeField] float detectDurationReturn;
     [SerializeField] LineOfSight line;
     Transform target;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (target == other.transform)
+                return;
+
+            target = other.transform;
+          
+                 line.AddTarget(other.transform);
+             
+        }
+        /*
+        if (other.gameObject.CompareTag("Detector"))
+        {
+            if (target == other.transform.parent)
+                return;
+
+            target = other.transform.parent;
+           
+                line.AddTarget(other.transform.parent);
+        }
+        */
+    }
+    /*
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player") )
         {
             if (target == other.transform)
                 return;
@@ -22,7 +47,20 @@ public class WatcherDetector : MonoBehaviour
             {
                 line.AddTarget(other.transform);
                 detectDuration = detectDurationReturn;
+            }
+        }
+        if (other.gameObject.CompareTag("Detector"))
+        {
+            if (target == other.transform.parent)
+                return;
 
+            target = other.transform.parent;
+            if (detectDuration > 0)
+                detectDuration = detectDuration - Time.deltaTime;
+            else
+            {
+                line.AddTarget(other.transform.parent);
+                detectDuration = detectDurationReturn;
             }
         }
     }
@@ -32,5 +70,10 @@ public class WatcherDetector : MonoBehaviour
         {
             detectDuration = detectDurationReturn;
         }
+        if (other.GetComponent<DetectorPlayer>() != null)
+        {
+            detectDuration = detectDurationReturn;
+        }
     }
+    */
 }

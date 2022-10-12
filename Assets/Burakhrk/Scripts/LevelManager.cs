@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public GameObject[] Levels;
     [SerializeField] int levelNo = 1;
-
+    [SerializeField] bool instantiate = false;
     private void Awake()
     {
 
@@ -19,7 +19,14 @@ public class LevelManager : MonoBehaviour
             PlayerPrefs.SetInt("Level", 1);
             levelNo = 1;
         }
-         LoadLevel(levelNo);
+
+       
+
+        if (instantiate)
+         CreateLevel(levelNo);
+        else
+            LoadLevel(levelNo);
+
     }
     public void LoadLevel(int levelNo)
     {
@@ -28,15 +35,34 @@ public class LevelManager : MonoBehaviour
             item.SetActive(false);
         }
         int openLevelIndex;
-        openLevelIndex = ((levelNo%Levels.Length));
+        openLevelIndex = ((levelNo % Levels.Length));
         if (openLevelIndex != 0)
             openLevelIndex--;
         else
-            openLevelIndex = 4;
+            openLevelIndex = Levels.Length;
 
-         Debug.Log("openlevel Index  " + openLevelIndex);
+        Debug.Log("openlevel Index  " + openLevelIndex);
          Levels[openLevelIndex].SetActive(true);
         Debug.Log("level no  "+levelNo);
+        GetComponentInChildren<UIManager>().SetLevelText(levelNo);
+    }
+    void CreateLevel(int levelNo)
+    {
+        int openLevelIndex;
+        openLevelIndex = ((levelNo % Levels.Length));
+        if (openLevelIndex != 0)
+            openLevelIndex--;
+        else
+            openLevelIndex = Levels.Length;
+
+        foreach (var item in Levels)
+        {
+            GameObject garbage = item;
+            if (item != Levels[openLevelIndex])
+                Destroy(garbage);
+        }
+        Levels[openLevelIndex].SetActive(true);
+        Debug.Log("level no  " + levelNo);
         GetComponentInChildren<UIManager>().SetLevelText(levelNo);
     }
     public void NextLevel()

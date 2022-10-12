@@ -9,12 +9,12 @@ public class UIButtonController : MonoBehaviour
     [SerializeField] GameObject abcPrefab;
     [SerializeField] Canvas canvas;
       EnemyDetection enemyDetection;
-    private void Awake()
-    {
-        enemyDetection = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<EnemyDetection>();
-    }
+   
+ 
     public void CreateButton(EnemyScript enemy)
     {
+        enemyDetection = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<EnemyDetection>();
+
         var abc = Instantiate(abcPrefab, canvas.transform);
         abc.GetComponentInChildren<AttackButtonController>().Init(enemy, enemyDetection);
     }

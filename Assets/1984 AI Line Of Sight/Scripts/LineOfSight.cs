@@ -20,7 +20,7 @@ public class LineOfSight : MonoBehaviour
     private MeshRenderer _meshR;
 
     public bool Use2DPhysics;
-
+    [SerializeField] GameObject[] destroyWithSelfObj;
     void Start()
     {
         _viewMesh = new Mesh {name = "View Mesh"};
@@ -42,7 +42,13 @@ public class LineOfSight : MonoBehaviour
             FindVisibleTargets();
         }
     }
-
+    private void OnDisable()
+    {
+        foreach (var asd in destroyWithSelfObj)
+        {
+            Destroy(asd);
+        }
+    }
     void LateUpdate()
     {
         DrawFieldOfView();

@@ -85,12 +85,14 @@ public class CombatScript : MonoBehaviour
     {
         if(movementInput.enabled==false)
         {
+            /*
             attackEndDoubleCheckCounter = attackEndDoubleCheckCounter - Time.deltaTime;
             if(attackEndDoubleCheckCounter<=0)
             {
                 AttackEnd();
                 attackEndDoubleCheckCounter = attackCooldown;
             }
+            */
         }
        // lockedTarget = enemyDetection.CurrentTarget();
     }
@@ -162,7 +164,7 @@ public class CombatScript : MonoBehaviour
         yield return new WaitForSeconds(1);
         movementInput.enabled = true;
         enemyManager.StartAI();
-
+         isAttackingEnemy = false;
         animator.speed = 1;
 
     }
@@ -197,7 +199,7 @@ public class CombatScript : MonoBehaviour
             AttackStart();
            
             yield return new WaitForSeconds(duration);
-            isAttackingEnemy = false;           
+             AttackEnd();
             LerpCharacterAcceleration();
         }
 
@@ -214,8 +216,6 @@ public class CombatScript : MonoBehaviour
             Time.timeScale = 1f;
  
         }
-
-
     }
 
     void MoveTorwardsTarget(EnemyScript target, float duration)
@@ -287,7 +287,10 @@ public class CombatScript : MonoBehaviour
         enemyDetection.CurrentTarget().OnPlayerHitBurak();
         //Polish
         punchParticle.PlayParticleAtPosition(punchPosition.position);
+        /*
+        if(!isLastHit())
          AttackEnd();
+        */
      }
 
     public void DamageEvent()
@@ -352,13 +355,16 @@ public class CombatScript : MonoBehaviour
         movementInput.acceleration = 0;
         DOVirtual.Float(0, movementInput.firstAcceleration, 1f, ((acceleration)=> movementInput.acceleration = acceleration));
 
-     }
+    }
 
     bool isLastHit()
     {
         if (lockedTarget == null)
             return false;
-
+        if(lockedTarget.GetComponent<EnemyScript>().watcherEnemy==true)
+        {
+            return false;
+        }
         return enemyManager.AliveEnemyCount() == 1 && lockedTarget.health <= 1;
     }
     public void Attack2()
