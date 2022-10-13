@@ -81,21 +81,7 @@ public class CombatScript : MonoBehaviour
         OnBattle = false;
 
     }
-    private void LateUpdate()
-    {
-        if(movementInput.enabled==false)
-        {
-            /*
-            attackEndDoubleCheckCounter = attackEndDoubleCheckCounter - Time.deltaTime;
-            if(attackEndDoubleCheckCounter<=0)
-            {
-                AttackEnd();
-                attackEndDoubleCheckCounter = attackCooldown;
-            }
-            */
-        }
-       // lockedTarget = enemyDetection.CurrentTarget();
-    }
+   
     //This function gets called whenever the player inputs the punch action
     void AttackCheck()
     {
@@ -166,13 +152,12 @@ public class CombatScript : MonoBehaviour
         enemyManager.StartAI();
          isAttackingEnemy = false;
         animator.speed = 1;
-
+                GameManager.Instance.EnableControl();
+      //  transform.DORotate(new Vector3(0, transform.rotation.y, transform.rotation.z), 0.3f);
     }
     void AttackEnd()
     {
        
-        transform.DORotate(new Vector3(0, transform.rotation.y, transform.rotation.z),0.3f);
-        GameManager.Instance.EnableControl();
         StartCoroutine(AttackEndNumerator());
 
     }
@@ -315,7 +300,8 @@ public class CombatScript : MonoBehaviour
     void HealthCheck()
     {
         health.TakeDamage(1);
-         GameManager.Instance.EnableControl();
+        
+        // GameManager.Instance.EnableControl();
 
  
         takeDamageParticle.transform.position = takeDamagePos.transform.position;

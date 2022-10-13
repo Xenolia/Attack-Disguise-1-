@@ -28,7 +28,7 @@ public class LevelEndManager : MonoBehaviour
         if(safeGate)
         {
             safeGate.transform.DORotate
-                (new Vector3(safeGate.transform.rotation.x, safeGate.transform.rotation.y + 120, safeGate.transform.rotation.z), 1, RotateMode.LocalAxisAdd);
+                (new Vector3(safeGate.transform.rotation.x, safeGate.transform.rotation.y + 105, safeGate.transform.rotation.z), 1, RotateMode.LocalAxisAdd);
         }
     }
 }

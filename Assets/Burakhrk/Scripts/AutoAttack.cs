@@ -75,15 +75,15 @@ public class AutoAttack : MonoBehaviour
     IEnumerator AttackNumerator()
     {
         if (attackString == "AirPunch")
-            yield return new WaitForSeconds(1.4f);
+            yield return new WaitForSecondsRealtime(1.4f);
 
         if (attackString=="AirKick")
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSecondsRealtime(1.4f);
 
         if (attackString == "AirKick2")
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSecondsRealtime(0.8f);
         if (attackString == "AirKick3")
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSecondsRealtime(0.8f);
 
         isAttacking = false;
         isVisible = true;

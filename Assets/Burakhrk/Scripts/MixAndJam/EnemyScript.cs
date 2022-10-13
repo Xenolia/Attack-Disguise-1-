@@ -12,7 +12,7 @@ public class EnemyScript : MonoBehaviour
     BattleManager battleManager;
     public bool OnBattle = false;
     public bool isTarget = false;
-    public bool watcherEnemy=false;
+    public bool watcherEnemy = false;
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
@@ -52,7 +52,7 @@ public class EnemyScript : MonoBehaviour
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         characterController = GetComponent<CharacterController>();
         playerCombat = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatScript>();
-
+        animator = GetComponent<Animator>();
     }
     private void OnEnable()
     {
@@ -79,7 +79,6 @@ public class EnemyScript : MonoBehaviour
     {
         enemyManager = GetComponentInParent<EnemyManager>();
 
-        animator = GetComponent<Animator>();
 
         enemyDetection = playerCombat.GetComponentInChildren<EnemyDetection>();
 
@@ -124,7 +123,7 @@ public class EnemyScript : MonoBehaviour
             //Only moves if the direction is set
             if (!isTarget && enemyManager)
                 MoveEnemy(moveDirection);
-        } 
+        }
     }
     public void OnPlayerHitBurak()
     {
@@ -229,7 +228,7 @@ public class EnemyScript : MonoBehaviour
 
 
         Destroy(characterController);
-         animator.SetTrigger("Death");
+        animator.SetTrigger("Death");
 
         if (enemyManager)
             enemyManager.SetEnemyAvailiability(this, false);
@@ -240,7 +239,7 @@ public class EnemyScript : MonoBehaviour
         }
         EnemyScript enemyScriptGarbage = this;
         Destroy(enemyScriptGarbage);
-     }
+    }
 
     public void SetRetreat()
     {
@@ -379,7 +378,7 @@ public class EnemyScript : MonoBehaviour
     public float dirMultiplier = 0.6f;
     void MoveEnemyWatcher()
     {
-        if (isPreparingAttack||isDead)
+        if (isPreparingAttack || isDead)
             return;
 
         dir = playerCombat.transform.position - transform.position;
@@ -390,7 +389,7 @@ public class EnemyScript : MonoBehaviour
             //  StopMoving();
             if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
             {
-                isPreparingAttack = true;
+                PrepareAttack(true);
                 Attack();
             }
             else
@@ -400,36 +399,48 @@ public class EnemyScript : MonoBehaviour
         {
             if (isMoving)
                 return;
-            isPreparingAttack = false;
-            transform.DOMove((transform.position + (dirMultiplier * dir)), (dist / 5))
+            PrepareAttack(false);
+            transform.DOMove((transform.position + (dirMultiplier * dir)), (dist / 6))
                 .OnStart(() => {
-                isMoving = true;
-            })
+                    isMoving = true;
+                })
                 .OnUpdate(() =>
-            {
-                float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
-
-                Debug.Log("getting close to player ");
-                    animator.SetFloat("InputMagnitude", 10*dist, .2f, Time.deltaTime);
-             
-            })
-                .OnComplete(() => {
-                    Debug.Log("getting in range completed");
-                isMoving = false;
-                if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
                 {
-                    isPreparingAttack = true;
-                    Attack();
-                }
-                else
-                    PrepareAttack(false);
-            });
+                    float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
+
+                    Debug.Log("getting close to player ");
+                    animator.SetFloat("InputMagnitude", 10 * dist, .2f, Time.deltaTime);
+
+                })
+                .OnComplete(() => {
+                    float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
+                    if (dist < attackRange)
+                    {
+                        Debug.Log("getting in range completed");
+                        StopMoving();
+                        isMoving = false;
+
+                        if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+                        {
+                           PrepareAttack(true);
+                            Attack();
+                        }
+                        else
+                            PrepareAttack(false);
+                    }
+                    else
+                    {
+                        MoveEnemyWatcher();
+                    }
+                });
+
+
         }
 
     }
     private void Attack()
     {
-         if (playerCombat.isDead)
+        if (playerCombat.isDead)
             return;
 
         isMoving = false;

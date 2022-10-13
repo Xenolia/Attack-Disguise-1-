@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4934394654407947327}
   - component: {fileID: 8332250975378923389}
   - component: {fileID: 4134158533318071248}
-  - component: {fileID: 2631047545168350999}
   m_Layer: 0
   m_Name: futuristic-building5
   m_TagString: Untagged
@@ -84,17 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2631047545168350999
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945737411285780604}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5843023122139551005, guid: 1cebc9e09a629d03e882b5db93756f34, type: 3}

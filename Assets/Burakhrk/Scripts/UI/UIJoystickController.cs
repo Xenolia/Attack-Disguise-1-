@@ -22,7 +22,7 @@ public class UIJoystickController : MonoBehaviour
     public void EnableJoyStick()
     {
         stickEnabled = true;
-
+        
         _initParamaters.JoystickImage.enabled = true;
         _initParamaters.JoystickImageBackground.enabled = true;
     }

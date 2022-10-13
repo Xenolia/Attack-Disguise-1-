@@ -15,6 +15,8 @@ public class Watcher : EnemyAI
      public enum MovementDirection {RightLeft, UpDown };
    public MovementDirection movementDirection;
     [SerializeField] float range=2;
+    [SerializeField] int sideRange = 1;
+
     public Material seenMaterial, unseenMaterial;
     public bool isDead = false;
     public bool isTarget = false;
@@ -49,7 +51,7 @@ public class Watcher : EnemyAI
         if (isDead||isTarget)
             return;
 
-        if ((rb.position - targetPos).magnitude >= 0.5f)
+        if ((rb.position - targetPos).magnitude >= 0.3f)
         {
             MoveTo(targetPos);
 
@@ -57,10 +59,22 @@ public class Watcher : EnemyAI
         else
         {
             if(movementDirection==MovementDirection.RightLeft)
-            targetPos=(firstPos + new Vector3(Random.Range(-range, range), 0, 0));
+            {
+                if(transform.position.magnitude-targetPos.magnitude>0)
+                targetPos = (firstPos + new Vector3(Random.Range(0, range), 0, Random.Range(-sideRange, sideRange)));
+                else
+                    targetPos = (firstPos + new Vector3(Random.Range(-range, 0), 0, Random.Range(-sideRange, sideRange)));
+
+            }
 
             if (movementDirection == MovementDirection.UpDown)
-                targetPos = (firstPos + new Vector3(0, 0, Random.Range(-range, range)));
+            {
+                if (transform.position.magnitude - targetPos.magnitude > 0)
+                    targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(0, range)));
+                else
+                    targetPos = (firstPos + new Vector3(Random.Range(-sideRange,sideRange), 0, Random.Range(-range, 0)));
+
+            }
             lineOfSight.SetMaterial(unseenMaterial);
         }
     }

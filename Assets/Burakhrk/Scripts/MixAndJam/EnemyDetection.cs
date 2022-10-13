@@ -54,9 +54,12 @@ public class EnemyDetection : MonoBehaviour
     public void SetNewTarget(EnemyScript target)
     {
          if (combatScript.isAttackingEnemy)
+        {
             return;
+        }
 
- 
+
+
         currentTarget = target;
              combatScript.Attack2();
 

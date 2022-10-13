@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
             PlayerPrefs.SetInt("Level", 1);
             levelNo = 1;
         }
-
+     //   Debug.Log(Levels.Length);
        
 
         if (instantiate)
@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour
         if (openLevelIndex != 0)
             openLevelIndex--;
         else
-            openLevelIndex = Levels.Length;
+            openLevelIndex = Levels.Length-1;
 
         Debug.Log("openlevel Index  " + openLevelIndex);
          Levels[openLevelIndex].SetActive(true);
@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
         if (openLevelIndex != 0)
             openLevelIndex--;
         else
-            openLevelIndex = Levels.Length;
+            openLevelIndex = Levels.Length-1;
 
         foreach (var item in Levels)
         {

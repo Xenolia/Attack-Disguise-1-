@@ -17,9 +17,15 @@ public class AttackButtonController : MonoBehaviour
     bool workOnce = true;
     MovementInput movementInput;
     UIButtonController UIButton;
+
+
+    public float multiplier;
+    float screenHeight;
     private void Awake()
     {
         UIButton = GetComponentInParent<UIButtonController>();
+        screenHeight = Screen.height;
+        multiplier = screenHeight / 1080;
     }
     public void Init(EnemyScript enemy, EnemyDetection enemyDetection)
     {
@@ -28,7 +34,13 @@ public class AttackButtonController : MonoBehaviour
         targetTransform = enemy.transform;
         enemyScript = enemy;
         GetComponent<Button>().onClick.AddListener(() => enemyDetection.SetNewTarget(enemy));
+        GetComponent<Button>().onClick.AddListener(() => DisableMovement());
+
         UpdateButtonPos(targetTransform);
+    }
+    void DisableMovement()
+    {
+        GameManager.Instance.DisableControl();
     }
     private void OnEnable()
     {
@@ -40,8 +52,7 @@ public class AttackButtonController : MonoBehaviour
     }
     private void Update()
     {
-
-        if (enemyScript.isDead)
+         if (enemyScript.isDead)
         {
             if (workOnce)
             {
@@ -62,9 +73,9 @@ public class AttackButtonController : MonoBehaviour
 
     private void UpdateButtonPos(Transform enemyTransform)
     {
-
+     
         Vector3 targetPosition = Camera.main.WorldToScreenPoint(enemyTransform.position);
-        targetPosition = targetPosition + offsetY;
+        targetPosition = targetPosition + offsetY*multiplier;
         transform.position = targetPosition;
         //   Debug.LogError(ScaleCalculator());
     }

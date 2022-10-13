@@ -8,7 +8,6 @@ public class EnemyManager : MonoBehaviour
     public EnemyScript[] enemies;
     public EnemyStruct[] allEnemies;
     private List<int> enemyIndexes;
-
     [Header("Main AI Loop - Settings")]
     private Coroutine AI_Loop_Coroutine;
 
@@ -71,8 +70,15 @@ public class EnemyManager : MonoBehaviour
             attackingEnemy = RandomEnemy();
 
         if (attackingEnemy == null)
+        {
+            if(AliveEnemyCount()>0)
+            {
+                Debug.LogError("Attacking enemy null problem here");
+              //  Time.timeScale = 0;
+            }
             yield break;
-            
+        }
+
         yield return new WaitUntil(()=>attackingEnemy.IsRetreating() == false);
         yield return new WaitUntil(() => attackingEnemy.IsLockedTarget() == false);
         yield return new WaitUntil(() => attackingEnemy.IsStunned() == false);

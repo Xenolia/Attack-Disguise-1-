@@ -58,11 +58,14 @@ public class GameManager : MonoBehaviour
     }
     public void EnableControl()
     {
-         uIButton.EnableAllButtons();
+        Debug.Log("Enable Control Button");
+
+        uIButton.EnableAllButtons();
         joystickController.EnableJoyStick();
     }
     public void DisableControl()
     {
+        Debug.Log("Disable Control Button");
         uIButton.DisableAllButtons();
         joystickController.DisableJoyStick();
 

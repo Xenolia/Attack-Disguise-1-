@@ -584,7 +584,7 @@ MonoBehaviour:
   firstAcceleration: 0
   moveAxis: {x: 0, y: 0}
   allowMovement: 1
-  movementSpeed: 3
+  movementSpeed: 2.6
   rotationSpeed: 100
   fallSpeed: 0.2
   acceleration: 1
@@ -663,7 +663,7 @@ MonoBehaviour:
   takeDamagePos: {fileID: 6884889258801696049}
   takeDamageParticle: {fileID: 949887553587673454}
   lastHitCamera: {fileID: 0}
-  lastHitFocusObject: {fileID: 0}
+  lastHitFocusObject: {fileID: 6109414691055030765}
   OnTrajectory:
     m_PersistentCalls:
       m_Calls: []

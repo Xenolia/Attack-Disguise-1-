@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4253379223439561515}
   - component: {fileID: 3721859625528382364}
   - component: {fileID: 3474076125362509298}
-  - component: {fileID: 6402350524660477781}
   m_Layer: 0
   m_Name: panel4
   m_TagString: Untagged
@@ -84,17 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6402350524660477781
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2205686467399580872}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1584572485937648577, guid: 67768b946a60962dbbe202f1268ae2d8, type: 3}
