@@ -173,6 +173,7 @@ Transform:
   - {fileID: 92870303958788065}
   - {fileID: 92870304773340443}
   - {fileID: 5685742707520501426}
+  - {fileID: 92870305300999220}
   m_Father: {fileID: 92870304219722676}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1178,7 +1179,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92870305114731173}
-  m_LocalRotation: {x: 0.38268346, y: -1e-45, z: -0, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268346, y: 3e-45, z: -1e-45, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1404,6 +1405,7 @@ GameObject:
   - component: {fileID: 92870305300999223}
   - component: {fileID: 92870305300999222}
   - component: {fileID: 92870305300999113}
+  - component: {fileID: 2886036995947513300}
   m_Layer: 0
   m_Name: Fog
   m_TagString: Untagged
@@ -1419,12 +1421,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92870305300999112}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.53, y: 7.84, z: 2.06}
+  m_LocalPosition: {x: -2.8, y: 7.84, z: 1.6}
   m_LocalScale: {x: 333, y: 246.2, z: 333}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6161189574296074227}
-  m_RootOrder: 9
+  m_Father: {fileID: 92870303890870414}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &92870305300999223
 MeshFilter:
@@ -1490,6 +1492,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2886036995947513300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92870305300999112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ea38128c8e448b5820e50d7864ea90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6161189574296074231}
 --- !u!1 &92870305396177143
 GameObject:
   m_ObjectHideFlags: 0
@@ -4764,6 +4779,12 @@ MonoBehaviour:
 --- !u!4 &6161189574296074227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6109414691055030765, guid: a43a632c76f894d30bb72c415e3bf3e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 92870303799223838}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6161189574296074231 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6109414691055030761, guid: a43a632c76f894d30bb72c415e3bf3e8,
     type: 3}
   m_PrefabInstance: {fileID: 92870303799223838}
   m_PrefabAsset: {fileID: 0}
