@@ -584,7 +584,7 @@ MonoBehaviour:
   firstAcceleration: 0
   moveAxis: {x: 0, y: 0}
   allowMovement: 1
-  movementSpeed: 2.6
+  movementSpeed: 2.3
   rotationSpeed: 100
   fallSpeed: 0.2
   acceleration: 1

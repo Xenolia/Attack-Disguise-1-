@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public bool controlEnabled=true;
     EnemyManager enemyManager;
      public UIManager uIManager;
     UIJoystickController joystickController;
@@ -39,11 +40,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         enemyManager = GameObject.FindGameObjectWithTag("Enemy").GetComponentInParent<EnemyManager>();
-
     }
     public void LevelWin()
     {
-        Debug.LogError("Win level");
+        Debug.Log("Win level");
         Time.timeScale = 0;
         DisableControl();
         uIManager.ActivateWinPanel();
@@ -62,12 +62,14 @@ public class GameManager : MonoBehaviour
 
         uIButton.EnableAllButtons();
         joystickController.EnableJoyStick();
+        controlEnabled = true;
     }
     public void DisableControl()
     {
         Debug.Log("Disable Control Button");
         uIButton.DisableAllButtons();
         joystickController.DisableJoyStick();
+        controlEnabled = false;
 
     }
     private void Update()

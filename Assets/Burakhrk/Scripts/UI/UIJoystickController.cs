@@ -30,7 +30,7 @@ public class UIJoystickController : MonoBehaviour
     private void Update()
     {
         
-        if (Input.GetMouseButton(0)&&stickEnabled)
+        if (Input.GetMouseButton(0)&&stickEnabled&&GameManager.Instance.controlEnabled)
         {
             // if (!EventSystem.current.IsPointerOverGameObject())
            //     return;

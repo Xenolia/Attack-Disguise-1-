@@ -8,11 +8,12 @@ public class LevelEndManager : MonoBehaviour
     BattleManager battleManager;
     private void Awake()
     {
-        battleManager = GameManager.Instance.gameObject.GetComponent<BattleManager>();
-
+        battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
     }
     private void OnEnable()
     {
+      
+
         battleManager.OnBattleFinished += SafeGateAnim;
     }
     private void OnDisable()
@@ -23,7 +24,7 @@ public class LevelEndManager : MonoBehaviour
     {
          GameManager.Instance.LevelWin();
     }
-   public void SafeGateAnim()
+   private void SafeGateAnim()
     {
         if(safeGate)
         {

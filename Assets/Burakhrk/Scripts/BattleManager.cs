@@ -6,7 +6,7 @@ public  class BattleManager :MonoBehaviour
 {
    public UnityAction  OnBattle;
     public UnityAction OnBattleFinished;
-
+  
     public bool Trigger = false;
  
     public void OnBattleInvoke()
@@ -17,8 +17,13 @@ public  class BattleManager :MonoBehaviour
     }
     public void BattleFinished()
     {
-        OnBattleFinished?.Invoke();
+        if(Trigger)
+        {
+            OnBattleFinished?.Invoke();
 
-        Debug.Log("Battle end");
+            Debug.Log("Battle end");
+            Trigger = false;
+        }
+     
     }
 }

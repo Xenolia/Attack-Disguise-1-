@@ -860,6 +860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnBattle: 0
   isTarget: 0
+  watcherEnemy: 0
   isDead: 0
   health: 2
   retreatDistance: 3
@@ -879,7 +880,7 @@ MonoBehaviour:
   OnRetreat:
     m_PersistentCalls:
       m_Calls: []
-  attackRange: 1.7
+  attackRange: 1.2
   dirMultiplier: 0.6
 --- !u!1 &6459073995764573621
 GameObject:

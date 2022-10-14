@@ -7,16 +7,16 @@ public class EnemyDetection : MonoBehaviour
     private MovementInput movementInput;
     [SerializeField] CombatScript combatScript;
 
- //   public LayerMask layerMask;
+    //   public LayerMask layerMask;
 
     [SerializeField] Vector3 inputDirection;
     [SerializeField] private EnemyScript currentTarget;
     BattleManager battleManager;
     public GameObject cam;
-     private void Start()
+    private void Start()
     {
         movementInput = GetComponentInParent<MovementInput>();
-         battleManager = GameManager.Instance.GetComponent<BattleManager>();
+        battleManager = GameManager.Instance.GetComponent<BattleManager>();
     }
 
     private void Update()
@@ -44,24 +44,22 @@ public class EnemyDetection : MonoBehaviour
         }
         */
     }
- 
+
     public EnemyScript CurrentTarget()
     {
         return currentTarget;
     }
 
- 
+
     public void SetNewTarget(EnemyScript target)
     {
-         if (combatScript.isAttackingEnemy)
+        if (combatScript.isAttackingEnemy)
         {
             return;
         }
 
-
-
         currentTarget = target;
-             combatScript.Attack2();
+        combatScript.Attack2();
 
     }
     public float InputMagnitude()

@@ -150,6 +150,7 @@ public class EnemyScript : MonoBehaviour
         IEnumerator HitCoroutine()
         {
             isStunned = true;
+            isMoving = false;
             yield return new WaitForSeconds(.5f);
             isStunned = false;
         }
@@ -362,8 +363,16 @@ public class EnemyScript : MonoBehaviour
         characterController.Move(movedir);
         Debug.Log(" Enemy moved checking is preparing attack ");
 
-        if (!isPreparingAttack)
+       
+            if (!isPreparingAttack)
+        {
+            if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
+            {
+                PrepareAttack(true);
+            }
             return;
+
+        }
 
         if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
         {
