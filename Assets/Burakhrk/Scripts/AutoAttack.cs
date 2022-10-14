@@ -13,7 +13,7 @@ public class AutoAttack : MonoBehaviour
     private string[] attacks;
     [SerializeField] float attackCooldown;
 
-
+    MovementInput movementInput;
     [SerializeField] private Transform punchPosition;
     [SerializeField] private ParticleSystemScript punchParticle;
     [SerializeField] float range;
@@ -25,6 +25,7 @@ public class AutoAttack : MonoBehaviour
     {
         animator = GetComponent<Animator>();
        range= GetComponentInChildren<DetectorPlayer>().gameObject.GetComponent<SphereCollider>().radius;
+        movementInput = GetComponent<MovementInput>();
      }
     public void AttackCheck(Watcher watcher)
     {
@@ -61,7 +62,7 @@ public class AutoAttack : MonoBehaviour
     }
     void AttackStart()
     {
-        GetComponent<MovementInput>().enabled = false;
+        movementInput.enabled = false;
          target.isTarget = true;
         target.DoIdle();
         isAttacking = true;
@@ -75,21 +76,47 @@ public class AutoAttack : MonoBehaviour
     IEnumerator AttackNumerator()
     {
         if (attackString == "AirPunch")
-            yield return new WaitForSecondsRealtime(1.4f);
+        {
+            yield return new WaitForSecondsRealtime(0.9f);
+            isAttacking = false;
+            isVisible = true;
+            readyToAttack = true;
+          
+            yield return new WaitForSecondsRealtime(0.2f);
+
+        }
 
         if (attackString=="AirKick")
-        yield return new WaitForSecondsRealtime(1.4f);
+        {
+            yield return new WaitForSecondsRealtime(1);
+            isAttacking = false;
+            isVisible = true;
+            readyToAttack = true;
+ 
+             yield return new WaitForSecondsRealtime(0.2f);
+        }
 
         if (attackString == "AirKick2")
-            yield return new WaitForSecondsRealtime(0.8f);
+        {
+            yield return new WaitForSecondsRealtime(0.6f);
+            isAttacking = false;
+            isVisible = true;
+            readyToAttack = true;
+ 
+             yield return new WaitForSecondsRealtime(0.2f);
+        }
         if (attackString == "AirKick3")
-            yield return new WaitForSecondsRealtime(0.8f);
+        {
+            yield return new WaitForSecondsRealtime(0.6f);
+            isAttacking = false;
+            isVisible = true;
+            readyToAttack = true;
+ 
+             yield return new WaitForSecondsRealtime(0.2f);
+        }
 
-        isAttacking = false;
-        isVisible = true;
-        readyToAttack = true;
-        GetComponent<MovementInput>().enabled = true;
-
+       movementInput.enabled = true;
+        
         GameManager.Instance.EnableControl();
         Debug.Log("attack done");
         animator.speed = 1F;

@@ -38,7 +38,7 @@ public class CombatScript : MonoBehaviour
     private Coroutine counterCoroutine;
     private Coroutine attackCoroutine;
     private Coroutine damageCoroutine;
-
+    string attackString;
     [Space]
 
     //Events
@@ -123,7 +123,7 @@ public class CombatScript : MonoBehaviour
         if (distance < 3)
         {
             animationCount = (int)Mathf.Repeat((float)animationCount + 1, (float)attacks.Length);
-            string attackString = isLastHit() ? attacks[Random.Range(0, attacks.Length)] : attacks[animationCount];
+             attackString = isLastHit() ? attacks[Random.Range(0, attacks.Length)] : attacks[animationCount];
             AttackType(attackString, attackCooldown, target, .65f);
             Debug.Log("Close attack");
         }
@@ -147,19 +147,57 @@ public class CombatScript : MonoBehaviour
      }
     IEnumerator AttackEndNumerator()
     {
-        yield return new WaitForSeconds(1);
-        movementInput.enabled = true;
-        enemyManager.StartAI();
-         isAttackingEnemy = false;
+        if (attackString == "AirPunch")
+        {
+            yield return new WaitForSeconds(0.8f);
+            movementInput.enabled = true;
+            enemyManager.StartAI();
+            isAttackingEnemy = false;
+            GameManager.Instance.EnableControl();
+
+            yield return new WaitForSeconds(0.2f);
+
+        }
+
+        if (attackString == "AirKick")
+        {
+            yield return new WaitForSeconds(0.7f);
+            movementInput.enabled = true;
+            enemyManager.StartAI();
+            isAttackingEnemy = false;
+            GameManager.Instance.EnableControl();
+            yield return new WaitForSeconds(0.2f);
+
+        }
+
+        if (attackString == "AirKick2")
+        {
+            yield return new WaitForSeconds(0.5f);
+            movementInput.enabled = true;
+            enemyManager.StartAI();
+            isAttackingEnemy = false;
+            GameManager.Instance.EnableControl();
+            yield return new WaitForSeconds(0.2f);
+
+        }
+        if (attackString == "AirKick3")
+        {
+            yield return new WaitForSeconds(0.4f);
+            movementInput.enabled = true;
+            enemyManager.StartAI();
+            isAttackingEnemy = false;
+            GameManager.Instance.EnableControl();
+            yield return new WaitForSeconds(0.2f);
+
+        }
+
+    
         animator.speed = 1;
-                GameManager.Instance.EnableControl();
       //  transform.DORotate(new Vector3(0, transform.rotation.y, transform.rotation.z), 0.3f);
     }
     void AttackEnd()
     {
-       
         StartCoroutine(AttackEndNumerator());
-
     }
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)
