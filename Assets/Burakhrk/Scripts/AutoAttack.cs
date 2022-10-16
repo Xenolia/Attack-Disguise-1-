@@ -77,7 +77,7 @@ public class AutoAttack : MonoBehaviour
     {
         if (attackString == "AirPunch")
         {
-            yield return new WaitForSecondsRealtime(0.9f);
+            yield return new WaitForSecondsRealtime(1.1f);
             isAttacking = false;
             isVisible = true;
             readyToAttack = true;

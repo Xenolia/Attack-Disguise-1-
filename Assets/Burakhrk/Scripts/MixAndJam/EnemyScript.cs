@@ -23,7 +23,7 @@ public class EnemyScript : MonoBehaviour
     [Header("Stats")]
     public bool isDead = false;
     public int health = 3;
-    private float moveSpeed = 1;
+    [SerializeField] float moveSpeed = 1;
     private Vector3 moveDirection;
     public float retreatDistance = 2;
     [Header("States")]
@@ -123,6 +123,17 @@ public class EnemyScript : MonoBehaviour
             //Only moves if the direction is set
             if (!isTarget && enemyManager)
                 MoveEnemy(moveDirection);
+
+            else if(characterController.velocity.magnitude==0)
+            {
+                isMoving = false;
+                MoveEnemyWatcher();
+            }
+            else if(isMoving)
+            {
+                MoveEnemyWatcher();
+            }
+
         }
     }
     public void OnPlayerHitBurak()
@@ -383,67 +394,36 @@ public class EnemyScript : MonoBehaviour
                 PrepareAttack(false);
         }
     }
-    Vector3 dir;
-    public float dirMultiplier = 0.6f;
+     public float dirMultiplier = 0.6f;
     void MoveEnemyWatcher()
     {
-        if (isPreparingAttack || isDead)
+        if (IsPreparingAttack() || isDead)
             return;
 
-        dir = playerCombat.transform.position - transform.position;
+ 
         float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
 
         if (dist < attackRange)
         {
+            isMoving = false;
+            animator.SetFloat("InputMagnitude", 0);
+
             //  StopMoving();
             if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
             {
                 PrepareAttack(true);
                 Attack();
             }
-            else
-                PrepareAttack(false);
         }
         else
         {
-            if (isMoving)
-                return;
+           
             PrepareAttack(false);
-            transform.DOMove((transform.position + (dirMultiplier * dir)), (dist / 6))
-                .OnStart(() => {
-                    isMoving = true;
-                })
-                .OnUpdate(() =>
-                {
-                    float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
-
-                    Debug.Log("getting close to player ");
-                    animator.SetFloat("InputMagnitude", 10 * dist, .2f, Time.deltaTime);
-
-                })
-                .OnComplete(() => {
-                    float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
-                    if (dist < attackRange)
-                    {
-                        Debug.Log("getting in range completed");
-                        StopMoving();
-                        isMoving = false;
-
-                        if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
-                        {
-                           PrepareAttack(true);
-                            Attack();
-                        }
-                        else
-                            PrepareAttack(false);
-                    }
-                    else
-                    {
-                        MoveEnemyWatcher();
-                    }
-                });
-
-
+             characterController.Move(transform.forward*moveSpeed*3*Time.deltaTime);
+            animator.SetFloat("InputMagnitude", (characterController.velocity.normalized.magnitude));
+            isMoving = true;
+            Debug.Log("getting in range ");
+           
         }
 
     }
@@ -459,28 +439,8 @@ public class EnemyScript : MonoBehaviour
         if (dist <= attackRange)
         {
             animator.SetTrigger("AirPunch");
-            PrepareAttack(false);
         }
-
-        else
-            PrepareAttack(false);
-
-        /*
-        else
-
-            transform.DOMove((transform.position + (dirMultiplier/2 * dir)), (dist / 5)).OnComplete(() => { isMoving = false; }).OnUpdate(() =>
-            {
-
-                animator.SetFloat("InputMagnitude",5, .15f, Time.deltaTime);
-                float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
-
-            }).OnComplete(() =>
-            {
-                if (dist < attackRange)
-                    animator.SetTrigger("AirPunch");
-            });
-        */
-
+        PrepareAttack(false); 
     }
 
     public void HitEvent()

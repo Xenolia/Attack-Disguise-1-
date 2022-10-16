@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Burakhrk/Scenes/Xenolia_Scene.unity
+    guid: 95d8d061d89d8403f999e3fb9affb2b1
+  - enabled: 1
     path: Assets/Burakhrk/Scenes/GameScene.unity
     guid: 4143d7b99250e473f8b4f21c1a7aaafb
   m_configObjects: {}

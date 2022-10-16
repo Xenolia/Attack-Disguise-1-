@@ -149,7 +149,7 @@ public class CombatScript : MonoBehaviour
     {
         if (attackString == "AirPunch")
         {
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(1f);
             movementInput.enabled = true;
             enemyManager.StartAI();
             isAttackingEnemy = false;
