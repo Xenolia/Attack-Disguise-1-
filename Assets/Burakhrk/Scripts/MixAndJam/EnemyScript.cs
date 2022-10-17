@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using MoreMountains.NiceVibrations;
 
 public class EnemyScript : MonoBehaviour
 {
@@ -154,6 +155,8 @@ public class EnemyScript : MonoBehaviour
 
         isLockedTarget = false;
         OnDamage.Invoke(this);
+
+        MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
 
         health--;
  

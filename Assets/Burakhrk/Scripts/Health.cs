@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using MoreMountains.NiceVibrations;
 public class Health : MonoBehaviour
 {
       [SerializeField] float totalHealth;
@@ -25,7 +26,8 @@ public class Health : MonoBehaviour
     public void TakeDamage(int Damage)
     {
         totalHealth = (totalHealth - Damage);
-        if (totalHealth <= 0)
+        MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
+         if (totalHealth <= 0)
         {
             combatScript.Dead();
             totalHealth = 0;

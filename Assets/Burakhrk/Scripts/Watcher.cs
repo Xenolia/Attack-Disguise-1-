@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.NiceVibrations;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -163,6 +164,8 @@ public class Watcher : EnemyAI
     public void TakeDamage()
     {
         SetAnim(false, true);
+        MMVibrationManager.Haptic(HapticTypes.HeavyImpact);
+
         isDead = true;
          Debug.Log("watcher dead");
         DeadSituation();
