@@ -79,6 +79,7 @@ public class LineOfSight : MonoBehaviour
                 }
             }
         }
+        /*
         else
         {
             Collider2D[] targetsInViewRadius = new Collider2D[5];
@@ -97,6 +98,7 @@ public class LineOfSight : MonoBehaviour
                 }
             }
         }
+        */
     }
     public void AddTarget(Transform transform)
     {

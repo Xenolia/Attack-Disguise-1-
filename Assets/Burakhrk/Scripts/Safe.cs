@@ -6,7 +6,9 @@ using System;
 public class Safe : MonoBehaviour
 {
     [SerializeField] GameObject safeKapak;
-     [SerializeField] float safeOpenDuration;
+    [SerializeField] GameObject donenSey;
+
+    [SerializeField] float safeOpenDuration;
     [SerializeField] float moneyExplosionDuration;
 
     [SerializeField] ParticleSystem[] explosionParticles;
@@ -21,9 +23,15 @@ public class Safe : MonoBehaviour
     }
     void OpenSafe()
     {
-        safeKapak.transform.DORotate(new Vector3(0,130,0),safeOpenDuration,RotateMode.LocalAxisAdd).SetEase(SafeOpenEase);
-        StartCoroutine(WaitForParticle());
+        StartCoroutine(DonenSey());
+    }
+    IEnumerator  DonenSey()
+    {
+        donenSey.transform.DOLocalRotate(new Vector3(0,0, -600), safeOpenDuration, RotateMode.LocalAxisAdd).SetEase(SafeOpenEase);
 
+        yield return new WaitForSeconds(0.2f);
+        safeKapak.transform.DOLocalRotate(new Vector3(0, 0, 90), safeOpenDuration, RotateMode.LocalAxisAdd).SetEase(SafeOpenEase);
+        StartCoroutine(WaitForParticle());
     }
     IEnumerator WaitForParticle()
     {

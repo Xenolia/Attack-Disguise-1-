@@ -13,10 +13,14 @@ public class EnemyScript : MonoBehaviour
     public bool OnBattle = false;
     public bool isTarget = false;
     public bool watcherEnemy = false;
+   [SerializeField] float attackTimer=2;
+    [SerializeField] float attackTimerReturn=2;
+
+    [SerializeField] bool allowAttack=false;
     //Declarations
     private Animator animator;
     private CombatScript playerCombat;
-    private EnemyManager enemyManager;
+    [SerializeField] EnemyManager enemyManager;
     private EnemyDetection enemyDetection;
     private CharacterController characterController;
 
@@ -117,24 +121,30 @@ public class EnemyScript : MonoBehaviour
     {
         if (OnBattle && !isDead)
         {
+            if (attackTimer > 0  )
+            {
+                 attackTimer = attackTimer - Time.deltaTime;
+            }
+            if (attackTimer <= 0 && !allowAttack)
+            {
+                allowAttack = true;
+                attackTimer = attackTimerReturn;
+            }
             //Constantly look at player
             transform.LookAt(new Vector3(playerCombat.transform.position.x, transform.position.y, playerCombat.transform.position.z));
 
             //Only moves if the direction is set
             if (!isTarget && enemyManager)
+            {
                 MoveEnemy(moveDirection);
-
-            else if(characterController.velocity.magnitude==0)
-            {
-                isMoving = false;
-                MoveEnemyWatcher();
+                return;
             }
-            else if(isMoving)
+            
+             else if(!enemyManager)
             {
                 MoveEnemyWatcher();
             }
-
-        }
+         }
     }
     public void OnPlayerHitBurak()
     {
@@ -146,7 +156,7 @@ public class EnemyScript : MonoBehaviour
         OnDamage.Invoke(this);
 
         health--;
-
+ 
         if (health <= 0)
         {
             Death();
@@ -164,9 +174,15 @@ public class EnemyScript : MonoBehaviour
             isMoving = false;
             yield return new WaitForSeconds(.5f);
             isStunned = false;
+
+            if (!enemyManager)
+                isMoving = true;
         }
         isTarget = false;
         SetRetreat();
+
+        if(!enemyManager)
+        isMoving = true;
     }
     //Listened event from Player Animation
     void OnPlayerHit(EnemyScript target)
@@ -274,9 +290,18 @@ public class EnemyScript : MonoBehaviour
             isRetreating = false;
             StopMoving();
 
-            //Free 
-            isWaiting = true;
-            MovementCoroutine = StartCoroutine(EnemyMovement());
+            //Free
+            if(enemyManager)
+            {
+                isWaiting = true;
+
+                MovementCoroutine = StartCoroutine(EnemyMovement());
+            }
+            else
+            {
+                isMoving = true;
+            }
+         
         }
     }
 
@@ -301,19 +326,20 @@ public class EnemyScript : MonoBehaviour
         OnBattle = true;
 
         watcherEnemy = true;
-        StartCoroutine(SetAttackWatcherNumerator());
+       // StartCoroutine(SetAttackWatcherNumerator());
         MoveEnemyWatcher();
     }
+    /*
     IEnumerator SetAttackWatcherNumerator()
     {
         if (isDead)
             yield break;
-
-        yield return new WaitForSeconds(2);
-        MoveEnemyWatcher();
-        StartCoroutine(SetAttackWatcherNumerator());
-    }
-
+        yield return new WaitUntil(() => allowAttack == true);
+ 
+                MoveEnemyWatcher();
+                StartCoroutine(SetAttackWatcherNumerator());
+     }
+    */
     void PrepareAttack(bool active)
     {
         if (isDead)
@@ -348,10 +374,7 @@ public class EnemyScript : MonoBehaviour
         animator.SetFloat("InputMagnitude", (characterController.velocity.normalized.magnitude * direction.z) / (5 / moveSpeed), .2f, Time.deltaTime);
         animator.SetBool("Strafe", (direction == Vector3.right || direction == Vector3.left));
         animator.SetFloat("StrafeDirection", direction.normalized.x, .2f, Time.deltaTime);
-
-        //Don't do anything if isMoving is false
-        if (!isMoving)
-            return;
+ 
 
         Vector3 dir = (playerCombat.transform.position - transform.position).normalized;
         Vector3 pDir = Quaternion.AngleAxis(90, Vector3.up) * dir; //Vector perpendicular to direction
@@ -372,29 +395,48 @@ public class EnemyScript : MonoBehaviour
         movedir += finalDirection * moveSpeed * Time.deltaTime;
 
         characterController.Move(movedir);
-        Debug.Log(" Enemy moved checking is preparing attack ");
+ 
+        /*
+             if (!isPreparingAttack)
+         {
+             if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
+             {
+                 PrepareAttack(true);
+             }
+             return;
 
-       
-            if (!isPreparingAttack)
-        {
-            if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
-            {
-                PrepareAttack(true);
-            }
+         }
+        */
+        if (!allowAttack||attackTimer>0)
             return;
-
-        }
-
         if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
         {
-            StopMoving();
-            if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+            Debug.LogError("Attack called for " + transform.name);
+                StopMoving();
+                if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+            {
+                Debug.LogError("Fuxkibn porblem here  " + transform.name);
                 Attack();
-            else
-                PrepareAttack(false);
+
+            }
         }
     }
-     public float dirMultiplier = 0.6f;
+    bool setAttack=false;
+    IEnumerator WaitForAllowAttack()
+    {
+        if (setAttack)
+            yield break;
+        setAttack = true;
+
+        yield return  new WaitUntil(() => allowAttack == true);
+        setAttack = false;
+        StopMoving();
+        if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
+            Attack();
+        else
+            PrepareAttack(false);
+     }
+    public float dirMultiplier = 0.6f;
     void MoveEnemyWatcher()
     {
         if (IsPreparingAttack() || isDead)
@@ -408,20 +450,14 @@ public class EnemyScript : MonoBehaviour
             isMoving = false;
             animator.SetFloat("InputMagnitude", 0);
 
-            //  StopMoving();
-            if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
-            {
-                PrepareAttack(true);
-                Attack();
-            }
+            if(!setAttack)
+                StartCoroutine(WaitForAllowAttack());
         }
         else
         {
-           
-            PrepareAttack(false);
-             characterController.Move(transform.forward*moveSpeed*3*Time.deltaTime);
-            animator.SetFloat("InputMagnitude", (characterController.velocity.normalized.magnitude));
             isMoving = true;
+               characterController.Move(transform.forward*moveSpeed*3*Time.deltaTime);
+            animator.SetFloat("InputMagnitude", (characterController.velocity.normalized.magnitude));
             Debug.Log("getting in range ");
            
         }
@@ -429,18 +465,19 @@ public class EnemyScript : MonoBehaviour
     }
     private void Attack()
     {
-        if (playerCombat.isDead)
+        if (playerCombat.isDead||!allowAttack)
             return;
-
-        isMoving = false;
-
+         Debug.Log("Attack called");
+        allowAttack = false;
+        
         float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
 
         if (dist <= attackRange)
         {
-            animator.SetTrigger("AirPunch");
+              animator.SetTrigger("AirPunch");
         }
-        PrepareAttack(false); 
+        PrepareAttack(false);
+
     }
 
     public void HitEvent()
@@ -456,11 +493,7 @@ public class EnemyScript : MonoBehaviour
         isMoving = false;
         moveDirection = Vector3.zero;
         animator.SetFloat("InputMagnitude", 0);
-
-        /*
-        if (characterController)
-            characterController.Move(moveDirection);
-        */
+ 
     }
 
     void StopEnemyCoroutines()

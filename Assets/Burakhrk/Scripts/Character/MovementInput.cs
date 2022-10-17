@@ -39,7 +39,7 @@ public class MovementInput : MonoBehaviour
 
         _jummoActions = new JammoActions();
         _jummoActions.Player.Enable();
-        anim = this.GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         cam = Camera.main;
         controller = this.GetComponent<CharacterController>();
     }
@@ -86,7 +86,6 @@ public class MovementInput : MonoBehaviour
         }
 	
         InputMagnitude();
-
 		isGrounded = controller.isGrounded;
 
 		if (isGrounded)
@@ -107,8 +106,7 @@ public class MovementInput : MonoBehaviour
 		if(anim.speed!=1)
         anim.speed = 1;
 
-        var camera = Camera.main;
-		var forward = cam.transform.forward;
+ 		var forward = cam.transform.forward;
 		var right = cam.transform.right;
 
 		forward.y = 0f;

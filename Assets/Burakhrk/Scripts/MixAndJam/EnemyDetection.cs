@@ -53,7 +53,7 @@ public class EnemyDetection : MonoBehaviour
 
     public void SetNewTarget(EnemyScript target)
     {
-        if (combatScript.isAttackingEnemy)
+        if (combatScript.isAttackingEnemy||combatScript.isDead)
         {
             return;
         }

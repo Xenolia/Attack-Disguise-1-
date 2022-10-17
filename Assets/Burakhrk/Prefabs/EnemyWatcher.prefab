@@ -279,7 +279,7 @@ MonoBehaviour:
     m_Bits: 1
   visibleTargets: []
   furtherFrontier: {x: 0, y: 0, z: 1}
-  meshResolution: 10
+  meshResolution: 2
   Use2DPhysics: 0
   destroyWithSelfObj:
   - {fileID: 3139902695287407754}
@@ -1086,8 +1086,13 @@ MonoBehaviour:
   OnBattle: 0
   isTarget: 0
   watcherEnemy: 0
+  attackTimer: 0
+  attackTimerReturn: 3
+  allowAttack: 0
+  enemyManager: {fileID: 0}
   isDead: 0
   health: 2
+  moveSpeed: 1
   retreatDistance: 2
   isPreparingAttack: 0
   isMoving: 0

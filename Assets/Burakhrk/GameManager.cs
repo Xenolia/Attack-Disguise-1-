@@ -12,10 +12,11 @@ public class GameManager : MonoBehaviour
     UIJoystickController joystickController;
     [SerializeField] UIButtonController uIButton;
     LevelManager levelManager;
-     private void Awake()
+    float enableCounter;
+    bool isControlEnabled;
+      private void Awake()
     {
-
-        if (Instance != null && Instance != this)
+         if (Instance != null && Instance != this)
         {
             Destroy(this);
         }
@@ -58,6 +59,8 @@ public class GameManager : MonoBehaviour
     }
     public void EnableControl()
     {
+        enableCounter = 0;
+        isControlEnabled = true;
         Debug.Log("Enable Control Button");
 
         uIButton.EnableAllButtons();
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour
     }
     public void DisableControl()
     {
+        isControlEnabled = false;
+
         Debug.Log("Disable Control Button");
         uIButton.DisableAllButtons();
         joystickController.DisableJoyStick();
@@ -82,6 +87,18 @@ public class GameManager : MonoBehaviour
         {
             levelManager.NextLevel();
         }
+        if(!isControlEnabled)
+        {
+            enableCounter = enableCounter + Time.deltaTime;
+            if(enableCounter>=5)
+            {
+                ForceEnableControl();
+            }
+        }
+    }
+    void ForceEnableControl()
+    {
+        EnableControl();
     }
 }
 

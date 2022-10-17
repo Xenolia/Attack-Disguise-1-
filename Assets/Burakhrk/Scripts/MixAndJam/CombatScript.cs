@@ -338,19 +338,27 @@ public class CombatScript : MonoBehaviour
     void HealthCheck()
     {
         health.TakeDamage(1);
-        
+
+        movementInput.enabled = true;
+         isAttackingEnemy = false;
+        GameManager.Instance.EnableControl();
         // GameManager.Instance.EnableControl();
 
- 
+
         takeDamageParticle.transform.position = takeDamagePos.transform.position;
         takeDamageParticle.GetComponent<ParticleSystem>().Play();
     }
    public void Dead()
     {
         animator.SetTrigger("Death");
-        battleManager.gameObject.GetComponent<GameManager>().LevelFail();
+        StartCoroutine(WaitForDeadAnim());
     }
+    IEnumerator WaitForDeadAnim()
+    {
+        yield return new WaitForSeconds(1.5f);
+        battleManager.gameObject.GetComponent<GameManager>().LevelFail();
 
+    }
     EnemyScript ClosestCounterEnemy()
     {
         float minDistance = 100;

@@ -705,7 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04655e75244c644159a08a92de999ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalHealth: 10
+  totalHealth: 5
   healthMultiplier: 0
   takeDamageDuration: 0.8
   healthBar: {fileID: 8244456561206107096}
