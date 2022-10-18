@@ -27,6 +27,7 @@ public class LineOfSight : MonoBehaviour
         GetComponent<MeshFilter>().mesh = _viewMesh;
         _meshR = GetComponent<MeshRenderer>();
         StartCoroutine(FindTargetsWithDelay(.2f));
+        DFOVInit();
     }
 
     public void SetMaterial(Material m)
@@ -105,16 +106,36 @@ public class LineOfSight : MonoBehaviour
         if(!visibleTargets.Contains(transform))
         visibleTargets.Add(transform);
     }
-    void DrawFieldOfView()
+
+    int vertexCount;
+    Vector3[] vertices;
+    int[] triangles;
+    List<Vector3> viewPoints = new List<Vector3>();
+    float stepAngleSize;
+    int stepCount;
+    float angle;
+    float maxDist;
+    ViewCastInfo newViewCast;
+
+    void DFOVInit()
     {
-        int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
-        float stepAngleSize = viewAngle / stepCount;
-        List<Vector3> viewPoints = new List<Vector3>();
-        float maxDist = -1;
+        stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
+        stepAngleSize = viewAngle / stepCount;
+
+        vertexCount = stepCount + 1;
+        vertices = new Vector3[vertexCount];
+        triangles = new int[(vertexCount - 2) * 3];
+
+    }
+
+    private void FixedUpdate()
+    {
+        viewPoints.Clear();
+        maxDist = -1;
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = - viewAngle / 2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = ViewCast(angle);
+            angle = -viewAngle * 0.5f + stepAngleSize * i;
+            newViewCast = ViewCast(angle);
             if (newViewCast.dst > maxDist)
             {
                 maxDist = newViewCast.dst;
@@ -123,12 +144,15 @@ public class LineOfSight : MonoBehaviour
 
             viewPoints.Add(newViewCast.point);
         }
+    }
 
-        int vertexCount = viewPoints.Count + 1;
-        Vector3[] vertices = new Vector3[vertexCount];
-        int[] triangles = new int[(vertexCount - 2) * 3];
+    void DrawFieldOfView()
+    {
+
+        if (viewPoints.Count != vertexCount) return;
 
         vertices[0] = Vector3.zero;
+
         for (int i = 0; i < vertexCount - 1; i++)
         {
             vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
@@ -140,6 +164,7 @@ public class LineOfSight : MonoBehaviour
             }
         }
 
+        viewPoints.Clear();
         _viewMesh.Clear();
         _viewMesh.vertices = vertices;
         _viewMesh.triangles = triangles;

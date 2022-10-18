@@ -366,7 +366,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, playerCombat.transform.position) >= attackRange)
         {
-            Debug.Log("Move Enemy");
+          //  Debug.Log("Move Enemy");
             //Set movespeed based on direction
             moveSpeed = 1;
 
@@ -427,7 +427,7 @@ public class EnemyScript : MonoBehaviour
         {
             animator.SetFloat("InputMagnitude", 0);
 
-            Debug.Log("Attack called for " + transform.name);
+           // Debug.Log("Attack called for " + transform.name);
             StopMoving();
             if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
             {
@@ -473,7 +473,7 @@ public class EnemyScript : MonoBehaviour
             isMoving = true;
             characterController.Move(transform.forward * moveSpeed * 3 * Time.deltaTime);
             animator.SetFloat("InputMagnitude", (characterController.velocity.normalized.magnitude));
-            Debug.Log("getting in range ");
+          //  Debug.Log("getting in range ");
 
         }
 
@@ -482,7 +482,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (playerCombat.isDead || !allowAttack)
             return;
-        Debug.Log("Attack called");
+      //  Debug.Log("Attack called");
         allowAttack = false;
 
         float dist = Vector3.Distance(playerCombat.transform.position, transform.position);
