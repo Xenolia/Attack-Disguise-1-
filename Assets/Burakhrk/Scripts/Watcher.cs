@@ -125,6 +125,7 @@ public class Watcher : EnemyAI
             enemyScript.enabled = true;
           
             enemyScript.SetAttackAfterWatcher();
+            player.GetComponent<Health>().ShowHealth();
             var sightObject = lineOfSight.gameObject;
             Destroy(sightObject);
             Watcher watcher = this;

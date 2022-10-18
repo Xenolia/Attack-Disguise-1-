@@ -8,7 +8,7 @@ public class MovementInput : MonoBehaviour
     public bool OnBattle = false;
 	private float firstSpeed;
     public float firstAcceleration;
-
+	Health health;
     private Animator anim;
 	private Camera cam;
 	private CharacterController controller;
@@ -42,6 +42,7 @@ public class MovementInput : MonoBehaviour
         anim = GetComponent<Animator>();
         cam = Camera.main;
         controller = this.GetComponent<CharacterController>();
+	 
     }
     private void OnEnable()
     {
@@ -59,10 +60,10 @@ public class MovementInput : MonoBehaviour
     {
         OnBattle = true;
         anim.SetFloat("InputMagnitude", 0);
-     }
+      }
 	void OnBattleFinished()
     {
-		Debug.Log("battle end for movement");
+ 		Debug.Log("battle end for movement");
         OnBattle = false;
  		acceleration = firstAcceleration;
     }

@@ -7,6 +7,9 @@ using Cinemachine;
  
 public class CombatScript : MonoBehaviour
 {
+    float isAttackingCounter=3;
+     float isAttackingCounterReturner=3;
+
     Health health;
     BattleManager battleManager;
     public bool OnBattle=false;
@@ -81,7 +84,25 @@ public class CombatScript : MonoBehaviour
         OnBattle = false;
 
     }
-   
+    private void Update()
+    {
+        if (!OnBattle)
+            return;
+
+        if(!isAttackingEnemy)
+        {
+            isAttackingCounter = isAttackingCounterReturner;
+        }
+        if(isAttackingEnemy&&isAttackingCounter>0)
+        {
+            isAttackingCounter = isAttackingCounter - Time.deltaTime;
+        }
+        if(isAttackingEnemy&&isAttackingCounter<=0)
+        {
+            isAttackingEnemy = false;
+            isAttackingCounter = isAttackingCounterReturner;
+        }
+    }
     //This function gets called whenever the player inputs the punch action
     void AttackCheck()
     {
@@ -351,6 +372,7 @@ public class CombatScript : MonoBehaviour
    public void Dead()
     {
         animator.SetTrigger("Death");
+        GameManager.Instance.DisableControl();
         StartCoroutine(WaitForDeadAnim());
     }
     IEnumerator WaitForDeadAnim()

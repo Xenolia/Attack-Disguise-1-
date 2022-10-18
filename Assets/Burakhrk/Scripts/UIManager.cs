@@ -30,6 +30,6 @@ using DG.Tweening;
 
 
         healthBar.fillAmount = health * healthMultiplier;
-        healthText.text = health*healthMultiplier + " / " + "100";
+       // healthText.text = health*healthMultiplier + " / " + "100";
     }
 }

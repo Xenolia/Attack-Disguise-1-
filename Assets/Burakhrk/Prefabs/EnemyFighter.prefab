@@ -861,7 +861,7 @@ MonoBehaviour:
   OnBattle: 0
   isTarget: 0
   watcherEnemy: 0
-  attackTimer: 0
+  attackTimer: 1
   attackTimerReturn: 3
   allowAttack: 0
   enemyManager: {fileID: 0}

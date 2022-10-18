@@ -25,7 +25,7 @@ public class AttackButtonController : MonoBehaviour
     {
         UIButton = GetComponentInParent<UIButtonController>();
         screenHeight = Screen.height;
-        multiplier = screenHeight / 1080;
+        multiplier = 16 / 9;
     }
     public void Init(EnemyScript enemy, EnemyDetection enemyDetection)
     {
