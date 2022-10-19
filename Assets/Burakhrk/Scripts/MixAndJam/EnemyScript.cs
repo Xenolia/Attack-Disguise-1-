@@ -414,16 +414,17 @@ public class EnemyScript : MonoBehaviour
 
          }
         */
-       
+        float dist = Vector3.Distance(transform.position, playerCombat.transform.position);
         if (!allowAttack || attackTimer > 0)
         {
-            if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
+            if (dist < attackRange)
             {
+                if(dist<=1.1f)
                 animator.SetFloat("InputMagnitude", 0);
              }
             return;
         }
-        if (Vector3.Distance(transform.position, playerCombat.transform.position) < attackRange)
+        if (dist < attackRange)
         {
             animator.SetFloat("InputMagnitude", 0);
 

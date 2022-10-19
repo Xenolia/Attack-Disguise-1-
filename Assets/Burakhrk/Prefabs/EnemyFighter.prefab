@@ -862,8 +862,8 @@ MonoBehaviour:
   isTarget: 0
   watcherEnemy: 0
   attackTimer: 1
-  attackTimerReturn: 3
-  allowAttack: 0
+  attackTimerReturn: 2.5
+  allowAttack: 1
   enemyManager: {fileID: 0}
   isDead: 0
   health: 2

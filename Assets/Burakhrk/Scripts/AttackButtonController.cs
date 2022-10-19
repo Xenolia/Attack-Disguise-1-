@@ -25,7 +25,7 @@ public class AttackButtonController : MonoBehaviour
     {
         UIButton = GetComponentInParent<UIButtonController>();
         screenHeight = Screen.height;
-        multiplier = 16 / 9;
+        multiplier = Screen.height / Screen.width;
     }
     public void Init(EnemyScript enemy, EnemyDetection enemyDetection)
     {
@@ -73,7 +73,7 @@ public class AttackButtonController : MonoBehaviour
 
     private void UpdateButtonPos(Transform enemyTransform)
     {
-     
+       
         Vector3 targetPosition = Camera.main.WorldToScreenPoint(enemyTransform.position);
         targetPosition = targetPosition + offsetY*multiplier;
         transform.position = targetPosition;
@@ -96,6 +96,9 @@ public class AttackButtonController : MonoBehaviour
     }
     public void EnableButton()
     {
+        if (Time.timeScale != 1)
+            return;
+
         textObj.SetActive(true);
         image.enabled = true;
         button.enabled = true;

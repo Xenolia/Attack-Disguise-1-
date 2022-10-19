@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     bool isControlEnabled;
       private void Awake()
     {
+        Application.targetFrameRate = 30;
          if (Instance != null && Instance != this)
         {
             Destroy(this);

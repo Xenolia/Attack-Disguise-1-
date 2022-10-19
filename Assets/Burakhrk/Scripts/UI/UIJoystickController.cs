@@ -21,6 +21,9 @@ public class UIJoystickController : MonoBehaviour
     }
     public void EnableJoyStick()
     {
+        if (Time.timeScale != 1)
+            return;
+
         stickEnabled = true;
         
         _initParamaters.JoystickImage.enabled = true;
