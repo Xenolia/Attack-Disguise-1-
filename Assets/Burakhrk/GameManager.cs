@@ -62,8 +62,7 @@ public class GameManager : MonoBehaviour
     {
         enableCounter = 0;
         isControlEnabled = true;
-        Debug.Log("Enable Control Button");
-
+ 
         uIButton.EnableAllButtons();
         joystickController.EnableJoyStick();
         controlEnabled = true;
@@ -72,8 +71,7 @@ public class GameManager : MonoBehaviour
     {
         isControlEnabled = false;
 
-        Debug.Log("Disable Control Button");
-        uIButton.DisableAllButtons();
+         uIButton.DisableAllButtons();
         joystickController.DisableJoyStick();
         controlEnabled = false;
 

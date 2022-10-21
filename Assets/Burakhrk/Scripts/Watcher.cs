@@ -47,36 +47,74 @@ public class Watcher : EnemyAI
     }
     private Vector3 lastMove;
 
+ 
+ 
     internal override void DoPatrol()
     {
         if (isDead||isTarget)
             return;
-
+      
         if ((rb.position - targetPos).magnitude >= 0.3f)
         {
-            MoveTo(targetPos);
-
+             MoveTo(targetPos);
         }
         else
         {
-            if(movementDirection==MovementDirection.RightLeft)
-            {
-                if(transform.position.magnitude-targetPos.magnitude>0)
-                targetPos = (firstPos + new Vector3(Random.Range(0, range), 0, Random.Range(-sideRange, sideRange)));
-                else
-                    targetPos = (firstPos + new Vector3(Random.Range(-range, 0), 0, Random.Range(-sideRange, sideRange)));
+            Debug.LogError(transform.name + " new pos ");
 
+
+             while ((rb.position - targetPos).magnitude <= 0.3f)
+            {
+                animator.SetFloat("InputMagnitude", 0);
+
+                if (movementDirection == MovementDirection.RightLeft)
+                {
+                    if (transform.position.magnitude - targetPos.magnitude > 0)
+                        targetPos = (firstPos + new Vector3(Random.Range(0, range), 0, Random.Range(-sideRange, sideRange)));
+                    else
+                        targetPos = (firstPos + new Vector3(Random.Range(-range, 0), 0, Random.Range(-sideRange, sideRange)));
+
+                }
+
+                if (movementDirection == MovementDirection.UpDown)
+                {
+                    if (transform.position.magnitude - targetPos.magnitude > 0)
+                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(0, range)));
+                    else
+                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(-range, 0)));
+
+                }
             }
 
-            if (movementDirection == MovementDirection.UpDown)
+        }
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.forward), out hit, range / 5))
+        {
+  
+ 
+            while ((rb.position - targetPos).magnitude <= 0.3f)
             {
-                if (transform.position.magnitude - targetPos.magnitude > 0)
-                    targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(0, range)));
-                else
-                    targetPos = (firstPos + new Vector3(Random.Range(-sideRange,sideRange), 0, Random.Range(-range, 0)));
+                animator.SetFloat("InputMagnitude", 0);
 
+                if (movementDirection == MovementDirection.RightLeft)
+                {
+                    if (transform.position.magnitude - targetPos.magnitude > 0)
+                        targetPos = (firstPos + new Vector3(Random.Range(0, range), 0, Random.Range(-sideRange, sideRange)));
+                    else
+                        targetPos = (firstPos + new Vector3(Random.Range(-range, 0), 0, Random.Range(-sideRange, sideRange)));
+
+                }
+
+                if (movementDirection == MovementDirection.UpDown)
+                {
+                    if (transform.position.magnitude - targetPos.magnitude > 0)
+                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(0, range)));
+                    else
+                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(-range, 0)));
+
+                }
             }
-            lineOfSight.SetMaterial(unseenMaterial);
         }
     }
 
@@ -85,8 +123,7 @@ public class Watcher : EnemyAI
         if (isDead)
             return;
 
-        lineOfSight.SetMaterial(unseenMaterial);
-        SetAnim(false,false);
+         SetAnim(false,false);
         return;
     }
 
@@ -140,7 +177,7 @@ public class Watcher : EnemyAI
         SetAnim(true,false);
         Vector3 delta = (pos - transform.position).normalized;
           rb.MoveRotation(Quaternion.Slerp(rb.rotation, Quaternion.LookRotation(delta),
-           Time.fixedDeltaTime * movementSpeed));
+           Time.fixedDeltaTime * movementSpeed*(1.5f)));
        rb.MovePosition(Vector3.Lerp(rb.position, rb.position + delta, Time.fixedDeltaTime * movementSpeed));
         characterController.enabled = true;
 

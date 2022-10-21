@@ -305,7 +305,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f4601853fd4d416999bf16a1b684ea8, type: 2}
+  - {fileID: 2100000, guid: 8f7b956602a6043bbb8965ff918df8cd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1047,11 +1047,11 @@ MonoBehaviour:
   lineOfSight: {fileID: 2498689410027496191}
   currentState: 1
   attackRange: 2
-  movementSpeed: 1.8
+  movementSpeed: 1.6
   movementDirection: 1
   range: 6
   sideRange: 1
-  seenMaterial: {fileID: 2100000, guid: 4de222a020f6eec4da76fe71af770b69, type: 2}
+  seenMaterial: {fileID: 2100000, guid: 8f7b956602a6043bbb8965ff918df8cd, type: 2}
   unseenMaterial: {fileID: 2100000, guid: 8f7b956602a6043bbb8965ff918df8cd, type: 2}
   isDead: 0
   isTarget: 0
