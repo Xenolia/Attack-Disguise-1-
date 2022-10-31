@@ -22,6 +22,7 @@ public class Watcher : EnemyAI
 
     private Vector3 firstPos;
     private Vector3 targetPos;
+    bool hasButton = false;
 
     private void Awake()
     {
@@ -64,18 +65,18 @@ public class Watcher : EnemyAI
                 if (movementDirection == MovementDirection.RightLeft)
                 {
                     if (transform.position.magnitude - targetPos.magnitude > 0)
-                        targetPos = (firstPos + new Vector3(Random.Range(0, range), 0, Random.Range(-sideRange, sideRange)));
+                        targetPos = (firstPos + new Vector3(Random.Range(1, range), 0, Random.Range(-sideRange, sideRange)));
                     else
-                        targetPos = (firstPos + new Vector3(Random.Range(-range, 0), 0, Random.Range(-sideRange, sideRange)));
+                        targetPos = (firstPos + new Vector3(Random.Range(-range, -1), 0, Random.Range(-sideRange, sideRange)));
 
                 }
 
                 if (movementDirection == MovementDirection.UpDown)
                 {
                     if (transform.position.magnitude - targetPos.magnitude > 0)
-                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(0, range)));
+                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(1, range)));
                     else
-                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(-range, 0)));
+                        targetPos = (firstPos + new Vector3(Random.Range(-sideRange, sideRange), 0, Random.Range(-range, -1)));
 
                 }
             }
@@ -83,7 +84,7 @@ public class Watcher : EnemyAI
         }
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.forward), out hit, range / 5))
+        if (Physics.Raycast(transform.position + Vector3.up, transform.TransformDirection(Vector3.forward), out hit, 0.35F))
         {
   
  
@@ -144,7 +145,6 @@ public class Watcher : EnemyAI
 
         Debug.Log("Pew Pew!");
     }
-    bool hasButton=false;
     void PlayerSeen()
     {
         if (!hasButton)
