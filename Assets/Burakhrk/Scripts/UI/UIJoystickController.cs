@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class UIJoystickController : MonoBehaviour
 {
     [SerializeField] private InitParameters _initParamaters;
+    [SerializeField] GameObject stickPanel;
     bool stickEnabled = true;
     public void Init(InitParameters initParameters)
     {
@@ -15,6 +12,7 @@ public class UIJoystickController : MonoBehaviour
     }
     public void DisableJoyStick()
     {
+        stickPanel.SetActive(false);
         stickEnabled = false;
         _initParamaters.JoystickImage.enabled = false;
         _initParamaters.JoystickImageBackground.enabled = false;
@@ -25,7 +23,7 @@ public class UIJoystickController : MonoBehaviour
             return;
 
         stickEnabled = true;
-        
+        stickPanel.SetActive(true);
         _initParamaters.JoystickImage.enabled = true;
         _initParamaters.JoystickImageBackground.enabled = true;
     }

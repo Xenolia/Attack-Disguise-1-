@@ -260,16 +260,30 @@ public class EnemyScript : MonoBehaviour
         StopEnemyCoroutines();
        
         Destroy(characterController);
-        animator.SetTrigger("Death");
-        this.enabled = false;
-        if (enemyManager)
+         var testArray =  animator.GetCurrentAnimatorClipInfo(0);
+
+            foreach(var test in testArray)
+            {
+             if (!test.clip.empty)
+                test.clip.events = null;
+             }
+
+animator.SetTrigger("Death");
+ 
+         if (enemyManager)
+        {
+            enemyManager.UpdateEnemyList();
             enemyManager.SetEnemyAvailiability(this, false);
+        }
         else
         {
             CombatController combatController = playerCombat.gameObject.GetComponent<CombatController>();
             combatController.ChangeMechanicToAuto();
             combatController.GetComponent<Health>().HideHealth();
         }
+ 
+        var garbage = this;
+        Destroy(garbage);
     }
 
     public void SetRetreat()

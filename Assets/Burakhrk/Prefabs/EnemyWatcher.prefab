@@ -1087,7 +1087,7 @@ MonoBehaviour:
   isTarget: 0
   watcherEnemy: 0
   attackTimer: 0
-  attackTimerReturn: 3
+  attackTimerReturn: 2.2
   allowAttack: 0
   enemyManager: {fileID: 0}
   isDead: 0
@@ -1525,14 +1525,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8919236028004875510}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.703, y: 1.127, z: 2.4872017}
+  m_LocalRotation: {x: -0, y: -0.0927553, z: -0, w: 0.9956889}
+  m_LocalPosition: {x: -0.51, y: 1.127, z: 2.4872017}
   m_LocalScale: {x: 0.69151616, y: 0.15053701, z: 2.1494365}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6243745069151466471}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -10.644, z: 0}
 --- !u!33 &1181962671559335231
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1765,14 +1765,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9142206736984073639}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5899999, y: 1.127, z: 2.4872017}
+  m_LocalRotation: {x: -0, y: 0.11330381, z: -0, w: 0.99356043}
+  m_LocalPosition: {x: 0.381, y: 1.127, z: 2.4872017}
   m_LocalScale: {x: 0.69151616, y: 0.15053701, z: 2.1494365}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6243745069151466471}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 13.012, z: 0}
 --- !u!33 &4742041805517908774
 MeshFilter:
   m_ObjectHideFlags: 0

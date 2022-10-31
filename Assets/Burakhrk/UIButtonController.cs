@@ -46,13 +46,14 @@ public class UIButtonController : MonoBehaviour
     }
     public void DisableAllButtons()
     {
-        foreach (var item in buttons)
+         foreach (var item in buttons)
         {
             item.DisableButtonForAWhile();
         }
     }
     public void EnableAllButtons()
     {
+ 
         foreach (var item in buttons)
         {
             item.EnableButton();

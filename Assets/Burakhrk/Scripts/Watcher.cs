@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using MoreMountains.NiceVibrations;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Watcher : EnemyAI
@@ -45,10 +42,7 @@ public class Watcher : EnemyAI
     {
         lineOfSight.gameObject.SetActive(false);
     }
-    private Vector3 lastMove;
-
- 
- 
+    
     internal override void DoPatrol()
     {
         if (isDead||isTarget)
@@ -60,7 +54,7 @@ public class Watcher : EnemyAI
         }
         else
         {
-            Debug.LogError(transform.name + " new pos ");
+            Debug.Log(transform.name + " new pos ");
 
 
              while ((rb.position - targetPos).magnitude <= 0.3f)
@@ -187,6 +181,13 @@ public class Watcher : EnemyAI
     {
         if (isDeadAnim)
         {
+            var testArray = animator.GetCurrentAnimatorClipInfo(0);
+
+            foreach (var test in testArray)
+            {
+                 if(!test.clip.empty)
+                test.clip.events = null;
+            }
             animator.SetTrigger("Death");
             return;
         }

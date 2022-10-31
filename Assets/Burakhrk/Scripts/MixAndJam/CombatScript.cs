@@ -18,7 +18,6 @@ public class CombatScript : MonoBehaviour
     private MovementInput movementInput;
     private Animator animator;
     private CinemachineImpulseSource impulseSource;
-    private float attackEndDoubleCheckCounter;
     [Header("Target")]
    [SerializeField] private EnemyScript lockedTarget;
 
@@ -54,7 +53,6 @@ public class CombatScript : MonoBehaviour
     private void Awake()
     {
         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
-        attackEndDoubleCheckCounter = attackCooldown+0.1f;
         health = GetComponent<Health>();
         enemyManager = FindObjectOfType<EnemyManager>();
         animator = GetComponent<Animator>();
@@ -165,6 +163,7 @@ public class CombatScript : MonoBehaviour
         lockedTarget.GettingAttacked();
         GameManager.Instance.DisableControl();
         animator.speed = 1.25f;
+        
      }
     IEnumerator AttackEndNumerator()
     {

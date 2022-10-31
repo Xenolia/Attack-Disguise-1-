@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -27,10 +25,13 @@ public class Health : MonoBehaviour
     private void OnEnable()
     {
         battleManager.OnBattle += ShowHealth;
+        battleManager.OnBattleFinished += HideHealth;
     }
     private void OnDisable()
     {
         battleManager.OnBattle -= ShowHealth;
+        battleManager.OnBattleFinished -= HideHealth;
+
     }
     public void ShowHealth()
     {

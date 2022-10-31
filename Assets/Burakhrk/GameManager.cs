@@ -7,13 +7,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public bool controlEnabled=true;
-    EnemyManager enemyManager;
-     public UIManager uIManager;
+      public UIManager uIManager;
     UIJoystickController joystickController;
     [SerializeField] UIButtonController uIButton;
     LevelManager levelManager;
-    float enableCounter;
-    bool isControlEnabled;
+    float enableCounter=0;
+    bool isControlEnabled=true;
       private void Awake()
     {
         Application.targetFrameRate = 30;
@@ -39,10 +38,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
-    private void Start()
-    {
-        enemyManager = GameObject.FindGameObjectWithTag("Enemy").GetComponentInParent<EnemyManager>();
-    }
+ 
     public void LevelWin()
     {
         Debug.Log("Win level");
@@ -86,17 +82,21 @@ public class GameManager : MonoBehaviour
         {
             levelManager.NextLevel();
         }
-        if(!isControlEnabled)
+        if (!isControlEnabled)
         {
             enableCounter = enableCounter + Time.deltaTime;
-            if(enableCounter>=5)
+            if (enableCounter >= 4f)
             {
                 ForceEnableControl();
             }
         }
+        else
+            enableCounter = 0;
+            
     }
     void ForceEnableControl()
     {
+        if(!controlEnabled)
         EnableControl();
     }
 }

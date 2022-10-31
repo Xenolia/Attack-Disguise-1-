@@ -30,24 +30,13 @@ public class AutoAttack : MonoBehaviour
     public void AttackCheck(Watcher watcher)
     {
         Debug.Log("Auto attack check");
-
-        if (!readyToAttack)
+        target = watcher;
+        if (!target||!readyToAttack)
             return;
+
         GameManager.Instance.DisableControl();
 
-        target = watcher;
-        if (!target)
-            return;
-
-        if (Vector3.Distance(target.transform.position, transform.position) < range)
-        {
             Attack();
-        }
-        else
-            target = null;
-       
-           
-
     }
     string attackString;
     public void Attack()

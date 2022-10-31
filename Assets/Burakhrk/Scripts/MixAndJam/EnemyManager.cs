@@ -42,6 +42,23 @@ public class EnemyManager : MonoBehaviour
         EnemySetUp();
         StartAI();
     }
+    public void UpdateEnemyList()
+    {
+        StartCoroutine(UpdateListNumerator());  
+    }
+    IEnumerator UpdateListNumerator()
+    {
+        yield return new WaitForEndOfFrame();
+        enemies = GetComponentsInChildren<EnemyScript>();
+        allEnemies = new EnemyStruct[enemies.Length];
+
+        for (int i = 0; i < allEnemies.Length; i++)
+        {
+            allEnemies[i].enemyScript = enemies[i];
+            allEnemies[i].enemyAvailability = true;
+        }
+        StartAI();
+    }
     bool workOnce = false;
     public void StartAI()
     {
