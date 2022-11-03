@@ -15,6 +15,7 @@ public class FogTransformSetter : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if(player!=null)
         fogPos = new Vector3(fogPos.x, player.transform.position.y, fogPos.z);
     }
 }

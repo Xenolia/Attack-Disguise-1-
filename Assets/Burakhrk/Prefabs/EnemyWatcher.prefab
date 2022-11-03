@@ -965,6 +965,7 @@ GameObject:
   - component: {fileID: 6718906641429552433}
   - component: {fileID: 1661102350}
   - component: {fileID: 5838559307007887571}
+  - component: {fileID: -3275577580561514992}
   m_Layer: 6
   m_Name: EnemyWatcher
   m_TagString: Enemy
@@ -1112,6 +1113,18 @@ MonoBehaviour:
       m_Calls: []
   attackRange: 1.5
   dirMultiplier: 0.6
+--- !u!114 &-3275577580561514992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6243745069151466467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb77a9b0191004b57aff7aafbc04158f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6459073995764573621
 GameObject:
   m_ObjectHideFlags: 0

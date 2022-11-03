@@ -12,7 +12,7 @@ public class UIJoystickController : MonoBehaviour
     }
     public void DisableJoyStick()
     {
-        stickPanel.SetActive(false);
+      //  stickPanel.SetActive(false);
         stickEnabled = false;
         _initParamaters.JoystickImage.enabled = false;
         _initParamaters.JoystickImageBackground.enabled = false;
@@ -21,26 +21,25 @@ public class UIJoystickController : MonoBehaviour
     {
         if (Time.timeScale != 1)
             return;
-
+       // stickPanel.SetActive(true);
         stickEnabled = true;
-        stickPanel.SetActive(true);
-        _initParamaters.JoystickImage.enabled = true;
-        _initParamaters.JoystickImageBackground.enabled = true;
+     //   _initParamaters.JoystickImage.enabled = true;
+     //   _initParamaters.JoystickImageBackground.enabled = true;
     }
 
     private void Update()
     {
-        
-        if (Input.GetMouseButton(0)&&stickEnabled&&GameManager.Instance.controlEnabled)
+      
+        if (Input.GetMouseButton(0)&&stickEnabled)
         {
             // if (!EventSystem.current.IsPointerOverGameObject())
-           //     return;
-          //  EventSystem.current.RaycastAll(PointerEventData pointer)
+            //     return;
+            //  EventSystem.current.RaycastAll(PointerEventData pointer)
  
             Vector2 pos = Input.mousePosition;
             if (!_initParamaters.JoystickImageBackground.enabled || !_initParamaters.JoystickImage.enabled)
             {
-
+ 
 
                 _initParamaters.JoystickImage.enabled = true;
                 _initParamaters.JoystickImageBackground.enabled = true;

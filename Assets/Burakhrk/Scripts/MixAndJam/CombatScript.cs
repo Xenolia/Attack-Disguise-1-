@@ -148,7 +148,7 @@ public class CombatScript : MonoBehaviour
         }
         else
         {
-            AttackType("AirKick", .5f, target, 0.75f);
+            AttackType("AirKick", .5f, target, 0.9f);
             Debug.Log("Range attack");
         }
 
@@ -157,6 +157,7 @@ public class CombatScript : MonoBehaviour
     }
     void AttackStart()
     {
+        movementInput.allowMovement = false;
         movementInput.acceleration = 0;
         isAttackingEnemy = true;
         movementInput.enabled = false;
@@ -170,48 +171,45 @@ public class CombatScript : MonoBehaviour
         if (attackString == "AirPunch")
         {
             yield return new WaitForSeconds(1f);
+            movementInput.allowMovement = true;
+
             movementInput.enabled = true;
-            enemyManager.StartAI();
             isAttackingEnemy = false;
-            GameManager.Instance.EnableControl();
-
             yield return new WaitForSeconds(0.2f);
-
         }
 
         if (attackString == "AirKick")
         {
             yield return new WaitForSeconds(0.7f);
-            movementInput.enabled = true;
-            enemyManager.StartAI();
-            isAttackingEnemy = false;
-            GameManager.Instance.EnableControl();
-            yield return new WaitForSeconds(0.2f);
+            movementInput.allowMovement = true;
 
+            movementInput.enabled = true;
+            isAttackingEnemy = false;
+            yield return new WaitForSeconds(0.2f);
         }
 
         if (attackString == "AirKick2")
         {
             yield return new WaitForSeconds(0.5f);
-            movementInput.enabled = true;
-            enemyManager.StartAI();
-            isAttackingEnemy = false;
-            GameManager.Instance.EnableControl();
-            yield return new WaitForSeconds(0.2f);
+            movementInput.allowMovement = true;
 
+            movementInput.enabled = true;
+            isAttackingEnemy = false;
+            yield return new WaitForSeconds(0.2f);
         }
         if (attackString == "AirKick3")
         {
             yield return new WaitForSeconds(0.4f);
+            movementInput.allowMovement = true;
+
             movementInput.enabled = true;
-            enemyManager.StartAI();
             isAttackingEnemy = false;
-            GameManager.Instance.EnableControl();
             yield return new WaitForSeconds(0.2f);
-
         }
+        movementInput.allowMovement = true;
 
-    
+        enemyManager.StartAI();
+        GameManager.Instance.EnableControl();
         animator.speed = 1;
       //  transform.DORotate(new Vector3(0, transform.rotation.y, transform.rotation.z), 0.3f);
     }
@@ -222,6 +220,8 @@ public class CombatScript : MonoBehaviour
 
     void AttackType(string attackTrigger, float cooldown, EnemyScript target, float movementDuration)
     {
+        AttackStart();
+
         animator.SetTrigger(attackTrigger);
 
         if (attackCoroutine != null)
@@ -237,10 +237,10 @@ public class CombatScript : MonoBehaviour
 
         target.StopMoving();
         MoveTorwardsTarget(target, movementDuration);
-         IEnumerator AttackCoroutine(float duration)
+
+        IEnumerator AttackCoroutine(float duration)
         {
-            AttackStart();
-           
+            
             yield return new WaitForSeconds(duration);
              AttackEnd();
             LerpCharacterAcceleration();
@@ -248,7 +248,6 @@ public class CombatScript : MonoBehaviour
 
         IEnumerator FinalBlowCoroutine()
         {
-            AttackStart();
             yield return new WaitForSeconds(0.1f);
 
             Time.timeScale = .5f;

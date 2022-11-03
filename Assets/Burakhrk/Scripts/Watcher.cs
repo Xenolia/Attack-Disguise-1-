@@ -55,8 +55,7 @@ public class Watcher : EnemyAI
         }
         else
         {
-            Debug.Log(transform.name + " new pos ");
-
+ 
 
              while ((rb.position - targetPos).magnitude <= 0.3f)
             {

@@ -54,14 +54,20 @@ public class GameManager : MonoBehaviour
         uIManager.ActivateLosePanel();
 
     }
+    IEnumerator EnableStickDelay()
+    {
+        yield return new WaitForSeconds(0.15f);
+        joystickController.EnableJoyStick();
+        controlEnabled = true;
+
+    }
     public void EnableControl()
     {
         enableCounter = 0;
         isControlEnabled = true;
  
         uIButton.EnableAllButtons();
-        joystickController.EnableJoyStick();
-        controlEnabled = true;
+        StartCoroutine(EnableStickDelay());
     }
     public void DisableControl()
     {

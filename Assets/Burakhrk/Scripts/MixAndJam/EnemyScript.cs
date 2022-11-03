@@ -54,7 +54,24 @@ public class EnemyScript : MonoBehaviour
 
     private void Awake()
     {
-        battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
+        Watcher watcher = GetComponent<Watcher>();
+        if (watcher)
+            watcherEnemy = true;
+
+        if(watcherEnemy)
+        {
+            attackTimerReturn = 2.2f;
+            attackTimer = 0;
+        }
+        else
+        {
+            attackTimer = 1f;
+            attackTimerReturn = 2.5f;
+        }
+
+
+
+         battleManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<BattleManager>();
         characterController = GetComponent<CharacterController>();
         playerCombat = GameObject.FindGameObjectWithTag("Player").GetComponent<CombatScript>();
         animator = GetComponent<Animator>();
@@ -130,7 +147,18 @@ public class EnemyScript : MonoBehaviour
             {
                 attackTimer = attackTimer - Time.deltaTime;
             }
-            if (attackTimer <= 0 && !allowAttack)
+            if (attackTimer <=0 ||isTarget)
+            {
+                if (playerCombat.isAttackingEnemy)
+                {
+                    if(attackTimer<1)
+                    attackTimer = attackTimerReturn / (Random.Range(1, 3));
+
+                    return;
+                }
+            }
+
+                if (attackTimer <= 0 && !allowAttack)
             {
                 allowAttack = true;
                 attackTimer = attackTimerReturn;
@@ -264,9 +292,14 @@ public class EnemyScript : MonoBehaviour
 
             foreach(var test in testArray)
             {
-             if (!test.clip.empty)
-                test.clip.events = null;
-             }
+            if (test.clip.empty)
+                return;
+             for (int i = 0; i < test.clip.events.Length; i++)
+            {
+                test.clip.events[i] = null;
+            }
+
+        }
 
 animator.SetTrigger("Death");
  
@@ -510,11 +543,11 @@ animator.SetTrigger("Death");
 
     }
 
-    public void HitEvent()
+    public void HitEventViaAnim()
     {
         if (!playerCombat.isCountering && !playerCombat.isAttackingEnemy)
             playerCombat.DamageEvent();
-
+        
         PrepareAttack(false);
     }
 
