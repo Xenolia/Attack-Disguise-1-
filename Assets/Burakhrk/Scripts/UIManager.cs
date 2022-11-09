@@ -11,7 +11,7 @@ using DG.Tweening;
     [SerializeField] Text levelText;
     [SerializeField] Image healthBar;
     [SerializeField] TextMeshProUGUI healthText;
-
+    
     public void ActivateWinPanel()
     {
         winPanel.SetActive(true); 

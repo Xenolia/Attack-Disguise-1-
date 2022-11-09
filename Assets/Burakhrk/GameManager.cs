@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
 #else
 {
-  Debug.logger.logEnabled = false;
+  Debug.unityLogger.logEnabled = false;
 }
 #endif
     }
