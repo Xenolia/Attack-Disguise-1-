@@ -30,7 +30,7 @@ public class BattleTrigger : MonoBehaviour
 
     void CreateButtons()
     {
-
+        canvas = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<Canvas>();
         enemyScript = enemyManager.enemies;
         foreach (var enemy in enemyScript)
         {

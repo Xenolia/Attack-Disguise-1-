@@ -59,6 +59,8 @@ public class LevelManager : MonoBehaviour
             openLevelIndex = Levels.Length-1;
 
         Debug.Log("openlevel Index  " + openLevelIndex);
+
+
          Levels[openLevelIndex].SetActive(true);
         Debug.Log("level no  "+levelNo);
         GetComponentInChildren<UIManager>().SetLevelText(levelNo);
@@ -72,13 +74,8 @@ public class LevelManager : MonoBehaviour
         else
             openLevelIndex = Levels.Length-1;
 
-        foreach (var item in Levels)
-        {
-            GameObject garbage = item;
-            if (item != Levels[openLevelIndex])
-                Destroy(garbage);
-        }
-        Levels[openLevelIndex].SetActive(true);
+      var go=  Instantiate(Levels[openLevelIndex]);
+        go.SetActive(true);
         Debug.Log("level no  " + levelNo);
         GetComponentInChildren<UIManager>().SetLevelText(levelNo);
     }
