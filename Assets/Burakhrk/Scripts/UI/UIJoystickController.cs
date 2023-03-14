@@ -29,7 +29,7 @@ public class UIJoystickController : MonoBehaviour
 
     private void Update()
     {
-      
+      /*
         if (Input.GetMouseButton(0)&&stickEnabled)
         {
             // if (!EventSystem.current.IsPointerOverGameObject())
@@ -58,7 +58,7 @@ public class UIJoystickController : MonoBehaviour
             }
         }
 
-
+        */
     }
 
 

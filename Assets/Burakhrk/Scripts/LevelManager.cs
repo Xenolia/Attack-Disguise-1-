@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.UI; 
+
 public class LevelManager : MonoBehaviour
 {
     public GameObject[] Levels;
     [SerializeField] int levelNo = 1;
     [SerializeField] bool instantiate = false;
-    [SerializeField] AdManager adManager;
-    [SerializeField] Button rewardedButton;
+     [SerializeField] Button rewardedButton;
 
-    bool isOpened=false;
-    private void Awake()
+     private void Awake()
     {
 
         if (PlayerPrefs.HasKey("Level"))
@@ -35,37 +34,17 @@ public class LevelManager : MonoBehaviour
             LoadLevel(levelNo);
 
     }
-    void CheckAndRegisterRewardedEvents()
+    
+  
+   public void x()
     {
-       if(adManager.RewardedAdManager.IsRewardedAddReady())
-        {
-            rewardedButton.interactable = true;
-        }
-        else
-        {
-            rewardedButton.interactable = false;
-            StartCoroutine(RegisterRewardedEvent());
-        }
-        adManager.RewardedAdManager.RegisterOnAddFailedToLoad(OnRewardedFailedLoading);
-    }
-    void OnRewardedFailedLoading(object sender , AdFailedToLoadEventArgs failedToLoadEventArgs)
-    {
-        CheckAndRegisterRewardedEvents();
-    }
-    private IEnumerator RegisterRewardedEvent()
-    {
-        while ( !(adManager.RewardedAdManager.IsRewardedAddReady()))
-        {
-            yield return null;
-        }
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1));
+        StopAllCoroutines();
 
-        rewardedButton.interactable = true;
-       // adManager.RewardedAdManager.RegisterOnUserEarnedReward(IsUserEarnedReward);
+        SceneManager.LoadScene(1);
     }
-    void IsUserEarnedReward(object sender , Reward reward)
-    {
-        LoadScene();
-    }
+ 
+ 
     public void LoadLevel(int levelNo)
     {
         foreach (var item in Levels)
@@ -105,71 +84,30 @@ public class LevelManager : MonoBehaviour
     }
     public void NextLevel()
     {
-        isOpened = false;
-        if (!adManager.InterstitialAdManager.IsInterstitialAdReady())
-        {
-            adManager.InterstitialAdManager.RequestInterstitial();
-        }
-        else
-            isOpened = true;
-
-        adManager.InterstitialAdManager.RegisterInterstitalAdOpening(SetIsOpenedTrue);
-        adManager.InterstitialAdManager.RegisterInterstitialAdClosed(IntersitialAdClosed);
-
-        adManager.InterstitialAdManager.ShowInterstitialAd();
-
-        if (!isOpened)
+        
             LoadScene();
 
     }
-    void SetIsOpenedTrue(object sender, EventArgs ea)
-    {
-        isOpened = true;
-    }
-    void IntersitialAdClosed(object sender , EventArgs eventArgs)
-    {
-        LoadScene();
-    }
-    void IntersitialClosedForRestart(object sender, EventArgs eventArgs)
-    {
-        LoadRestartLevel();
-    }
-
-    public void RewardedButton()
-    {
-        adManager.RewardedAdManager.RegisterOnUserEarnedReward(IsUserEarnedReward);
-        adManager.RewardedAdManager.ShowRewardedAd();
-    }
-
 
     void LoadScene()
     {
+       // CrazyEvents.Instance.GameplayStart();
+
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+     
+        StopAllCoroutines();
         SceneManager.LoadScene(1);
     }
     public void RestartLevel()
     {
-        isOpened = false;
-        if (!adManager.InterstitialAdManager.IsInterstitialAdReady())
-        {
-            adManager.InterstitialAdManager.RequestInterstitial();
-        }
-        else
-            isOpened = true;
-
-        adManager.InterstitialAdManager.RegisterInterstitalAdOpening(SetIsOpenedTrue);
-        adManager.InterstitialAdManager.RegisterInterstitialAdClosed(IntersitialClosedForRestart);
-
-        adManager.InterstitialAdManager.ShowInterstitialAd();
-
-        if (!isOpened)
             LoadRestartLevel();
-
-       
-    }
+     }
     void LoadRestartLevel()
     {
+       // CrazyEvents.Instance.GameplayStart();
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1));
+        StopAllCoroutines();
+       
         SceneManager.LoadScene(1);
     }
 }

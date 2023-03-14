@@ -80,14 +80,6 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            LevelFail();  
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            levelManager.NextLevel();
-        }
         if (!isControlEnabled)
         {
             enableCounter = enableCounter + Time.deltaTime;

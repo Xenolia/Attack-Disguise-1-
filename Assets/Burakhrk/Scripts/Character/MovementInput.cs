@@ -71,11 +71,19 @@ public class MovementInput : MonoBehaviour
 
 	void Update()
 	{
-        if (Input.GetMouseButton(0))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+
+			KeyboardInput();
+            PlayerMoveAndRotation();
+        }
+		/*
+      else  if (Input.GetMouseButton(0))
         {
             GetInput2();
 			PlayerMoveAndRotation();
         }
+	*/
         else
         {
 			moveAxis.x = 0;
@@ -172,6 +180,63 @@ public class MovementInput : MonoBehaviour
         var inputValues = _jummoActions.Player.Move.ReadValue<Vector2>();
         moveAxis.x = inputValues.x;
         moveAxis.y = inputValues.y;
+    }
+	void KeyboardInput()
+	{
+        if (Input.GetKey(KeyCode.W))
+		{
+			var pastY = moveAxis.y;
+			if(pastY<1)
+			{
+				pastY += 0.2f;
+				moveAxis.y = pastY;
+			}
+			else
+			{
+                moveAxis.y = 1;
+            }
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            var pastY = moveAxis.y;
+            if (pastY >-1)
+            {
+                pastY -= 0.2f;
+                moveAxis.y = pastY;
+            }
+            else
+            {
+                moveAxis.y = -1;
+            }
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            var pastY = moveAxis.x;
+            if (pastY > -1)
+            {
+                pastY -= 0.2f;
+                moveAxis.x = pastY;
+            }
+            else
+            {
+                moveAxis.x = -1;
+            }
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            var pastY = moveAxis.x;
+            if (pastY < 1)
+            {
+                pastY += 0.2f;
+                moveAxis.x = pastY;
+            }
+            else
+            {
+                moveAxis.x = 1;
+            }
+        }
+
+
     }
 	#region Input
 
